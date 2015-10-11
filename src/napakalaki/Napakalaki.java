@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 package napakalaki;
-
+import java.util.ArrayList;
 /**
  *
- * @author usuario
+ * @author pc
  */
 public class Napakalaki {
 
@@ -15,7 +15,16 @@ public class Napakalaki {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        ArrayList<TreasureKind> tvp = new ArrayList();
+        ArrayList<TreasureKind> top = new ArrayList();
+        tvp.add(TreasureKind.armor);
+        top.add(TreasureKind.armor);
+        BadConsequence bc = new BadConsequence("Pierdes tu armadura visible y otra oculta", 0, tvp, top);
+        Prize prize = new Prize(2,1);
+        Monster monster = new Monster("3 Byakhees de bonanza", 8, bc, prize);
+        System.out.println(monster.toString());
+        
     }
     
 }
+
