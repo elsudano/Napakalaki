@@ -10,7 +10,6 @@ import java.util.ArrayList;
  * @author pc
  */
 public class Napakalaki {
-
     /**
      * @param args the command line arguments
      */
@@ -25,6 +24,5 @@ public class Napakalaki {
         System.out.println(monster.toString());
         
     }
-    
 }
 

@@ -25,46 +25,58 @@ public class BadConsequence {
     private ArrayList<TreasureKind> specificHiddenTreasures=new ArrayList();
     private ArrayList<TreasureKind> specificVisibleTreasures=new ArrayList();
     
+    public BadConsequence(String text, int levels, int nVisible, int nHidden){
+        this.text = text;
+        this.levels = levels;
+        this.nVisibleTreasures=nVisible;
+        this.nHiddenTreasures=nHidden;
+    }
+    
+    public BadConsequence(String text, int levels, ArrayList<TreasureKind> tVisible,ArrayList<TreasureKind> tHidden){
+        this.text = text;
+        this.levels = levels;
+        this.specificVisibleTreasures = tVisible;
+        this.specificHiddenTreasures = tHidden;
+    }
+
+    public BadConsequence(String text, boolean death){
+        this.text = text;
+        this.death = death;
+    }
+    
+    public String getText() {
+        return this.text;
+    }
     
     public int getLevels() {
-        return levels;
+        return this.levels;
     }
     
     public int getNVisibleTreasures() {
-        return nVisibleTreasures;
+        return this.nVisibleTreasures;
     }
 
     public int getNHiddenTreasures() {
-        return nHiddenTreasures;
+        return this.nHiddenTreasures;
     }
     
     public ArrayList<TreasureKind> getSpecificHiddenTreasures() {
-        return specificHiddenTreasures;
+        return this.specificHiddenTreasures;
     }
 
     public ArrayList<TreasureKind> getSpecificVisibleTreasures() {
-        return specificVisibleTreasures;
+        return this.specificVisibleTreasures;
     }
-    
-    public BadConsequence(String t, int l, ArrayList<TreasureKind> tVisible, ArrayList<TreasureKind> tHidden){
-        levels = l;
-        text = t;
-        specificHiddenTreasures=tHidden;
-        specificVisibleTreasures=tVisible;
-    }
-
     
     @Override
     public String toString(){
-        return "Texto: "+text +", "+
-               "Niveles: "+Integer.toString(levels)+", "+
-               "Numero de Tesoros Visibles: "+Integer.toString(nVisibleTreasures)+", "+
-               "Numero de Tesoros Ocultos: "+Integer.toString(nHiddenTreasures)+", "+
-               "Muerte: "+Boolean.toString(death)+", "+
-               "Tesoros Ocultos: "+specificHiddenTreasures.toString()+", "+
-               "Tesoros Visibles: "+specificVisibleTreasures.toString();
+        return "Texto: "+this.text +", "+
+               "Niveles: "+Integer.toString(this.levels)+", "+
+               "Numero de Tesoros Visibles: "+Integer.toString(this.nVisibleTreasures)+", "+
+               "Numero de Tesoros Ocultos: "+Integer.toString(this.nHiddenTreasures)+", "+
+               "Muerte: "+Boolean.toString(this.death)+", "+
+               "Tesoros Ocultos: "+this.specificHiddenTreasures.toString()+", "+
+               "Tesoros Visibles: "+this.specificVisibleTreasures.toString();
     }
     
 }
-
-

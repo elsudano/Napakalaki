@@ -13,48 +13,46 @@ public class Monster  {
     private int combatLevel;
     private Prize prize;
     private BadConsequence badConsequence;
-
-
-          
-    public Monster(String n, int l, BadConsequence b,Prize p){
-        name = n;
-        combatLevel = l;
-        prize = p;
-        badConsequence=b;
+    
+    public Monster(String name, int level, BadConsequence bc, Prize price){
+        this.name = name;
+        this.combatLevel = level;
+        this.badConsequence = bc;
+        this.prize = price;
        
     }
     
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public int getCombatLevel() {
-        return combatLevel;
+        return this.combatLevel;
     }
     
     public BadConsequence getBadConsequence() {
-        return badConsequence;
+        return this.badConsequence;
     }
     
     public Prize getPrice(){
-        return prize;
+        return this.prize;
     }
     
     public int getLevelsGained(){
-        return prize.getLevel();
+        return this.prize.getLevel();
     }
     
     public int getTreasuresGained(){
-        return prize.getTreasures();
+        return this.prize.getTreasures();
     }
     
     
     @Override
     public String toString(){
-        return "Nombre: "+name+", "+ 
-               "Nivel de Combate: "+Integer.toString(combatLevel)+", "+
-               "Buen Rollo: "+"{"+prize.toString()+"}"+", "+
-               "Mal Rollo: "+"{"+badConsequence.toString()+"}";
+        return "Nombre: "+this.name+", "+ 
+               "Nivel de Combate: "+Integer.toString(this.combatLevel)+", "+
+               "Buen Rollo: "+"{"+this.prize.toString()+"}"+", "+
+               "Mal Rollo: "+"{"+this.badConsequence.toString()+"}";
     }
     
 }
