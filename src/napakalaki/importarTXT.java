@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class importarTXT {
-    private static final String FICHERO = "/home/usuario/ownCloud/Eclipse/Napakalaki/src/napakalaki/BD.txt";
+    private static final String FICHERO = "C:\\Users\\pc\\Desktop\\pdoo\\Napakalaki\\src\\napakalaki\\BD.txt";
     private static final importarTXT myInstanciaImportar = new importarTXT(FICHERO);
     private ArrayList<Monster> BDMonstruos = new ArrayList();
     //private ArrayList<TreasureKind> BDTreasure = new ArrayList();
