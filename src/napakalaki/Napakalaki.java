@@ -1,6 +1,6 @@
 package napakalaki;
 
-import gui.NapakalakiView;
+//import gui.NapakalakiView;
 import java.util.ArrayList; 
 import java.util.Random;
 
@@ -112,16 +112,16 @@ public class Napakalaki {
     public CombatResult developCombat () {
         CombatResult cr = this.currentPlayer.combat(currentMonster);
         this.dealer.giveMonsterBack(currentMonster);
-        if(cr.equals(CombatResult.LOSEANDCONVERT)){
-            Cultist c = dealer.nextCultists();
-            CultistPlayer cp = new CultistPlayer(this.currentPlayer,c);
-            for(Player p:players){
-                if(p.equals(currentPlayer)){
-                    p = cp;
-                }
-            }
-            this.currentPlayer = cp;
-        }
+//        if(cr.equals(CombatResult.LOSEANDCONVERT)){
+//            Cultist c = dealer.nextCultists();
+//            CultistPlayer cp = new CultistPlayer(this.currentPlayer,c);
+//            for(Player p:players){
+//                if(p.equals(currentPlayer)){
+//                    p = cp;
+//                }
+//            }
+//            this.currentPlayer = cp;
+//        }
         return cr;
     }
     
@@ -192,27 +192,30 @@ public class Napakalaki {
      * al pasar al siguiente turno
      * @return objeto tipo Circunstancia que indica si se pasa, o se sigue jugando
      */
-    public Circunstancia nextTurn () {
-    	Circunstancia respuesta = Circunstancia.NADA;
-        boolean stateOK = this.nextTurnIsAllowed();
-        if(stateOK){
-            this.currentMonster = dealer.nextMonster();
-            this.currentPlayer = this.nextPlayer();
-            boolean dead = this.currentPlayer.isDead();
-            if(dead){
-                this.currentPlayer.initTreasures();
-            }
-        }
-
-    	if (this.currentPlayer.isCultistPlayer()){
-    		respuesta = Circunstancia.PASA;
-        }else if (this.getDice().getInstance().nextNumber() == 1){
-        	respuesta = Circunstancia.PIERDE_TURNO;
-        }else if (!stateOK){
-        	respuesta = Circunstancia.NOPASA;
-        }
-        return respuesta;
+    public boolean nextTurn () {
+        return true;
     }
+//    public Circunstancia nextTurn () {
+//    	Circunstancia respuesta = Circunstancia.NADA;
+//        boolean stateOK = this.nextTurnIsAllowed();
+//        if(stateOK){
+//            this.currentMonster = dealer.nextMonster();
+//            this.currentPlayer = this.nextPlayer();
+//            boolean dead = this.currentPlayer.isDead();
+//            if(dead){
+//                this.currentPlayer.initTreasures();
+//            }
+//        }
+//
+//    	if (this.currentPlayer.isCultistPlayer()){
+//    		respuesta = Circunstancia.PASA;
+//        }else if (this.getDice().getInstance().nextNumber() == 1){
+//        	respuesta = Circunstancia.PIERDE_TURNO;
+//        }else if (!stateOK){
+//        	respuesta = Circunstancia.NOPASA;
+//        }
+//        return respuesta;
+//    }
     
     /**
      * Consultor para saber si el juego ha llegado a su final
@@ -229,15 +232,15 @@ public class Napakalaki {
         return this.players;
     }
     
-    private NapakalakiView vista;
-    
-    public NapakalakiView getVista(){
-        return this.vista;
-    }
-    
-    public void setVista(NapakalakiView vista){
-        this.vista = vista;
-    }
+//    private NapakalakiView vista;
+//    
+//    public NapakalakiView getVista(){
+//        return this.vista;
+//    }
+//    
+//    public void setVista(NapakalakiView vista){
+//        this.vista = vista;
+//    }
     
     public boolean buyLevels (ArrayList<Treasure> visible, ArrayList<Treasure> hidden){
         boolean canI = this.currentPlayer.buyLevels(visible, hidden);

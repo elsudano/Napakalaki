@@ -19,8 +19,8 @@ public class CardDealer {
 	public ArrayList<Monster> mUsedMonsters;
 	public ArrayList<Treasure> mUsedTreasures;
 	public ArrayList<Treasure> mUnusedTreasures;
-	public ArrayList<Cultist> mUsedCultists;
-	public ArrayList<Cultist> mUnusedCultists;
+//	public ArrayList<Cultist> mUsedCultists;
+//	public ArrayList<Cultist> mUnusedCultists;
 
     
 	private CardDealer() {
@@ -28,8 +28,8 @@ public class CardDealer {
 		this.mUsedMonsters = new ArrayList();
 		this.mUsedTreasures = new ArrayList();
 		this.mUnusedTreasures = new ArrayList();
-		this.mUsedCultists = new ArrayList();
-		this.mUnusedCultists = new ArrayList();
+//		this.mUsedCultists = new ArrayList();
+//		this.mUnusedCultists = new ArrayList();
 	}
 
 	private void initTreasureCardDeck() {
@@ -93,7 +93,7 @@ public class CardDealer {
 		br = new BufferedReader(fr);
           	while((fila=br.readLine())!=null){
 			columnas = fila.split(",");
-			mUnusedCultists.add(new Cultist(columnas[0], Integer.parseInt(columnas[1])));
+			//mUnusedCultists.add(new Cultist(columnas[0], Integer.parseInt(columnas[1])));
 		}
 		this.shuffleCultists();
 		fr.close();
@@ -142,7 +142,7 @@ public class CardDealer {
 	 * de los Sectarios
 	 */
 	private void shuffleCultists() {
-		Collections.shuffle(mUnusedCultists);
+		//Collections.shuffle(mUnusedCultists);
 	}
 	/**
 	 * @return la instancia del CardDealer
@@ -182,16 +182,16 @@ public class CardDealer {
 	/**
 	 * @return el siguiente Carta del Sectario
 	 */
-	public Cultist nextCultists() {
-		Cultist cultist = this.mUnusedCultists.get(0);
-		this.mUnusedCultists.remove(0);
-		if (this.mUnusedCultists.isEmpty()){
-			this.mUnusedCultists = this.mUsedCultists;
-			this.shuffleCultists();
-			this.mUnusedCultists.clear();
-		}
-		return cultist;
-	}
+//	public Cultist nextCultists() {
+//		Cultist cultist = this.mUnusedCultists.get(0);
+//		this.mUnusedCultists.remove(0);
+//		if (this.mUnusedCultists.isEmpty()){
+//			this.mUnusedCultists = this.mUsedCultists;
+//			this.shuffleCultists();
+//			this.mUnusedCultists.clear();
+//		}
+//		return cultist;
+//	}
 	
 	/**
 	 * @param pT
