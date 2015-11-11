@@ -1,47 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package napakalaki;
 
-
-
 /**
- *
- * @author 
+ * Clase enumerada que contiene el tipo o tipos
+ * de regalos que puede ganar un jugador
+ * @authors:
+ * Carlos de la Torre 75145459C
+ * Farouk
  */
 public enum TreasureKind {
-    armor,oneHand,bothHand,helmet,shoe,necklace;
+    ARMOR,ONEHAND,BOTHHANDS,HELMET,SHOES,NECKLACE;
     
+    /**
+     * Generá una cadena la cual contiene los datos formateados
+     * para imprimirlos por pantalla
+     * @return string que contiene los datos del objeto.
+     */
     @Override
     public String toString() {
-
         switch (this) {
-
-            case armor:
+            case ARMOR:
                 return "Armadura";
-
-            case oneHand:
+            case ONEHAND:
                 return "1 Mano";
-
-            case bothHand:
+            case BOTHHANDS:
                 return "2 Manos";
-
-            case helmet:
+            case HELMET:
                 return "Casco";
-
-            case shoe:
+            case SHOES:
                 return "Calzado";
-
-            case necklace:
+            case NECKLACE:
                 return "Collar";
-
             default:
                 return "Error";
         }
     }
     
- } 
+ }
 

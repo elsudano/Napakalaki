@@ -1,40 +1,54 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package napakalaki;
 
 /**
- *
- * @author 
+ * Clase de buen rollo del monstruo, esta clase indica
+ * lo que gana un jugador cuando gana un enfrentamiento
+ * contra un monstruo.
+ * @authors:
+ * Carlos de la Torre 75145459C
+ * Farouk
  */
 public class Prize {
-
-    
     private int treasures;
     private int level;
     
-    
-    
-    Prize(int treasures,int level){
-        this.level=level;
-        this.treasures=treasures;
+    /**
+     * Constructor de Clase, inicializa los valores del objeto
+     * con parámetros de entrada:
+     * @param t numero entero que indica cantidad de tesoros
+     * @param l numero que indica la cantidad de niveles
+     */
+    public Prize (int t, int l) {
+        this.treasures = t;
+        this.level = l;
     }
     
-    public int getTreasures() {
-        return treasures;
-    }
-
-    public int getLevel() {
-        return level;
+    /**
+     * Devuelve la cantidad de tesoros que tiene el buen rollo
+     * @return numero entero que muestra la cantidad de tesoros
+     */
+    public int getTreasures () {
+        return this.treasures;
     }
     
+    /**
+     * Devuelve la cantidad de niveles que contiene el buen rollo del monstruo
+     * @return numero entero que muestra la cantidad de niveles
+     */
+    public int getLevels () {
+        return this.level;
+    }
+    
+    /**
+     * Generá una cadena la cual contiene los datos formateados
+     * para imprimirlos por pantalla
+     * @return string que contiene los datos del objeto con cabeceras.
+     */
     @Override
     public String toString(){
-        return "Tesoros= "+Integer.toString(treasures)+", "+
-               "Niveles= "+Integer.toString(level);
+        return "Tesoros= "+Integer.toString(this.treasures)+", "+
+               "Niveles= "+Integer.toString(this.level);
     }
-    
 }
+
