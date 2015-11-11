@@ -1,6 +1,6 @@
 package napakalaki;
 
-//import gui.NapakalakiView;
+import gui.NapakalakiView;
 import java.util.ArrayList; 
 import java.util.Random;
 
@@ -192,30 +192,27 @@ public class Napakalaki {
      * al pasar al siguiente turno
      * @return objeto tipo Circunstancia que indica si se pasa, o se sigue jugando
      */
-    public boolean nextTurn () {
-        return true;
+    public Circunstancia nextTurn () {
+    	Circunstancia respuesta = Circunstancia.NADA;
+        boolean stateOK = this.nextTurnIsAllowed();
+        if(stateOK){
+            this.currentMonster = dealer.nextMonster();
+            this.currentPlayer = this.nextPlayer();
+            boolean dead = this.currentPlayer.isDead();
+            if(dead){
+                this.currentPlayer.initTreasures();
+            }
+        }
+
+    	if (this.currentPlayer.isCultistPlayer()){
+    		respuesta = Circunstancia.PASA;
+        }else if (this.getDice().getInstance().nextNumber() == 1){
+        	respuesta = Circunstancia.PIERDE_TURNO;
+        }else if (!stateOK){
+        	respuesta = Circunstancia.NOPASA;
+        }
+        return respuesta;
     }
-//    public Circunstancia nextTurn () {
-//    	Circunstancia respuesta = Circunstancia.NADA;
-//        boolean stateOK = this.nextTurnIsAllowed();
-//        if(stateOK){
-//            this.currentMonster = dealer.nextMonster();
-//            this.currentPlayer = this.nextPlayer();
-//            boolean dead = this.currentPlayer.isDead();
-//            if(dead){
-//                this.currentPlayer.initTreasures();
-//            }
-//        }
-//
-//    	if (this.currentPlayer.isCultistPlayer()){
-//    		respuesta = Circunstancia.PASA;
-//        }else if (this.getDice().getInstance().nextNumber() == 1){
-//        	respuesta = Circunstancia.PIERDE_TURNO;
-//        }else if (!stateOK){
-//        	respuesta = Circunstancia.NOPASA;
-//        }
-//        return respuesta;
-//    }
     
     /**
      * Consultor para saber si el juego ha llegado a su final
