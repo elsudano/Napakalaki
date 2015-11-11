@@ -20,9 +20,8 @@ public class Player {
     private static final int NIVEL_MINIMO = 1;
     private static final int NIVEL_MAXIMO = 10;
     private static final int TESOROS_OCULTOS_MAXIMO = 4;
-    // EXAMEN
     private boolean isCultistPlayer;
-    // FIN EXAMEN
+
     
     public Player (String name) {
         this.name = name;
@@ -297,10 +296,8 @@ public class Player {
         return this.pendingBadStuff;
     }
 
-    // EXAMEN
     public boolean isCultistPlayer() {
         return isCultistPlayer;
     }
-    // FIN EXAMEN
 }
 
