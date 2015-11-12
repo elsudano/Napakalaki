@@ -111,7 +111,7 @@ public class Napakalaki {
     }
 
     /**
-     * Metodo auxiliar que sirve para añadir los enemigos al juego
+     * Metodo auxiliar que sirve para añadir los enemigos al juego.
      */
     private void setEnemies() {
         //@@TODO;
@@ -129,7 +129,7 @@ public class Napakalaki {
 
     /**
      * Metodo que se encarga de realizar los combates entre juegadores y
-     * monstruos
+     * monstruos.
      *
      * @return devuelve un objeto de tipo CombarResult con el resultado del
      * combate
@@ -152,7 +152,7 @@ public class Napakalaki {
 
     /**
      * Metodo publico que sirve para descartar todo los tesoros visibles que se
-     * pasan por parametros en el array
+     * pasan por parametros en el array.
      *
      * @param treasures array de tipo tesoro que serán los que se descartan
      */
@@ -165,7 +165,7 @@ public class Napakalaki {
 
     /**
      * Metodo publico que sirve para descartar todo los tesoros ocultos que se
-     * pasan por parametros en el array
+     * pasan por parametros en el array.
      *
      * @param treasures array de tipo tesoro que serán los que se descartan
      */
@@ -178,10 +178,10 @@ public class Napakalaki {
 
     /**
      * Metodo que se encarga de cambiar los tesoros de la lista de los tesoros
-     * ocultos a tesoros visibles
+     * ocultos a tesoros visibles.
      *
      * @param treasures lista de tesoros validos que se puedan poner como
-     * visibles
+     * visibles.
      */
     public void makeTreasuresVisible(ArrayList<Treasure> treasures) {
         for (Treasure t : treasures) {
@@ -191,7 +191,7 @@ public class Napakalaki {
 
     /**
      * Metodo que se encarga de inicializar todas las variables necesarias para
-     * el juego
+     * el juego.
      *
      * @param names array con los nombres de los jugadores
      */
@@ -202,26 +202,26 @@ public class Napakalaki {
     }
 
     /**
-     * Consultor del jugador que esta actualmente en uso
+     * Consultor del jugador que esta actualmente en uso.
      *
      * @return objeto tipo player con el que esta actualmente en uso.
      */
     public Player getCurrentPlayer() {
-        return currentPlayer;
+        return this.currentPlayer;
     }
 
     /**
-     * Consultor del monstruo que esta actualmente en uso
+     * Consultor del monstruo que esta actualmente en uso.
      *
      * @return objeto tipo monstruo con el que esta actualmente en uso.
      */
     public Monster getCurrentMonster() {
-        return currentMonster;
+        return this.currentMonster;
     }
 
     /**
      * Consultor del tipo de circunstancia que se lleva a cabo al pasar al
-     * siguiente turno
+     * siguiente turno.
      *
      * @return objeto tipo Circunstancia que indica si se pasa, o se sigue
      * jugando
@@ -249,7 +249,7 @@ public class Napakalaki {
     }
 
     /**
-     * Consultor para saber si el juego ha llegado a su final
+     * Consultor para saber si el juego ha llegado a su final.
      *
      * @param result será el resultado de un combate para poder compararlo.
      * @return devuelve verdadero si el juego ha llegado a su fin falso en su
@@ -260,21 +260,40 @@ public class Napakalaki {
 
     }
 
+    /**
+     * Consultor auxiliar para saber los nombres de los participantes del juego.
+     *
+     * @return devuelve un array con los jugadores del Juego.
+     */
     public ArrayList<Player> getNames() {
         return this.players;
     }
 
-//    private NapakalakiView vista;
-//    
-//    public NapakalakiView getVista(){
-//        return this.vista;
-//    }
-//    
-//    public void setVista(NapakalakiView vista){
-//        this.vista = vista;
-//    }
     public boolean buyLevels(ArrayList<Treasure> visible, ArrayList<Treasure> hidden) {
         boolean canI = this.currentPlayer.buyLevels(visible, hidden);
         return canI;
     }
+
+    /**
+     * Metodo auxiliar que se usa para que devuelva la vista que actualmente se
+     * esta utilizando en el juego esto sirve solo para la interfaz gráfica.
+     */
+    private NapakalakiView vista;
+
+    /**
+     * Metodo auxiliar que se usa para que devuelva la vista que actualmente se
+     * esta utilizando en el juego esto sirve solo para la interfaz gráfica.
+     */
+    public NapakalakiView getVista() {
+        return this.vista;
+    }
+
+    /**
+     * Metodo auxiliar que se usa para que se pueda especificar la vista que
+     * queremos que tenga el Juego.
+     */
+    public void setVista(NapakalakiView vista) {
+        this.vista = vista;
+    }
+
 }
