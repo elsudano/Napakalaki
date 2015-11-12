@@ -75,6 +75,13 @@ public class Player {
         this.dead = false;
     }
 
+    /**
+     * Consultor que indica cual es el nivel de combate de un jugador, este
+     * metodo se suele utilizar mucho para compararlo con el nivel de combate de
+     * un monstruo, para llevar a cabo los enfrentamientos.
+     *
+     * @return devuelve un entero con el nivel de combate del Jugador
+     */
     public int getCombatLevel() {
         int cont = 0;
         boolean collar = false;
@@ -96,16 +103,27 @@ public class Player {
         return cont;
     }
 
+    /**
+     * Metodo Auxiliar que añade una cantidad de nivel al usuario segun el
+     * parámetro de entrada
+     *
+     * @param i cantidad que se quiere añadir al nivel de combate del jugador
+     */
     private void incrementLevels(int i) {
         this.level += i;
     }
 
+    /**
+     * Metodo Auxiliar que quita una cantidad de nivel al usuario segun el
+     * parámetro de entrada
+     *
+     * @param i cantidad que se quiere quitar al nivel de combate del jugador
+     */
     private void decrementLevels(int i) {
         this.level -= i;
         if (this.level <= 0) {
             this.level = 1;
         }
-
     }
 
     private void setPendingBadStuff(BadConsequence b) {
@@ -128,6 +146,11 @@ public class Player {
 
     }
 
+    /**
+     * Método que asigna que Nivel queremos ponerle al Jugador.
+     *
+     * @param n numero de nivel que vamos a asignar al jugador
+     */
     public void setLevel(int n) {
         this.level = n;
     }
