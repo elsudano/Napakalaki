@@ -1,3 +1,6 @@
+//  PDOO GRUPO A
+//  JESUS ANGEL GONZALEZ NOVEZ   76440070F
+//  CARLOS DE LA TORRE			 75145459C
 package napakalaki;
 
 import java.awt.event.ActionEvent;
@@ -6,12 +9,8 @@ import java.util.Random;
 import javax.swing.Timer;
 
 /**
- * Clase Dado, tiene parte gráfica se encarga de
- * reproducir los numeros de un dado que servira
- * para realizar las tiradas del juego.
- * @authors:
- * Carlos de la Torre 75145459C
- * Farouk
+ * 
+ * @author Profesor
  */
 public class Dice extends javax.swing.JDialog {
 

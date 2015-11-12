@@ -13,13 +13,17 @@ public class CultistPlayer extends Player {
 
     private static int totalCultistPlayers = 0;
     private Cultist myCultistCard;
+    // EXAMEN
     private boolean isCultistPlayer=false;
+    // FIN EXAMEN
     
     public CultistPlayer(Player player, Cultist card) {
         super(player);
         myCultistCard = new Cultist(card.getName(), card.getBasicValue());
         incrementCultists();
+        // EXAMEN
         this.isCultistPlayer = true;
+        // FIN EXAMEN
     }
     private void incrementCultists(){
         totalCultistPlayers++;
@@ -63,7 +67,9 @@ public class CultistPlayer extends Player {
         return this.myCultistCard;
     }
     
+    // EXAMEN
     public boolean isCultistPlayer() {
         return isCultistPlayer;
     }
+    // FIN EXAMEN
 }
