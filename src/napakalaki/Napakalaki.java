@@ -2,7 +2,6 @@ package napakalaki;
 
 import gui.NapakalakiView;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Clase principal del juego, contiene las instancias principales para el
@@ -33,7 +32,7 @@ public class Napakalaki {
     /**
      * Este es la instancia que controla el repartidor de cartas.
      */
-    private CardDealer dealer;
+    private final CardDealer dealer = CardDealer.getInstance();
     /**
      * Esta es la instancia que controla el dado.
      */
@@ -45,7 +44,7 @@ public class Napakalaki {
     private Napakalaki() {
         this.players = new ArrayList();
         this.currentMonster = null;
-        this.dealer = CardDealer.getInstance();
+        //this.dealer = CardDealer.getInstance();
         this.currentPlayer = new Player("nulo");
     }
 
@@ -283,6 +282,7 @@ public class Napakalaki {
     /**
      * Metodo auxiliar que se usa para que devuelva la vista que actualmente se
      * esta utilizando en el juego esto sirve solo para la interfaz gráfica.
+     * @return NapakalakiView retorna la vista del modelo.
      */
     public NapakalakiView getVista() {
         return this.vista;
@@ -291,6 +291,7 @@ public class Napakalaki {
     /**
      * Metodo auxiliar que se usa para que se pueda especificar la vista que
      * queremos que tenga el Juego.
+     * @param vista parametro tipo vista que se asigna al modelo.
      */
     public void setVista(NapakalakiView vista) {
         this.vista = vista;
