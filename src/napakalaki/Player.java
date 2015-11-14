@@ -179,6 +179,11 @@ public class Player {
         this.level = n;
     }
 
+    /**
+     * Método que se encarga de matar al jugador y volverlo a colocar en el
+     * estado inicial de la partida asi de esa manera empezara desde el
+     * principio.
+     */
     public void die() {
         this.setLevel(1);
 
@@ -193,6 +198,15 @@ public class Player {
         this.dieIfNoTreasures();
     }
 
+    /**
+     * Método auxuiliar que comprueba la cantidad de monedas que tiene el
+     * Jugador entre todos los tesoros que tiene acumulados
+     *
+     * @param treasures colección de tesoros desde los que se van a calcular la
+     * cantidad de monedas
+     * @return devuelve un valor entero con la cantidad de monedas que tiene el
+     * jugador
+     */
     private int computeGoldCoinsValue(ArrayList<Treasure> treasures) {
         int cont = 0;
         for (Treasure t : treasures) {
@@ -203,6 +217,14 @@ public class Player {
         return cont;
     }
 
+    /**
+     * Método auxiliar que indica si se pueden comprar mas niveles de combate
+     *
+     * @param I es un entero con el numero de niveles de combate que se quieren
+     * comprar
+     * @return devuelve verdadero si se puede comprar los niveles y falso en
+     * caso contrario
+     */
     private boolean canIBuyLevels(int I) {
         return ((this.level + I) < 10);
     }
@@ -211,8 +233,7 @@ public class Player {
      * Método auxiliar que sirve para aplicar el precio que tiemne un monstruo a
      * un jugador cuando este ultimo gana el combate contra el monstruo
      *
-     * @param miMonster es el monstruo el cuál contiene las ganancias del
-     * jugador
+     * @param m es el monstruo el cuál contiene las ganancias del jugador
      */
     private void applyPrize(Monster m) {
         int nlevels = m.getLevelsGained();
@@ -409,6 +430,17 @@ public class Player {
         this.dieIfNoTreasures();
     }
 
+    /**
+     * Método que se encarga de cambiar todos los tesoros que tiene el jugador
+     * en su poder tanto los visibles como los ocultos por mas nivel de combate
+     *
+     * @param visible colección de tesoros visibles que quiere intercambiar el
+     * jugador
+     * @param hidden colección de tesoros ocultos que quiere intercambiar el
+     * jugador
+     * @return devuelve verdadero si con los tesoros que tiene el jugador se
+     * pueden conseguir mas niveles de combate, falso en caso contrario
+     */
     public boolean buyLevels(ArrayList<Treasure> visible, ArrayList<Treasure> hidden) {
         int levelsMayBought = this.computeGoldCoinsValue(visible);
         levelsMayBought += this.computeGoldCoinsValue(hidden);
@@ -525,6 +557,12 @@ public class Player {
         //@TODO
     }
 
+    /**
+     * Sirve para comprobar si existen tesoros visibles.
+     *
+     * @return devuelve verdadero si el jugador tiene tesoros visibles, falso en
+     * caso contrario
+     */
     public boolean hasVisibleTreasures() {
         return (this.visibleTreasures.size() > 0);
     }

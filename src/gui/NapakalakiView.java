@@ -793,7 +793,7 @@ public class NapakalakiView extends javax.swing.JFrame implements Vista {
         napakalaki.discardVisibleTreasures(tesorosVisiblesSeleccionados);
         refreshPlayer();
 
-        if (currentPlayer.getPendingBadStuff().isEmpty()) {
+        if (currentPlayer.getPendingBadConsequence().isEmpty()) {
             jB_equiparse.setEnabled(true);
         }
     }
@@ -819,7 +819,7 @@ public class NapakalakiView extends javax.swing.JFrame implements Vista {
             currentPlayer.die();
         }
 
-        boolean cumplioMalRollo = currentPlayer.getPendingBadStuff().isEmpty();
+        boolean cumplioMalRollo = currentPlayer.getPendingBadConsequence().isEmpty();
         if (cumplioMalRollo == true) {
             jB_comprarNivel.setEnabled(true);
             jB_equiparse.setEnabled(true);
@@ -942,8 +942,7 @@ public class NapakalakiView extends javax.swing.JFrame implements Vista {
 
         jL_nombreJugador.setText("" + currentPlayer.getName());
         jL_nivelBasico.setText("Nivel Básico: " + currentPlayer.getLevels());
-        jL_nivelCombate.setText("Nivel de combate: "
-                + currentPlayer.getCombatLevel());
+        jL_nivelCombate.setText("Nivel de combate: "); //@TODO + currentPlayer.getCombatLevel());
 
         if (currentPlayer instanceof CultistPlayer) {
             jL_esSectario.setText("Sectario");
@@ -982,18 +981,18 @@ public class NapakalakiView extends javax.swing.JFrame implements Vista {
         tesorosOcultosSeleccionados.clear();
 
         // Actualizamos malRolloPendiente
-        if (currentPlayer.getPendingBadStuff().getNHiddenTreasures() == 0
-                && currentPlayer.getPendingBadStuff()
+        if (currentPlayer.getPendingBadConsequence().getNHiddenTreasures() == 0
+                && currentPlayer.getPendingBadConsequence()
                 .getSpecificHiddenTreasures().isEmpty()) {
             jL_ocultosPerdidos.setText("");
             jL_tipoOcultosPerdidos.setText("");
         } else {
             jL_ocultosPerdidos.setText("Nº ocultos perdidos: "
-                    + currentPlayer.getPendingBadStuff().getNHiddenTreasures());
+                    + currentPlayer.getPendingBadConsequence().getNHiddenTreasures());
 
             String f = new String();
             f += "Tipos: ";
-            for (TreasureKind t : currentPlayer.getPendingBadStuff()
+            for (TreasureKind t : currentPlayer.getPendingBadConsequence()
                     .getSpecificHiddenTreasures()) {
                 f += t + " | ";
             }
@@ -1001,8 +1000,8 @@ public class NapakalakiView extends javax.swing.JFrame implements Vista {
             jL_tipoOcultosPerdidos.setText(f);
         }
 
-        if (currentPlayer.getPendingBadStuff().getNVisibleTreasures() == 0
-                && currentPlayer.getPendingBadStuff()
+        if (currentPlayer.getPendingBadConsequence().getNVisibleTreasures() == 0
+                && currentPlayer.getPendingBadConsequence()
                 .getSpecificVisibleTreasures().isEmpty()) {
             jL_visiblesPerdidos.setText("");
             jL_tipoVisiblesPerdidos.setText("");
@@ -1010,11 +1009,11 @@ public class NapakalakiView extends javax.swing.JFrame implements Vista {
         } else {
             jL_visiblesPerdidos
                     .setText("Nº visibles perdidos: "
-                            + currentPlayer.getPendingBadStuff()
+                            + currentPlayer.getPendingBadConsequence()
                             .getNVisibleTreasures());
 
             String f = "Tipos: ";
-            for (TreasureKind t : currentPlayer.getPendingBadStuff()
+            for (TreasureKind t : currentPlayer.getPendingBadConsequence()
                     .getSpecificVisibleTreasures()) {
                 f += t + " | ";
             }
