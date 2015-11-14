@@ -30,13 +30,18 @@ public class Napakalaki {
      */
     private Monster currentMonster;
     /**
+     * Parámetro que se usa para que devuelva la vista que actualmente se
+     * esta utilizando en el juego esto sirve solo para la interfaz gráfica.
+     */
+    private NapakalakiView vista = null;
+    /**
      * Este es la instancia que controla el repartidor de cartas.
      */
-    private final CardDealer dealer = CardDealer.getInstance();
+    private CardDealer dealer = null;
     /**
      * Esta es la instancia que controla el dado.
      */
-    private Dice dice;
+    private Dice dice = null;
 
     /**
      * Constructor de Clase, inicializa los valores del objeto.
@@ -44,8 +49,9 @@ public class Napakalaki {
     private Napakalaki() {
         this.players = new ArrayList();
         this.currentMonster = null;
-        //this.dealer = CardDealer.getInstance();
+        this.dealer = CardDealer.getInstance();
         this.currentPlayer = new Player("nulo");
+        this.dice = Dice.getInstance();
     }
 
     /**
@@ -267,17 +273,21 @@ public class Napakalaki {
     public ArrayList<Player> getNames() {
         return this.players;
     }
-
+    
+    /**
+     * Este método nos permite cambiar nuestros tesoros ocultos y visibles
+     * por elevar el nivel del jugador que intercambia dichos tesoros.
+     * 
+     * @param visible array de tipo tesoro que son los tesoros visibles.
+     * @param hidden array de tipo tesoro que son los tesoros ocultos.
+     * 
+     * @return devuelve verdadero si se pueden comprar mas nivel para el
+     * usuario falso en caso contrario.
+     */
     public boolean buyLevels(ArrayList<Treasure> visible, ArrayList<Treasure> hidden) {
         boolean canI = this.currentPlayer.buyLevels(visible, hidden);
         return canI;
     }
-
-    /**
-     * Metodo auxiliar que se usa para que devuelva la vista que actualmente se
-     * esta utilizando en el juego esto sirve solo para la interfaz gráfica.
-     */
-    private NapakalakiView vista;
 
     /**
      * Metodo auxiliar que se usa para que devuelva la vista que actualmente se
