@@ -11,45 +11,53 @@ import java.util.ArrayList;
 public class Player {
 
     /**
-     * Indica si el jugador esta Muerto
+     * Indica si el jugador esta Muerto.
      */
     private boolean dead;
     /**
-     * Este es el nombre del Jugador
+     * Este es el nombre del Jugador.
      */
     private String name;
     /**
-     * Nivel de combate del Jugador
+     * Nivel de combate del Jugador.
      */
     private int level;
     /**
-     * Tesoros ocultos que tiene el Jugador
+     * Este sera un enemigo directo del jugador.
+     */
+    private Player enemy;
+    /**
+     * Tesoros ocultos que tiene el Jugador.
      */
     private ArrayList<Treasure> hiddenTreasures;
     /**
-     * Tesoros visibles que tiene el Jugador
+     * Tesoros visibles que tiene el Jugador.
      */
     private ArrayList<Treasure> visibleTreasures;
     /**
-     * Mal rollo mendiente de cumplir por el jugador
+     * Mal rollo mendiente de cumplir por el jugador.
      */
-    private BadConsequence pendingBadStuff;
+    private BadConsequence pendingBadConsequence;
     /**
-     * Constante que indica el nivel minimo de un Jugador
+     * Variable que indica .....
+     */
+    private boolean canISteal;
+    /**
+     * Indica si el Jugador es un Sectario.
+     */
+    private boolean isCultistPlayer;
+    /**
+     * Constante que indica el nivel minimo de un Jugador.
      */
     private static final int NIVEL_MINIMO = 1;
     /**
-     * Constante que indica el nivel máximo de un Jugador
+     * Constante que indica el nivel máximo de un Jugador.
      */
     private static final int NIVEL_MAXIMO = 10;
     /**
-     * Constante que indica el numero máximo de tesoros ocultos de un Jugador
+     * Constante que indica el numero máximo de tesoros ocultos de un Jugador.
      */
     private static final int TESOROS_OCULTOS_MAXIMO = 4;
-    /**
-     * Indica si el Jugador es un Sectario
-     */
-    private boolean isCultistPlayer;
 
     /**
      * Constructor de Clase, inicializa los valores del objeto con parámetros de
@@ -60,10 +68,11 @@ public class Player {
     public Player(String name) {
         this.name = name;
         this.dead = true;
+        this.level = 1;
         this.hiddenTreasures = new ArrayList();
         this.visibleTreasures = new ArrayList();
-        this.pendingBadStuff = new BadConsequence();
-        this.level = 1;
+        this.pendingBadConsequence = new BadConsequence();
+        this.canISteal = true;
         this.isCultistPlayer = false;
     }
 
@@ -82,7 +91,7 @@ public class Player {
      *
      * @return devuelve un entero con el nivel de combate del Jugador
      */
-    public int getCombatLevel() {
+    private int getCombatLevel() {
         int cont = 0;
         boolean collar = false;
         for (Treasure t : visibleTreasures) {
@@ -104,7 +113,7 @@ public class Player {
     }
 
     /**
-     * Metodo Auxiliar que añade una cantidad de nivel al usuario segun el
+     * Metodo Auxiliar que añade una cantidad de nivel al usuario según el
      * parámetro de entrada
      *
      * @param i cantidad que se quiere añadir al nivel de combate del jugador
@@ -114,7 +123,7 @@ public class Player {
     }
 
     /**
-     * Metodo Auxiliar que quita una cantidad de nivel al usuario segun el
+     * Metodo Auxiliar que quita una cantidad de nivel al usuario según el
      * parámetro de entrada
      *
      * @param i cantidad que se quiere quitar al nivel de combate del jugador
@@ -126,17 +135,32 @@ public class Player {
         }
     }
 
-    private void setPendingBadStuff(BadConsequence b) {
-        this.pendingBadStuff = b;
+    /**
+     * Metódo auxiliar para asignar un mal rollo al jugador, se le asigna el mal
+     * rollo de entrada a un estado pendiente y después se calcula cual es su
+     * repercución
+     *
+     * @param bc será el mal rollo que se aplicara al jugador.
+     */
+    private void setPendingBadConsequence(BadConsequence b) {
+        this.pendingBadConsequence = b;
 
     }
 
+    /**
+     * Método auxiliar que procede a matar al jugador que no tiene ningún tesoro
+     * entre los visibles y los ocultos, por lo tanto no puede seguir jugando.
+     */
     private void dieIfNoTreasures() {
         if (this.hiddenTreasures.isEmpty() && this.visibleTreasures.isEmpty()) {
             this.dead = true;
         }
     }
 
+    /**
+     * Método que se encarga de descartar el collar visible de la lista de
+     * tesoros visibles una vez que se utiliza.
+     */
     public void dicardNecklaceIfVisible() {
         for (Treasure t : visibleTreasures) {
             if (t.getType().equals(TreasureKind.NECKLACE)) {
@@ -183,10 +207,17 @@ public class Player {
         return ((this.level + I) < 10);
     }
 
-    public void applyPrize(Monster currentMonster) {
-        int nlevels = currentMonster.getLevelsGained();
+    /**
+     * Método auxiliar que sirve para aplicar el precio que tiemne un monstruo a
+     * un jugador cuando este ultimo gana el combate contra el monstruo
+     *
+     * @param miMonster es el monstruo el cuál contiene las ganancias del
+     * jugador
+     */
+    private void applyPrize(Monster m) {
+        int nlevels = m.getLevelsGained();
         this.incrementLevels(nlevels);
-        int nTreasures = currentMonster.getTreasuresGained();
+        int nTreasures = m.getTreasuresGained();
         if (nTreasures > 0) {
 
             for (int i = 0; i < nTreasures; i++) {
@@ -197,13 +228,28 @@ public class Player {
 
     }
 
-    public void applyBadStuff(BadConsequence bad) {
-        int nlevels = bad.getLevels();
+    /**
+     * Método auxiliar que se encarga de aplicar el mal rollo que se pasa por
+     * parametro al jugador.
+     *
+     * @param m objeto de tipo monstruo que contiene los datos a aplicar el mal
+     * rollo al jugador
+     */
+    private void applyBadConsequence(Monster m) {
+        int nlevels = m.getBadConsequence().getLevels();
         this.decrementLevels(nlevels);
-        pendingBadStuff = bad.adjustToFitTreasureList(visibleTreasures, hiddenTreasures);
-        this.setPendingBadStuff(pendingBadStuff);
+        pendingBadConsequence = m.getBadConsequence().adjustToFitTreasureList(visibleTreasures, hiddenTreasures);
+        this.setPendingBadConsequence(pendingBadConsequence);
     }
 
+    /**
+     * Método auxiliar que se encarga de convertir un tesoro que se pasa por
+     * parametros en un tesoro visble, o lo que es lo mismo que pase a se usado.
+     *
+     * @param t tesoro que se va a marcar como visible.
+     * @return si el tesoro se pone visible devuelve true, en caso contrario
+     * false.
+     */
     private boolean canMakeTreasureVisible(Treasure t) {
         boolean manodoble = false, puede = false;
         for (Treasure trea : visibleTreasures) {
@@ -227,6 +273,14 @@ public class Player {
         return puede;
     }
 
+    /**
+     * Método auxiliar que se encarga de comprobar si los tesoros que se pasan
+     * por parametro se encuentra entre los que tiene el jugador.
+     *
+     * @param tKind tipo de tesoro que se compara con uno de los que tiene el
+     * jugador
+     * @return devuelve la cantidad de tesoros visibles que tiene el jugador
+     */
     private int howManyVisibleTreasures(TreasureKind tKind) {
         int cont = 0;
         for (int i = 0; i < visibleTreasures.size(); i++) {
@@ -237,18 +291,43 @@ public class Player {
         return cont;
     }
 
+    /**
+     * Indica si el jugador esta muerto o esta vivo.
+     *
+     * @return devuelve verdadero si el jugador esta muerto, falso en caso
+     * contrario.
+     */
     public boolean isDead() {
         return dead;
     }
 
+    /**
+     * Consultor de todos los tesoros ocultos que tiene el Jugador.
+     *
+     * @return devuelve una colección de tesoros de tipo ArrayList
+     */
     public ArrayList<Treasure> getHiddenTreasures() {
         return this.hiddenTreasures;
     }
 
+    /**
+     * Consultor de todos los tesoros visibles que tiene el Jugador.
+     *
+     * @return devuelve una colección de tesoros de tipo ArrayList
+     */
     public ArrayList<Treasure> getVisibleTreasures() {
         return this.visibleTreasures;
     }
 
+    /**
+     * Realiza los calculos necesarios para que se lleve a cabo un combate entre
+     * el jugador y el monstruo que se recibe por la entrada del parametro m.
+     *
+     * @param m objeto de tipo monstruo con el cual se batira en duelo en
+     * jugador.
+     * @return devuelve un tipo CombatResult con el resultado calculado del
+     * combate.
+     */
     public CombatResult combat(Monster m) {
         CombatResult cr;
         Dice dado = Dice.getInstance();
@@ -270,9 +349,8 @@ public class Player {
                     this.die();
                     cr = CombatResult.LOSEANDDIE;
                 } else {
-                    BadConsequence bad = m.getBadConsequence();
                     cr = CombatResult.LOSE;
-                    this.applyBadStuff(bad);
+                    this.applyBadConsequence(m);
                 }
             } else {
                 cr = CombatResult.LOSEANDESCAPE;
@@ -287,6 +365,12 @@ public class Player {
         return cr;
     }
 
+    /**
+     * Método que sirve para convertir el objeto de tipo tesoro t en uno de los
+     * que están en los visibles.
+     *
+     * @param t objeto de tipo tesoro que se agregara a los visibles.
+     */
     public void makeTreasuresVisible(Treasure t) {
         boolean canI = this.canMakeTreasureVisible(t);
         if (canI) {
@@ -295,18 +379,32 @@ public class Player {
         }
     }
 
+    /**
+     * Cuando un tesoro se usa se tiene que descartar de la colección a la que
+     * pertenezca, es por eso que este metodo se usua para descartar los tesoros
+     * que ya se han usuado y que esten en los visibles.
+     *
+     * @param t este será el tesoro que vamos a quitar de la colección.
+     */
     public void discardVisibleTreasure(Treasure t) {
         this.visibleTreasures.remove(t);
-        if ((pendingBadStuff != null) && (!pendingBadStuff.isEmpty())) {
-            this.pendingBadStuff.substractVisibleTreasure(t);
+        if ((pendingBadConsequence != null) && (!pendingBadConsequence.isEmpty())) {
+            this.pendingBadConsequence.substractVisibleTreasure(t);
         }
         this.dieIfNoTreasures();
     }
 
+    /**
+     * Cuando un tesoro se usa se tiene que descartar de la colección a la que
+     * pertenezca, es por eso que este metodo se usua para descartar los tesoros
+     * que ya se han usuado y que esten en los ocultos.
+     *
+     * @param t este será el tesoro que vamos a quitar de la colección.
+     */
     public void discardHiddenTreasure(Treasure t) {
         this.hiddenTreasures.remove(t);
-        if ((pendingBadStuff != null) && (!pendingBadStuff.isEmpty())) {
-            this.pendingBadStuff.substractHiddenTreasure(t);
+        if ((pendingBadConsequence != null) && (!pendingBadConsequence.isEmpty())) {
+            this.pendingBadConsequence.substractHiddenTreasure(t);
         }
         this.dieIfNoTreasures();
     }
@@ -330,10 +428,22 @@ public class Player {
         return canI;
     }
 
+    /**
+     * Método que sirve para poder validar elestado correcto de un jugador, osea
+     * que despues de hacer todas las operaciones este es te en un estado valido
+     *
+     * @return devuelve true si no tenemos ningún mal rollo pendiente de asignar
+     * y si el tamaño de los tesoros ocultos es menor que
+     * Player.TESOROS_OCULTOS_MAXIMO
+     */
     public boolean validState() {
-        return ((pendingBadStuff.isEmpty()) && (hiddenTreasures.size() <= 4));
+        return ((pendingBadConsequence.isEmpty()) && (hiddenTreasures.size() <= Player.TESOROS_OCULTOS_MAXIMO));
     }
 
+    /**
+     * Metodo que se usa para asignar los tesoros que le corresponden a cada
+     * jugador al principio de la partida.
+     */
     public void initTreasures() {
         this.bringToLife();
         Treasure treasure = Napakalaki.getInstance().getDealer().nextTreasure();
@@ -350,25 +460,106 @@ public class Player {
 
     }
 
-    public boolean hasVisibleTreasures() {
-        return (this.visibleTreasures.size() > 0);
-
+    /**
+     * Método que sirve para.....
+     *
+     * @return devuelve un objeto tesoro que es....
+     */
+    public Treasure stealTreasure() {
+        //@TODO
+        return null;
     }
 
+    /**
+     * Metodo que se usa para asignar un enemigo al jugador actual.
+     *
+     * @param enemy objeto de tipo jugador que será asignado al Jugador actual
+     */
+    public void setEnemy(Player enemy) {
+        //@TODO
+    }
+
+    /**
+     * Método que se usa para .....
+     *
+     * @return devuelve verdadero si .... en caso contrario devuelve falso.
+     */
+    public boolean canISteal() {
+        //@TODO
+        return false;
+    }
+
+    /**
+     * Método auxiliar que sirve para pedir un tesoro cualquiera de la lista de
+     * cartas de tesoros y asignarselo al juegador actual
+     *
+     * @return objeto de tipo tesoro
+     */
+    private Treasure giveMeATreasure() {
+        //@TODO
+        return null;
+    }
+
+    /**
+     * Método que se usa para .....
+     *
+     * @return devuelve verdadero si .... en caso contrario devuelve falso.
+     */
+    private boolean canYouGiveMeaATreasure() {
+        //@TODO
+        return false;
+    }
+
+    /**
+     * Método que se usa para .....
+     */
+    private void haveStolen() {
+        //@TODO
+    }
+
+    /**
+     * Metodo que sirve para descartarse de todos los tesoros que tiene el
+     * jugador, tanto los visibles como los ocultos.
+     */
+    public void discardAllTreasure() {
+        //@TODO
+    }
+
+    public boolean hasVisibleTreasures() {
+        return (this.visibleTreasures.size() > 0);
+    }
+
+    /**
+     * Consultor de la cantidad de nivel de combate que tiene el jugador
+     *
+     * @return devuelve un entero que va desde 1, (nivel mas bajo), hasta 10,
+     * (nivel mas alto)
+     */
     public int getLevels() {
         return this.level;
     }
 
+    /**
+     * Consultor de l nombre del jugador
+     *
+     * @return devuelve una cadena de caracteres con el nombre del Jugador
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Constructor de copia de Jugador, copia un objeto de tipo jugador, a otra
+     * variable en el mismo estado en el que se encuentra el original.
+     *
+     * @param p objeto de tipo Jugador que será el origen.
+     */
     public Player(Player p) {
         this.dead = p.dead;
         this.hiddenTreasures = p.hiddenTreasures;
         this.level = p.level;
         this.name = p.name;
-        this.pendingBadStuff = p.pendingBadStuff;
+        this.pendingBadConsequence = p.pendingBadConsequence;
         this.visibleTreasures = p.visibleTreasures;
     }
 
@@ -381,8 +572,8 @@ public class Player {
         return (dado.nextNumber() == 6);
     }
 
-    public BadConsequence getPendingBadStuff() {
-        return this.pendingBadStuff;
+    public BadConsequence getPendingBadConsequence() {
+        return this.pendingBadConsequence;
     }
 
     public boolean isCultistPlayer() {

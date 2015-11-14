@@ -1,13 +1,12 @@
-//  PDOO GRUPO A
-//  JESUS ANGEL GONZALEZ NOVEZ   76440070F
-//  CARLOS DE LA TORRE			 75145459C
 package napakalaki;
 
 import java.util.ArrayList;
 
 /**
+ * Clase de Jugador que controla todo lo relacionado con el tesoros que posee,
+ * tanto ocultos como visibles nombre, o si ha terminado la partida para el.
  *
- * @author Jesús Ángel González Novez
+ * @authors: Carlos de la Torre 75145459C Farouk Arroub
  */
 public class CultistPlayer extends Player {
 
@@ -25,7 +24,7 @@ public class CultistPlayer extends Player {
         totalCultistPlayers++;
     }
     
-    @Override
+
     public int getCombatLevel() {
         return super.getCombatLevel() + myCultistCard.getSpecialValue();
     }

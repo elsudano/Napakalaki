@@ -7,7 +7,9 @@ import java.util.ArrayList;
  * Clase principal del juego, contiene las instancias principales para el
  * desarrollo de una partida.
  *
- * @authors: Carlos de la Torre 75145459C Farouk
+ * @authors:
+ * Carlos de la Torre 75145459C
+ * Farouk Arroub
  */
 public class Napakalaki {
 
