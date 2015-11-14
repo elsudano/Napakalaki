@@ -1,19 +1,19 @@
-
 package napakalaki;
 
 /**
- * Clase enumerada que contiene el tipo o tipos
- * de regalos que puede ganar un jugador
- * @authors:
- * Carlos de la Torre 75145459C
- * Farouk
+ * Clase enumerada que contiene el tipo o tipos de regalos que puede ganar un
+ * jugador
+ *
+ * @authors: Carlos de la Torre 75145459C Farouk Arroub
  */
 public enum TreasureKind {
-    ARMOR,ONEHAND,BOTHHANDS,HELMET,SHOES,NECKLACE;
-    
+
+    ARMOR, ONEHAND, BOTHHANDS, HELMET, SHOES, NECKLACE;
+
     /**
-     * Generá una cadena la cual contiene los datos formateados
-     * para imprimirlos por pantalla
+     * Generá una cadena la cual contiene los datos formateados para imprimirlos
+     * por pantalla
+     *
      * @return string que contiene los datos del objeto.
      */
     @Override
@@ -35,6 +35,5 @@ public enum TreasureKind {
                 return "Error";
         }
     }
-    
- }
 
+}
