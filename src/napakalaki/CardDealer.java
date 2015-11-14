@@ -4,26 +4,79 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
+/**
+ * Clase principal del juego, contiene las instancias principales para el
+ * desarrollo de una partida.
+ *
+ * @authors:
+ * Carlos de la Torre 75145459C
+ * Farouk Arroub
+ */
 public class CardDealer {
 
-    private static final CardDealer mInstance = new CardDealer();
-    FileReader fr = null;
-    private BufferedReader br = null;
-    private String[] columnas = null;
-    private String fila = null;
-    public ArrayList<Monster> mUnusedMonsters;
-    public ArrayList<Monster> mUsedMonsters;
-    public ArrayList<Treasure> mUsedTreasures;
-    public ArrayList<Treasure> mUnusedTreasures;
-    public ArrayList<Cultist> mUsedCultists;
-    public ArrayList<Cultist> mUnusedCultists;
-
     /**
-     * Es el constructor por defecto, pero está privado
-     * por que vamos a usar la clase de manera que sea
-     * una clase singleton, osea que solo habrá una 
+     * Instance es la unica instancia del mazo de cartas que hay en toda la
+     * aplicacion de esta manera no se pueden repetir mazos de cartas, esto
+     * sirve para las clases singleton.
+     */
+    private static final CardDealer INSTANCE = new CardDealer();
+    /**
+     * Estas variables son para el gestor de ficheros, se usan para poder leer
+     * los ficheros de textos necesarios para cargar todos los monstruos,
+     * tesoros y demas cartas en los mazos correspondientes.
+     */
+    private FileReader fr = null;
+    /**
+     * Estas variables son para el gestor de ficheros, se usan para poder leer
+     * los ficheros de textos necesarios para cargar todos los monstruos,
+     * tesoros y demas cartas en los mazos correspondientes.
+     */
+    private BufferedReader br = null;
+    /**
+     * Estas variables se usan para cuando se realizan las lecturas de los
+     * ficheros de texto se puedan guardar en un modelo de datos tipo matriz.
+     */
+    private String[] columnas = null;
+    /**
+     * Estas variables se usan para cuando se realizan las lecturas de los
+     * ficheros de texto se puedan guardar en un modelo de datos tipo matriz.
+     */
+    private String fila = null;
+    /**
+     * Este es el mazo de cartas que corresponde a los monstruos que NO se están
+     * usando en la partida.
+     */
+    public ArrayList<Monster> mUnusedMonsters;
+    /**
+     * Este es el mazo de cartas que corresponde a los monstruos que se están
+     * usando en la partida.
+     */
+    public ArrayList<Monster> mUsedMonsters;
+    /**
+     * Este es el mazo de cartas que corresponde a los tesoros que NO se están
+     * usando en la partida.
+     */
+    public ArrayList<Treasure> mUnusedTreasures;
+    /**
+     * Este es el mazo de cartas que corresponde a los tesoros que se están
+     * usando en la partida.
+     */
+    public ArrayList<Treasure> mUsedTreasures;
+    /**
+     * Este es el mazo de cartas que corresponde a los sectarios que NO se están
+     * usando en la partida.
+     */
+    public ArrayList<Cultist> mUnusedCultists;
+    /**
+     * Este es el mazo de cartas que corresponde a los sectarios que se están
+     * usando en la partida.
+     */
+    public ArrayList<Cultist> mUsedCultists;
+    
+    /**
+     * Es el constructor por defecto, pero está privado por que vamos a usar la
+     * clase de manera que sea una clase singleton, osea que solo habrá una
      * instancia de esta clase en todo el juego.
      */
     private CardDealer() {
@@ -36,10 +89,8 @@ public class CardDealer {
     }
 
     /**
-     * Inicializa el monton de cartas de Tesoros
-     * para que se puedan usar en el juego
-     * las carga desde un fichero de texto
-     * y las baraja.
+     * Inicializa el monton de cartas de Tesoros para que se puedan usar en el
+     * juego las carga desde un fichero de texto y las baraja.
      */
     private void initTreasureCardDeck() {
         try {
@@ -59,10 +110,8 @@ public class CardDealer {
     }
 
     /**
-     * Inicializa el monton de cartas de Monstruos
-     * para que se puedan usar en el juego
-     * las carga desde un fichero de texto
-     * y las baraja.
+     * Inicializa el monton de cartas de Monstruos para que se puedan usar en el
+     * juego las carga desde un fichero de texto y las baraja.
      */
     private void initMonsterCardDeck() {
         BadConsequence malrollo = null;
@@ -98,7 +147,7 @@ public class CardDealer {
      */
     private void initCultistCardDeck() {
         try {
-		// Apertura del fichero y creacion de BufferedReader para poder
+            // Apertura del fichero y creacion de BufferedReader para poder
             // hacer una lectura comoda (disponer del metodo readLine()).
 
             fr = new FileReader(getClass().getResource("/resources/base_datos_sectarios.txt").getPath());
@@ -124,49 +173,51 @@ public class CardDealer {
      */
     private ArrayList<TreasureKind> leeTesoros(String datos) {
         String[] objTesoro = datos.toUpperCase().split("-");
-        ArrayList<TreasureKind> Tesoros = new ArrayList<TreasureKind>();
+        ArrayList<TreasureKind> Tesoros = new ArrayList<>();
 
-        for (int c = 0; c < objTesoro.length; c++) {
-            if (!objTesoro[c].contentEquals("")) {
-                Tesoros.add(TreasureKind.valueOf(objTesoro[c]));
+        for (String miTesoro : objTesoro) {
+            if (!miTesoro.contentEquals("")) {
+                Tesoros.add(TreasureKind.valueOf(miTesoro));
             }
         }
         return Tesoros;
     }
 
     /**
-     * Con este metodo barajamos las cartas del monton de los Tesoros
+     * Con este metodo barajamos las cartas del monton de los Tesoros.
      */
     private void shuffleTreasures() {
         Collections.shuffle(mUnusedTreasures);
     }
 
     /**
-     * Con este metodo barajamos las cartas del monton de los monstruos
+     * Con este metodo barajamos las cartas del monton de los monstruos.
      */
     private void shuffleMonsters() {
         Collections.shuffle(mUnusedMonsters);
     }
 
     /**
-     * Con este metodo barajamos las cartas del monton de los Sectarios
+     * Con este metodo barajamos las cartas del monton de los Sectarios.
      */
     private void shuffleCultists() {
         Collections.shuffle(mUnusedCultists);
     }
 
     /**
-     * Metodo que sirve para poder obtener la unica instancia
-     * del manejador de cartas que tendrá el juego
+     * Metodo que sirve para poder obtener la unica instancia del manejador de
+     * cartas que tendrá el juego.
+     *
      * @return la instancia del CardDealer
      */
     public static CardDealer getInstance() {
-        return mInstance;
+        return INSTANCE;
     }
 
     /**
-     * Con este metodo conseguiremos que nos devuelvan
-     * el siguiente tesoro que no se este usando.
+     * Con este metodo conseguiremos que nos devuelvan el siguiente tesoro que
+     * no se este usando.
+     *
      * @return el siguiente Tesoro
      */
     public Treasure nextTreasure() {
@@ -181,8 +232,9 @@ public class CardDealer {
     }
 
     /**
-     * Con este metodo conseguiremos que nos devuelvan
-     * el siguiente monstruo que no se este usando.
+     * Con este metodo conseguiremos que nos devuelvan el siguiente monstruo que
+     * no se este usando.
+     *
      * @return el siguiente Monstruo
      */
     public Monster nextMonster() {
@@ -197,24 +249,26 @@ public class CardDealer {
     }
 
     /**
-     * Con este metodo conseguiremos que nos devuelvan
-     * el siguiente player Sectario que no se este usando.
+     * Con este metodo conseguiremos que nos devuelvan el siguiente player
+     * Sectario que no se este usando.
+     *
      * @return el siguiente Carta del Sectario
      */
-	public Cultist nextCultists() {
-		Cultist cultist = this.mUnusedCultists.get(0);
-		this.mUnusedCultists.remove(0);
-		if (this.mUnusedCultists.isEmpty()){
-			this.mUnusedCultists = this.mUsedCultists;
-			this.shuffleCultists();
-			this.mUnusedCultists.clear();
-		}
-		return cultist;
-	}
+    public Cultist nextCultists() {
+        Cultist cultist = this.mUnusedCultists.get(0);
+        this.mUnusedCultists.remove(0);
+        if (this.mUnusedCultists.isEmpty()) {
+            this.mUnusedCultists = this.mUsedCultists;
+            this.shuffleCultists();
+            this.mUnusedCultists.clear();
+        }
+        return cultist;
+    }
 
     /**
-     * Con este metodo conseguiremos insertar en los
-     * tesoros usuados el tesoro cuyo parámetro sea pT
+     * Con este metodo conseguiremos insertar en los tesoros usuados el tesoro
+     * cuyo parámetro sea pT
+     *
      * @param pT de tipo Treasure es el tesoro que vamos a usar
      */
     public void giveTreasureBack(Treasure pT) {
@@ -222,8 +276,9 @@ public class CardDealer {
     }
 
     /**
-     * Con este metodo conseguiremos insertar en los
-     * tesoros usuados el tesoro cuyo parámetro sea pT
+     * Con este metodo conseguiremos insertar en los tesoros usuados el tesoro
+     * cuyo parámetro sea pT
+     *
      * @param mM de tipo Monstruo es el monstruo que vamos a usar
      */
     public void giveMonsterBack(Monster mM) {
@@ -231,8 +286,8 @@ public class CardDealer {
     }
 
     /**
-     * Sirve para poder construir la bases de datos
-     * de cartas y barajarlas para el juego
+     * Sirve para poder construir la bases de datos de cartas y barajarlas para
+     * el juego
      */
     public void initCards() {
         this.initMonsterCardDeck();
@@ -241,8 +296,8 @@ public class CardDealer {
     }
 
     /**
-     * Devuelve el array completo de monstruos que
-     * estamos usando.
+     * Devuelve el array completo de monstruos que estamos usando.
+     *
      * @return el parametro mUsedMonsters
      */
     public ArrayList<Monster> getUsedMonsters() {
@@ -250,8 +305,8 @@ public class CardDealer {
     }
 
     /**
-     * Devuelve el array completo de los Treasures
-     * que estamos usuando.
+     * Devuelve el array completo de los Treasures que estamos usuando.
+     *
      * @return el parametro mUsedTreasures
      */
     public ArrayList<Treasure> getUsedTreasures() {
