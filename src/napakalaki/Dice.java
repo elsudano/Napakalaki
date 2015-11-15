@@ -76,8 +76,7 @@ public class Dice extends javax.swing.JDialog {
      * @return devuelve un numero entero entre 1 y 6
      */
     public int nextNumber() {
-        return nextNumber("Este es el Numero", "");
-
+        return nextNumber("Este es el Numero\n", "\n");
     }
 
     /**

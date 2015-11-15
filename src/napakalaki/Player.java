@@ -601,6 +601,31 @@ public class Player {
         this.visibleTreasures = p.visibleTreasures;
     }
 
+    /**
+     * Devuelve el contenido del jugador impreso por la pantalla de manera
+     * formateada
+     *
+     * @return cadena de caracteres con el contenido del jugador
+     */
+    @Override
+    public String toString() {
+        String formateado = this.name;
+        formateado += "\t\nTesoros Ocultos:";
+        for (Treasure tesoro : hiddenTreasures) {
+            formateado += tesoro.getName() + " | ";
+        }
+        formateado += "\t\nTesoros Visibles:";
+        for (Treasure tesoro : visibleTreasures) {
+            formateado += tesoro.getName() + " | ";
+        }
+        if (pendingBadConsequence != null && !pendingBadConsequence.isEmpty()) {
+            formateado += "\t\nMal rollo Pendiente: " + pendingBadConsequence.toString();
+            formateado += "\t\nNivel de Combate: " + level + "\n";
+            formateado += "\t\nEsta Muerto: " + dead;
+        }
+        return formateado;
+    }
+
     public int getOponentLevel(Monster m) {
         return m.getBasicValue();
     }

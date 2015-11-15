@@ -1,5 +1,6 @@
 package Test;
 
+import gui.NapakalakiView;
 import napakalaki.Napakalaki;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,11 +9,13 @@ import napakalaki.CombatResult;
 import napakalaki.Player;
 import napakalaki.Treasure;
 import java.util.Arrays;
+import napakalaki.Dice;
 
 public class GameTester {
   
   private static final GameTester test = new GameTester ();
   private Napakalaki game;
+  private NapakalakiView vista;
   private final Scanner in = new Scanner (System.in);  
   
   private GameTester () {}
@@ -21,13 +24,16 @@ public class GameTester {
     return test;
   }
   
-  public void play (Napakalaki aGame, int numberOfPlayers) {
+  public void play (Napakalaki aGame, NapakalakiView mVista, int numberOfPlayers) {
     Command command;
     CombatResult combatResult;
     Player currentPlayer;
     ArrayList<String> names;
 
-    game = aGame;
+    this.game = aGame;
+    this.vista = mVista;
+    this.vista.setModel(this.game);
+    this.game.setVista(this.vista);
     names = getPlayerNames(numberOfPlayers);
     game.initGame(names);
     do { // Mientras dure la partida

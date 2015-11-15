@@ -74,15 +74,15 @@ public class importarTXT {
      * @param miMonstruo objeto monstruo que queremos monstrar
      */
     public void mostrarMonstruoFormateado(Monster miMonstruo) {
-        System.out.println("Nombre del Monstruo: " + miMonstruo.getName());
-        System.out.println("Nivel de Combate: " + miMonstruo.getCombatLevel());
-        this.precioMonstruo = miMonstruo.getPrize();
-        System.out.println("Tesoros que podemos ganar: " + this.precioMonstruo.getTreasures());
-        System.out.println("Cantidad de niveles que conseguimos por ganar: " + this.precioMonstruo.getLevels());
-        this.MalRolloMonstruo = miMonstruo.getBadConsequence();
-        System.out.println("Texto MR: " + this.MalRolloMonstruo.getText());
-        System.out.println("Niveles de MR que perdemos: " + this.MalRolloMonstruo.getLevels());
-        System.out.println("String: " + this.MalRolloMonstruo.toString() + "\n");
+        System.out.println(
+        "Nombre del Monstruo: " + miMonstruo.getName()
+        +"Nivel de Combate: " + miMonstruo.getCombatLevel()
+        +"Tesoros que podemos ganar: " + miMonstruo.getPrize().getTreasures()
+        +"Cantidad de niveles que conseguimos por ganar: " + miMonstruo.getPrize().getLevels()
+        +"Texto MR: " + miMonstruo.getBadConsequence().getText()
+        +"Niveles de MR que perdemos: " + miMonstruo.getBadConsequence().getLevels()
+        +"String: " + miMonstruo.getBadConsequence().toString()
+        + "\n");
     }
 
     /**

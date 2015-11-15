@@ -157,9 +157,15 @@ public class Monster implements Card {
      */
     @Override
     public String toString() {
-        return "Nombre: " + this.name + ", "
-                + "Nivel de Combate: " + Integer.toString(this.combatLevel) + ", "
-                + "Buen Rollo: " + "{" + this.prize.toString() + "}" + ", "
-                + "Mal Rollo: " + "{" + this.badConsequence.toString() + "}";
+        String formateado = 
+        "Nombre del Monstruo: " + this.getName()
+        +"\nNivel de Combate: " + this.getCombatLevel()
+        +"\nTesoros que podemos ganar: " + this.getPrize().getTreasures()
+        +"\nCantidad de niveles que conseguimos por ganar: " + this.getPrize().getLevels()
+        +"\nTexto MR: " + this.getBadConsequence().getText()
+        +"\nNiveles de MR que perdemos: " + this.getBadConsequence().getLevels()
+        +"\ntoString():\n" + this.getBadConsequence().toString()
+        + "\n";
+        return formateado;
     }
 }

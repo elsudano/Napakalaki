@@ -86,7 +86,6 @@ public class Napakalaki {
             Player aux = new Player(s);
             players.add(aux);
         }
-
     }
 
     /**
@@ -236,15 +235,15 @@ public class Napakalaki {
     public boolean nextTurn() {
 //    public Circunstancia nextTurn() {
 //        Circunstancia respuesta = Circunstancia.NADA;
-//        boolean stateOK = this.nextTurnIsAllowed();
-//        if (stateOK) {
-//            this.currentMonster = dealer.nextMonster();
-//            this.currentPlayer = this.nextPlayer();
-//            boolean dead = this.currentPlayer.isDead();
-//            if (dead) {
-//                this.currentPlayer.initTreasures();
-//            }
-//        }
+        boolean stateOK = this.nextTurnIsAllowed();
+        if (stateOK) {
+            this.currentMonster = dealer.nextMonster();
+            this.currentPlayer = this.nextPlayer();
+            boolean dead = this.currentPlayer.isDead();
+            if (dead) {
+                this.currentPlayer.initTreasures();
+            }
+        }
 //
 //        if (this.currentPlayer.isCultistPlayer()) {
 //            respuesta = Circunstancia.PASA;
