@@ -1,11 +1,11 @@
+package napakalaki;
+
 /**
  * Clase Principal del Proyecto que sería como si fuera la clase controlador del
  * proyecto seria la que soporta todas las llamadas que se realizan por parte
  * del usuario y la que realiza las llamadas hacia las otras clase para que se
  * ejecute el programa.
  */
-package napakalaki;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -22,11 +22,11 @@ public class PruebaNapakalaki {
     /**
      * cogemos la instancia para importar la base de datos
      **/
-    private static final importarTXT myBD = importarTXT.getInstancia();
+    private static final CardDealer misCartas = CardDealer.getInstance();
     /**
      * el resto de variables
     * */
-    private static final ArrayList<Monster> BDMonstruos = myBD.getMonsterBD();
+    private static ArrayList<Monster> BDMonstruos;
     private static Monster monstruo = null;
     private static BadConsequence MalRolloMonstruo;
     private static Prize precioMonstruo;
@@ -35,6 +35,8 @@ public class PruebaNapakalaki {
      * @param args
      */
     public static void main(String[] args) {
+        misCartas.initCards();
+        PruebaNapakalaki.BDMonstruos = misCartas.mUnusedMonsters;
         int opcion = 0; //variables que nos controlan las opciónes de menú.
         String eleccion;
 
@@ -121,7 +123,7 @@ public class PruebaNapakalaki {
                                     while (contador < BDMonstruos.size()) {
                                         monstruo = BDMonstruos.get(contador);
                                         if (monstruo.getCombatLevel() > 10) {
-                                            myBD.mostrarMonstruoFormateado(monstruo);
+                                            misCartas.toString(monstruo);
                                         }
                                         contador++;
                                     }
@@ -129,7 +131,7 @@ public class PruebaNapakalaki {
                                     while (contador < BDMonstruos.size()) {
                                         monstruo = BDMonstruos.get(contador);
                                         if (monstruo.getBadConsequence().getLevels() != 0) {
-                                            myBD.mostrarMonstruoFormateado(monstruo);
+                                            misCartas.toString(monstruo);
                                         }
                                         contador++;
                                     }
@@ -137,7 +139,7 @@ public class PruebaNapakalaki {
                                     while (contador < BDMonstruos.size()) {
                                         monstruo = BDMonstruos.get(contador);
                                         if (monstruo.getPrize().getLevels() > 1) {
-                                            myBD.mostrarMonstruoFormateado(monstruo);
+                                            misCartas.toString(monstruo);
                                         }
                                         contador++;
                                     }
@@ -145,7 +147,7 @@ public class PruebaNapakalaki {
                                     while (contador < BDMonstruos.size()) {
                                         monstruo = BDMonstruos.get(contador);
                                         if (!monstruo.getBadConsequence().getSpecificHiddenTreasures().isEmpty() && !monstruo.getBadConsequence().getSpecificVisibleTreasures().isEmpty()) {
-                                            myBD.mostrarMonstruoFormateado(monstruo);
+                                            misCartas.toString(monstruo);
                                         }
                                         contador++;
                                     }
@@ -157,8 +159,7 @@ public class PruebaNapakalaki {
                     case 5:
                         int c = 0;
                         while (c < BDMonstruos.size()) {
-                            monstruo = BDMonstruos.get(c);
-                            myBD.mostrarMonstruoFormateado(monstruo);
+                            misCartas.toString(BDMonstruos.get(c));
                             c++;
                         }
                         break;

@@ -7,7 +7,7 @@ Pollipolipo volante,3,1,1,Da mucho asquito. Pierdes 3 niveles,3,0,0,,,no,0
 Bichgooth,2,1,1,Sientes bichos bajo la ropa. Descarta la armadura visible,0,0,0,HELMET-,,no,0
 Chibithulhu,2,1,1,Embobados con el lindo primigenio te descartas de tu casco visible,0,0,0,HELMET-,,no,0
 Dameargo,1,2,1,Te intentas escaquear. Pierdes una mano Visible,0,0,0,ONEHAND-,,no,0
-El Gran Cthulhu,20,2,5,Hoy no es tu día de Suerte, Mueres,0,0,0,,,muerte,4
+El Gran Cthulhu,20,2,5,Hoy no es tu día de Suerte y Mueres,0,0,0,,,muerte,4
 El Lenguas,20,1,1,Menudo susto te llevas. Pierdes 2 niveles y 5 tesoros visibles,2,5,0,,,no,0
 El mal indecible impronunciable,10,3,1,Pierdes una mano visible,0,0,0,ONEHAND-,,no,-2
 El rey de rosa,13,4,2,Pierdes 5 niveles y 3 tesoros visibles,5,3,0,,,no,0

@@ -835,7 +835,8 @@ public class NapakalakiView extends javax.swing.JFrame implements Vista {
     int veces = 0;
 
     private void jB_siguienteActionPerformed(java.awt.event.ActionEvent evt) {
-        Circunstancia fin = napakalaki.nextTurn();
+        boolean fin = napakalaki.nextTurn();
+        //Circunstancia fin = napakalaki.nextTurn();
         veces++;
         refreshPlayer();
 
@@ -855,7 +856,8 @@ public class NapakalakiView extends javax.swing.JFrame implements Vista {
         jL_excesoCartas.setText("");
 
         limpiaMonstruo();
-        if (fin == Circunstancia.PIERDE_TURNO) {
+        if (!fin) {
+        //if (fin == Circunstancia.PIERDE_TURNO) {
             jL_excesoCartas.setText("FIN ES FALSE");
         }
 

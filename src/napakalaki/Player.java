@@ -319,7 +319,7 @@ public class Player {
      * contrario.
      */
     public boolean isDead() {
-        return dead;
+        return this.dead;
     }
 
     /**
@@ -392,7 +392,7 @@ public class Player {
      *
      * @param t objeto de tipo tesoro que se agregara a los visibles.
      */
-    public void makeTreasuresVisible(Treasure t) {
+    public void makeTreasureVisible(Treasure t) {
         boolean canI = this.canMakeTreasureVisible(t);
         if (canI) {
             this.visibleTreasures.add(t);
@@ -553,7 +553,7 @@ public class Player {
      * Metodo que sirve para descartarse de todos los tesoros que tiene el
      * jugador, tanto los visibles como los ocultos.
      */
-    public void discardAllTreasure() {
+    public void discardAllTreasures() {
         //@TODO
     }
 

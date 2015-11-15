@@ -192,7 +192,7 @@ public class Napakalaki {
      */
     public void makeTreasuresVisible(ArrayList<Treasure> treasures) {
         for (Treasure t : treasures) {
-            this.currentPlayer.makeTreasuresVisible(t);
+            this.currentPlayer.makeTreasureVisible(t);
         }
     }
 
@@ -233,26 +233,28 @@ public class Napakalaki {
      * @return objeto tipo Circunstancia que indica si se pasa, o se sigue
      * jugando
      */
-    public Circunstancia nextTurn() {
-        Circunstancia respuesta = Circunstancia.NADA;
-        boolean stateOK = this.nextTurnIsAllowed();
-        if (stateOK) {
-            this.currentMonster = dealer.nextMonster();
-            this.currentPlayer = this.nextPlayer();
-            boolean dead = this.currentPlayer.isDead();
-            if (dead) {
-                this.currentPlayer.initTreasures();
-            }
-        }
-
-        if (this.currentPlayer.isCultistPlayer()) {
-            respuesta = Circunstancia.PASA;
-        } else if (this.getDice().getInstance().nextNumber() == 1) {
-            respuesta = Circunstancia.PIERDE_TURNO;
-        } else if (!stateOK) {
-            respuesta = Circunstancia.NOPASA;
-        }
-        return respuesta;
+    public boolean nextTurn() {
+//    public Circunstancia nextTurn() {
+//        Circunstancia respuesta = Circunstancia.NADA;
+//        boolean stateOK = this.nextTurnIsAllowed();
+//        if (stateOK) {
+//            this.currentMonster = dealer.nextMonster();
+//            this.currentPlayer = this.nextPlayer();
+//            boolean dead = this.currentPlayer.isDead();
+//            if (dead) {
+//                this.currentPlayer.initTreasures();
+//            }
+//        }
+//
+//        if (this.currentPlayer.isCultistPlayer()) {
+//            respuesta = Circunstancia.PASA;
+//        } else if (this.getDice().getInstance().nextNumber() == 1) {
+//            respuesta = Circunstancia.PIERDE_TURNO;
+//        } else if (!stateOK) {
+//            respuesta = Circunstancia.NOPASA;
+//        }
+//        return respuesta;
+        return false;
     }
 
     /**
