@@ -269,7 +269,7 @@ public class BadConsequence {
      */
     @Override
     public String toString() {
-        return "\tTexto: " + this.text + ", "
+        return "Texto: " + this.text + ", "
                 + "\n\tNiveles: " + Integer.toString(this.levels) + ", "
                 + "\n\tNumero de Tesoros Visibles: " + Integer.toString(this.nVisibleTreasures) + ", "
                 + "\n\tNumero de Tesoros Ocultos: " + Integer.toString(this.nHiddenTreasures) + ", "

@@ -123,7 +123,7 @@ public class PruebaNapakalaki {
                                     while (contador < BDMonstruos.size()) {
                                         monstruo = BDMonstruos.get(contador);
                                         if (monstruo.getCombatLevel() > 10) {
-                                            misCartas.toString(monstruo);
+                                            System.out.println(monstruo.toString());
                                         }
                                         contador++;
                                     }
@@ -131,7 +131,7 @@ public class PruebaNapakalaki {
                                     while (contador < BDMonstruos.size()) {
                                         monstruo = BDMonstruos.get(contador);
                                         if (monstruo.getBadConsequence().getLevels() != 0) {
-                                            misCartas.toString(monstruo);
+                                            System.out.println(monstruo.toString());
                                         }
                                         contador++;
                                     }
@@ -139,7 +139,7 @@ public class PruebaNapakalaki {
                                     while (contador < BDMonstruos.size()) {
                                         monstruo = BDMonstruos.get(contador);
                                         if (monstruo.getPrize().getLevels() > 1) {
-                                            misCartas.toString(monstruo);
+                                            System.out.println(monstruo.toString());
                                         }
                                         contador++;
                                     }
@@ -147,7 +147,7 @@ public class PruebaNapakalaki {
                                     while (contador < BDMonstruos.size()) {
                                         monstruo = BDMonstruos.get(contador);
                                         if (!monstruo.getBadConsequence().getSpecificHiddenTreasures().isEmpty() && !monstruo.getBadConsequence().getSpecificVisibleTreasures().isEmpty()) {
-                                            misCartas.toString(monstruo);
+                                            System.out.println(monstruo.toString());
                                         }
                                         contador++;
                                     }
@@ -159,7 +159,7 @@ public class PruebaNapakalaki {
                     case 5:
                         int c = 0;
                         while (c < BDMonstruos.size()) {
-                            misCartas.toString(BDMonstruos.get(c));
+                            System.out.println(BDMonstruos.get(c).toString());
                             c++;
                         }
                         break;

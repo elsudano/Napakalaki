@@ -1,7 +1,9 @@
 package napakalaki;
 
 /**
- * Clase Tesoro
+ * Clase Tesoro, se encarga gestionar todos los datos que contienen los tesoros
+ * que proporcionan las ventajas al jugador para poder enfrentarse a los
+ * monstruos
  *
  * @authors: Carlos de la Torre 75145459C Farouk Arroub
  */
@@ -92,11 +94,19 @@ public class Treasure implements Card {
         return this.name;
     }
 
+    /**
+     * Consultor del atributo de bonus minimo
+     * @return devuelve un entero con el nivel minimo que proporciona el tesoro
+     */
     @Override
     public int getBasicValue() {
         return this.getMinBonus();
     }
 
+    /**
+     * Consultor del atributo de bonus máximo
+     * @return devuelve un entero con el nivel máximo que proporciona el tesoro
+     */
     @Override
     public int getSpecialValue() {
         return this.getMaxBonus();
@@ -104,6 +114,9 @@ public class Treasure implements Card {
 
     @Override
     public String toString() {
-        return this.name + " (" + this.type.toString() + ") " + "\nBonus mínimo = " + this.minBonus + "\nBonus máximo = " + this.maxBonus + "\nPiezas de Oro = " + this.goldCoins;
+        return "Nombre tesoro: " + this.name + " (" + this.type.toString() + ") "
+        + "\nBonus mínimo = " + this.minBonus
+        + "\nBonus máximo = " + this.maxBonus
+        + "\nPiezas de Oro = " + this.goldCoins;
     }
 }

@@ -87,27 +87,33 @@ public class Player {
     /**
      * Consultor que indica cual es el nivel de combate de un jugador, este
      * metodo se suele utilizar mucho para compararlo con el nivel de combate de
-     * un monstruo, para llevar a cabo los enfrentamientos.
+     * un jugador, para llevar a cabo los enfrentamientos, Devuelve el nivel de
+     * combate del jugador, que viene dado por su nivel más los bonus que le
+     * proporcionan los tesoros que tenga equipados.
      *
      * @return devuelve un entero con el nivel de combate del Jugador
      */
     private int getCombatLevel() {
         int cont = 0;
-        boolean collar = false;
-        for (Treasure t : visibleTreasures) {
-            if (t.getType().equals(TreasureKind.NECKLACE)) {
-                collar = true;
-            }
+//        boolean collar = false;
+//        de momento se tiene que hacer asi cuando se explique el collar se separaran las bonus
+        for (Treasure tesoro : visibleTreasures) {
+            cont += tesoro.getBasicValue() + tesoro.getMaxBonus();
         }
-        if (collar) {
-            for (Treasure t1 : visibleTreasures) {
-                cont += t1.getSpecialValue();
-            }
-        } else {
-            for (Treasure t2 : visibleTreasures) {
-                cont += t2.getBasicValue();
-            }
-        }
+//        for (Treasure t : visibleTreasures) {
+//            if (t.getType().equals(TreasureKind.NECKLACE)) {
+//                collar = true;
+//            }
+//        }
+//        if (collar) {
+//            for (Treasure t1 : visibleTreasures) {
+//                cont += t1.getSpecialValue();
+//            }
+//        } else {
+//            for (Treasure t2 : visibleTreasures) {
+//                cont += t2.getBasicValue();
+//            }
+//        }
         cont += this.level;
         return cont;
     }
@@ -155,47 +161,6 @@ public class Player {
         if (this.hiddenTreasures.isEmpty() && this.visibleTreasures.isEmpty()) {
             this.dead = true;
         }
-    }
-
-    /**
-     * Método que se encarga de descartar el collar visible de la lista de
-     * tesoros visibles una vez que se utiliza.
-     */
-    public void dicardNecklaceIfVisible() {
-        for (Treasure t : visibleTreasures) {
-            if (t.getType().equals(TreasureKind.NECKLACE)) {
-                Napakalaki.getInstance().getDealer().giveTreasureBack(t);
-            }
-        }
-
-    }
-
-    /**
-     * Método que asigna que Nivel queremos ponerle al Jugador.
-     *
-     * @param n numero de nivel que vamos a asignar al jugador
-     */
-    public void setLevel(int n) {
-        this.level = n;
-    }
-
-    /**
-     * Método que se encarga de matar al jugador y volverlo a colocar en el
-     * estado inicial de la partida asi de esa manera empezara desde el
-     * principio.
-     */
-    public void die() {
-        this.setLevel(1);
-
-        for (Treasure treasure : visibleTreasures) {
-            Napakalaki.getInstance().getDealer().giveTreasureBack(treasure);
-        }
-        visibleTreasures.clear();
-        for (Treasure treasure : hiddenTreasures) {
-            Napakalaki.getInstance().getDealer().giveTreasureBack(treasure);
-        }
-        hiddenTreasures.clear();
-        this.dieIfNoTreasures();
     }
 
     /**
@@ -313,7 +278,78 @@ public class Player {
     }
 
     /**
-     * Indica si el jugador esta muerto o esta vivo.
+     * Método auxiliar que sirve para pedir un tesoro cualquiera de la lista de
+     * cartas de tesoros y asignarselo al juegador actual
+     *
+     * @return objeto de tipo tesoro
+     */
+    private Treasure giveMeATreasure() {
+        //@TODO
+        return null;
+    }
+
+    /**
+     * Método auxiliar que devuelve true si el jugador tiene tesoros para ser
+     * robados por otro jugador y false en caso contrario.
+     *
+     * @return devuelve verdadero si hay tesoros para robar en caso contrario
+     * devuelve falso.
+     */
+    private boolean canYouGiveMeaATreasure() {
+        return (!this.visibleTreasures.isEmpty()||!this.hiddenTreasures.isEmpty());
+    }
+
+    /**
+     * Método auxiliar que cambia el atributo canISteal a false cuando el
+     * jugador roba un tesoro.
+     */
+    private void haveStolen() {
+        this.canISteal = false;
+    }
+
+    /**
+     * Método que se encarga de descartar el collar visible de la lista de
+     * tesoros visibles una vez que se utiliza.
+     */
+    public void dicardNecklaceIfVisible() {
+        for (Treasure t : visibleTreasures) {
+            if (t.getType().equals(TreasureKind.NECKLACE)) {
+                Napakalaki.getInstance().getDealer().giveTreasureBack(t);
+            }
+        }
+
+    }
+
+    /**
+     * Método que asigna que Nivel queremos ponerle al Jugador.
+     *
+     * @param n numero de nivel que vamos a asignar al jugador
+     */
+    public void setLevel(int n) {
+        this.level = n;
+    }
+
+    /**
+     * Método que se encarga de matar al jugador y volverlo a colocar en el
+     * estado inicial de la partida asi de esa manera empezara desde el
+     * principio.
+     */
+    public void die() {
+        this.setLevel(1);
+
+        for (Treasure treasure : visibleTreasures) {
+            Napakalaki.getInstance().getDealer().giveTreasureBack(treasure);
+        }
+        visibleTreasures.clear();
+        for (Treasure treasure : hiddenTreasures) {
+            Napakalaki.getInstance().getDealer().giveTreasureBack(treasure);
+        }
+        hiddenTreasures.clear();
+        this.dieIfNoTreasures();
+    }
+    
+    /**
+     * Devuelve true si el jugador está muerto, false en caso contrario.
      *
      * @return devuelve verdadero si el jugador esta muerto, falso en caso
      * contrario.
@@ -461,15 +497,16 @@ public class Player {
     }
 
     /**
-     * Método que sirve para poder validar elestado correcto de un jugador, osea
-     * que despues de hacer todas las operaciones este es te en un estado valido
+     * Método que sirve para poder validar el estado correcto de un jugador,
+     * osea que despues de hacer todas las operaciones este tenga un estado
+     * valido
      *
      * @return devuelve true si no tenemos ningún mal rollo pendiente de asignar
      * y si el tamaño de los tesoros ocultos es menor que
      * Player.TESOROS_OCULTOS_MAXIMO
      */
     public boolean validState() {
-        return ((pendingBadConsequence.isEmpty()) && (hiddenTreasures.size() <= Player.TESOROS_OCULTOS_MAXIMO));
+        return ((this.pendingBadConsequence.isEmpty()) && (this.hiddenTreasures.size() <= Player.TESOROS_OCULTOS_MAXIMO));
     }
 
     /**
@@ -508,45 +545,18 @@ public class Player {
      * @param enemy objeto de tipo jugador que será asignado al Jugador actual
      */
     public void setEnemy(Player enemy) {
-        //@TODO
+        this.enemy = enemy;
     }
 
     /**
-     * Método que se usa para .....
+     * Devuelve el valor de la variable canISteal, que indica si el jugador ha
+     * robado antes o no un tesoro a su enemigo.
      *
-     * @return devuelve verdadero si .... en caso contrario devuelve falso.
+     * @return devuelve verdadero si el jugador a robado un tesoro en caso
+     * contrario devuelve falso.
      */
     public boolean canISteal() {
-        //@TODO
-        return false;
-    }
-
-    /**
-     * Método auxiliar que sirve para pedir un tesoro cualquiera de la lista de
-     * cartas de tesoros y asignarselo al juegador actual
-     *
-     * @return objeto de tipo tesoro
-     */
-    private Treasure giveMeATreasure() {
-        //@TODO
-        return null;
-    }
-
-    /**
-     * Método que se usa para .....
-     *
-     * @return devuelve verdadero si .... en caso contrario devuelve falso.
-     */
-    private boolean canYouGiveMeaATreasure() {
-        //@TODO
-        return false;
-    }
-
-    /**
-     * Método que se usa para .....
-     */
-    private void haveStolen() {
-        //@TODO
+        return this.canISteal;
     }
 
     /**
@@ -578,7 +588,7 @@ public class Player {
     }
 
     /**
-     * Consultor de l nombre del jugador
+     * Consultor del nombre del jugador.
      *
      * @return devuelve una cadena de caracteres con el nombre del Jugador
      */

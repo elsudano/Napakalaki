@@ -312,20 +312,4 @@ public class CardDealer {
     public ArrayList<Treasure> getUsedTreasures() {
         return mUsedTreasures;
     }
-    
-    /**
-     * Con esto mostramos por pantalla los datos del monstruo que pasamos por
-     * parametros
-     *
-     * @param miMonstruo objeto monstruo que queremos monstrar
-     */
-    public void toString(Monster miMonstruo) {
-        System.out.println("Nombre del Monstruo: " + miMonstruo.getName());
-        System.out.println("Nivel de Combate: " + miMonstruo.getCombatLevel());
-        System.out.println("Tesoros que podemos ganar: " + miMonstruo.getPrize().getTreasures());
-        System.out.println("Cantidad de niveles que conseguimos por ganar: " + miMonstruo.getPrize().getLevels());
-        System.out.println("Texto MR: " + miMonstruo.getBadConsequence().getText());
-        System.out.println("Niveles de MR que perdemos: " + miMonstruo.getBadConsequence().getLevels());
-        System.out.println("String: " + miMonstruo.getBadConsequence().toString() + "\n");
-    }
 }

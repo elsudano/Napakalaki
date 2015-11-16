@@ -160,11 +160,8 @@ public class Monster implements Card {
         String formateado = 
         "Nombre del Monstruo: " + this.getName()
         +"\nNivel de Combate: " + this.getCombatLevel()
-        +"\nTesoros que podemos ganar: " + this.getPrize().getTreasures()
-        +"\nCantidad de niveles que conseguimos por ganar: " + this.getPrize().getLevels()
-        +"\nTexto MR: " + this.getBadConsequence().getText()
-        +"\nNiveles de MR que perdemos: " + this.getBadConsequence().getLevels()
-        +"\ntoString():\n" + this.getBadConsequence().toString()
+        +"\nContenido del Precio:\n\t" + this.getPrize().toString()
+        +"\nContenido de Mal Rollo:\n\t" + this.getBadConsequence().toString()
         + "\n";
         return formateado;
     }
