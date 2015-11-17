@@ -18,13 +18,13 @@ public class Dice extends javax.swing.JDialog {
      */
     private static final long serialVersionUID = 1L;
     private static Dice instance = null;
-    private Random generator = new Random();
+    private final Random generator;
     private Timer timerDice;
     private int value;
 
     private Dice(java.awt.Frame parent) {
         super(parent, true);
-
+        this.generator = new Random();
         initComponents();
         timerDice = new Timer(50, diceAction);
         this.addWindowListener(new java.awt.event.WindowAdapter() {

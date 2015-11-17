@@ -1,6 +1,7 @@
 package napakalaki;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Clase de Jugador que controla todo lo relacionado con el tesoros que posee,
@@ -237,24 +238,35 @@ public class Player {
      * false.
      */
     private boolean canMakeTreasureVisible(Treasure t) {
-        boolean manodoble = false, puede = false;
-        for (Treasure trea : visibleTreasures) {
-            if (trea.getType().equals(TreasureKind.BOTHHANDS)) {
-                manodoble = true;
-            }
-        }
-
-        if (manodoble) {
-            if (this.visibleTreasures.size() < 4) {
-                puede = true;
-            }
-        } else if (this.visibleTreasures.size() < 5) {
-            puede = true;
-        }
-        for (Treasure trea : visibleTreasures) {
-            if (trea.getType().equals(t.getType())) {
-                puede = false;
-            }
+        boolean puede = true;
+        int cont = 0;
+        switch (t.getType().toString()) {
+            case "1 Mano":
+                for (Treasure tesoro : visibleTreasures) {
+                    if (tesoro.getType().equals(TreasureKind.ONEHAND))
+                        cont++;
+                    if (tesoro.getType().equals(TreasureKind.BOTHHANDS))
+                        puede = false;
+                }
+                if (cont >= 2)
+                    puede = false;
+                break;
+            case "2 Manos":
+                for (Treasure tesoro : visibleTreasures) {
+                    if (tesoro.getType().equals(TreasureKind.ONEHAND))
+                        cont++;
+                    if (tesoro.getType().equals(TreasureKind.BOTHHANDS))
+                        puede = false;
+                }
+                if (cont > 0)
+                    puede = false;
+                break;
+            default:
+                for (Treasure tesoro : visibleTreasures) {
+                    if (tesoro.getType().equals(t.getType())) {
+                        puede = false;
+                    }
+                }
         }
         return puede;
     }
@@ -278,14 +290,14 @@ public class Player {
     }
 
     /**
-     * Método auxiliar que sirve para pedir un tesoro cualquiera de la lista de
-     * cartas de tesoros y asignarselo al juegador actual
+     * Método auxiliar que sirve para pedir un tesoro al azar de la lista de
+     * cartas de tesoros ocultos y asignarselo al juegador actual
      *
      * @return objeto de tipo tesoro
      */
     private Treasure giveMeATreasure() {
-        //@TODO
-        return null;
+        Random generator = new Random();
+        return this.hiddenTreasures.get(generator.nextInt(this.hiddenTreasures.size()));
     }
 
     /**
@@ -296,7 +308,7 @@ public class Player {
      * devuelve falso.
      */
     private boolean canYouGiveMeaATreasure() {
-        return (!this.visibleTreasures.isEmpty()||!this.hiddenTreasures.isEmpty());
+        return (!this.visibleTreasures.isEmpty() || !this.hiddenTreasures.isEmpty());
     }
 
     /**
@@ -347,7 +359,7 @@ public class Player {
         hiddenTreasures.clear();
         this.dieIfNoTreasures();
     }
-    
+
     /**
      * Devuelve true si el jugador está muerto, false en caso contrario.
      *
@@ -387,38 +399,39 @@ public class Player {
      */
     public CombatResult combat(Monster m) {
         CombatResult cr;
-        Dice dado = Dice.getInstance();
-        int myLevel = this.getLevels();
-        int monsterLevel = this.getOponentLevel(m);
+//        Dice dado = Dice.getInstance();
+        int myLevel = this.getCombatLevel();
+        int monsterLevel = m.getCombatLevel();
         if (myLevel > monsterLevel) {
             this.applyPrize(m);
-            if (this.getLevels() >= 10) {
+            if (this.getLevels() >= NIVEL_MAXIMO) {
                 cr = CombatResult.WINGAME;
             } else {
                 cr = CombatResult.WIN;
             }
         } else {
-
-            int escape = dado.nextNumber();
-            if (escape < 5) {
-                boolean amIDead = m.kills();
-                if (amIDead) {
-                    this.die();
-                    cr = CombatResult.LOSEANDDIE;
-                } else {
-                    cr = CombatResult.LOSE;
-                    this.applyBadConsequence(m);
-                }
-            } else {
-                cr = CombatResult.LOSEANDESCAPE;
-            }
+            this.applyBadConsequence(m);
+            cr = CombatResult.LOSE;
+//            int escape = dado.nextNumber();
+//            if (escape < 5) {
+//                boolean amIDead = m.kills();
+//                if (amIDead) {
+//                    this.die();
+//                    cr = CombatResult.LOSEANDDIE;
+//                } else {
+//                    cr = CombatResult.LOSE;
+//                    this.applyBadConsequence(m);
+//                }
+//            } else {
+//                cr = CombatResult.LOSEANDESCAPE;
+//            }
         }
-        if (!this.isDead()) {
-            if (this.shouldConvert()) {
-                cr = CombatResult.LOSEANDCONVERT;
-            }
-        }
-        this.dicardNecklaceIfVisible();
+//        if (!this.isDead()) {
+//            if (this.shouldConvert()) {
+//                cr = CombatResult.LOSEANDCONVERT;
+//            }
+//        }
+//        this.dicardNecklaceIfVisible();
         return cr;
     }
 

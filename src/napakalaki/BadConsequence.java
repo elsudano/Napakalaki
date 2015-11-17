@@ -129,7 +129,7 @@ public class BadConsequence {
      * @return true si no hay tesoros almacenados en el mal rollo.
      */
     public boolean isEmpty() {
-        return (nHiddenTreasures == 0 && nVisibleTreasures == 0 && specificHiddenTreasures.isEmpty() && specificVisibleTreasures.isEmpty());
+        return (this.nHiddenTreasures == 0 && this.nVisibleTreasures == 0 && this.specificHiddenTreasures.isEmpty() && this.specificVisibleTreasures.isEmpty());
     }
 
     /**
@@ -138,7 +138,7 @@ public class BadConsequence {
      * @return nuemro entero con la cantidad de niveles que se pierde
      */
     public int getLevels() {
-        return levels;
+        return this.levels;
     }
 
     /**
@@ -148,7 +148,7 @@ public class BadConsequence {
      * @return numero entero con la cantidad de tesoros visibles
      */
     public int getNVisibleTreasures() {
-        return nVisibleTreasures;
+        return this.nVisibleTreasures;
     }
 
     /**
@@ -158,7 +158,7 @@ public class BadConsequence {
      * @return numero entero con la cantidad de tesoros ocultos
      */
     public int getNHiddenTreasures() {
-        return nHiddenTreasures;
+        return this.nHiddenTreasures;
     }
 
     /**
@@ -167,7 +167,7 @@ public class BadConsequence {
      * @return Array con todos los tesoros ocultos
      */
     public ArrayList<TreasureKind> getSpecificHiddenTreasures() {
-        return specificHiddenTreasures;
+        return this.specificHiddenTreasures;
     }
 
     /**
@@ -177,7 +177,7 @@ public class BadConsequence {
      * @return Array con todos los tesoros visibles
      */
     public ArrayList<TreasureKind> getSpecificVisibleTreasures() {
-        return specificVisibleTreasures;
+        return this.specificVisibleTreasures;
     }
 
     /**
@@ -186,7 +186,7 @@ public class BadConsequence {
      * @param treasure es el tesoro que queremos quitar
      */
     public void substractVisibleTreasure(Treasure treasure) {
-        Napakalaki.getInstance().getDealer().giveTreasureBack(treasure);
+        this.specificVisibleTreasures.remove(treasure);
     }
 
     /**
@@ -195,7 +195,7 @@ public class BadConsequence {
      * @param treasure es el tesoro que queremos quitar
      */
     public void substractHiddenTreasure(Treasure treasure) {
-        Napakalaki.getInstance().getDealer().giveTreasureBack(treasure);
+        this.specificHiddenTreasures.remove(treasure);
     }
 
     /**

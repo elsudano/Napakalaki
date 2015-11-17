@@ -2,6 +2,7 @@ package napakalaki;
 
 import gui.NapakalakiView;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Clase principal del juego, contiene las instancias principales para el
@@ -95,14 +96,22 @@ public class Napakalaki {
      * @return objeto tipo jugador que es el siguiente que le toca interactuar
      */
     private Player nextPlayer() {
+        //@TODO hay que descubrir como se busca la primera jugada.
         int aux = 0;
-        aux = players.indexOf(currentPlayer);
-        aux++;
-        if (aux == players.size()) {
+        boolean primera_jugada = false;
+        Random generator = new Random();
+        
+        if (primera_jugada){
+            aux = generator.nextInt(this.players.size());
+        }else{
+            aux = this.players.indexOf(this.currentPlayer);
+            aux++;
+        }
+        if (aux == this.players.size()) {
             aux = 0;
         }
 
-        return players.get(aux);
+        return this.players.get(aux);
     }
 
     /**
@@ -112,7 +121,7 @@ public class Napakalaki {
      * @return verdadero o falso según le toque o no al jugador tirar el dado
      */
     private boolean nextTurnIsAllowed() {
-        return currentPlayer.validState();
+        return this.currentPlayer.validState();
         //return true;
     }
 
@@ -120,7 +129,11 @@ public class Napakalaki {
      * Metodo auxiliar que sirve para añadir los enemigos al juego.
      */
     private void setEnemies() {
-        //@@TODO;
+        //@TODO Comprobar que este metodo esta correctamente implementado.
+        Player miEnemy = this.nextPlayer();
+        while (this.currentPlayer == miEnemy){
+            miEnemy = this.nextPlayer();
+        }
     }
 
     /**
@@ -203,6 +216,7 @@ public class Napakalaki {
      */
     public void initGame(ArrayList<String> names) {
         this.initPlayers(names);
+        this.setEnemies();
         this.dealer.initCards();
         this.nextTurn();
     }
@@ -237,7 +251,7 @@ public class Napakalaki {
 //        Circunstancia respuesta = Circunstancia.NADA;
         boolean stateOK = this.nextTurnIsAllowed();
         if (stateOK) {
-            this.currentMonster = dealer.nextMonster();
+            this.currentMonster = this.dealer.nextMonster();
             this.currentPlayer = this.nextPlayer();
             boolean dead = this.currentPlayer.isDead();
             if (dead) {
@@ -253,7 +267,7 @@ public class Napakalaki {
 //            respuesta = Circunstancia.NOPASA;
 //        }
 //        return respuesta;
-        return false;
+        return stateOK;
     }
 
     /**

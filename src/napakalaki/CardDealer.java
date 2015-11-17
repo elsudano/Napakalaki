@@ -187,21 +187,21 @@ public class CardDealer {
      * Con este metodo barajamos las cartas del monton de los Tesoros.
      */
     private void shuffleTreasures() {
-        Collections.shuffle(mUnusedTreasures);
+        Collections.shuffle(this.mUnusedTreasures);
     }
 
     /**
      * Con este metodo barajamos las cartas del monton de los monstruos.
      */
     private void shuffleMonsters() {
-        Collections.shuffle(mUnusedMonsters);
+        Collections.shuffle(this.mUnusedMonsters);
     }
 
     /**
      * Con este metodo barajamos las cartas del monton de los Sectarios.
      */
     private void shuffleCultists() {
-        Collections.shuffle(mUnusedCultists);
+        Collections.shuffle(this.mUnusedCultists);
     }
 
     /**
@@ -221,13 +221,13 @@ public class CardDealer {
      * @return el siguiente Tesoro
      */
     public Treasure nextTreasure() {
-        Treasure tesoro = this.mUnusedTreasures.get(0);
-        this.mUnusedTreasures.remove(0);
         if (this.mUnusedTreasures.isEmpty()) {
             this.mUnusedTreasures = this.mUsedTreasures;
             this.shuffleTreasures();
             this.mUsedTreasures.clear();
         }
+        Treasure tesoro = this.mUnusedTreasures.get(0);
+        this.mUnusedTreasures.remove(0);
         return tesoro;
     }
 
@@ -238,13 +238,13 @@ public class CardDealer {
      * @return el siguiente Monstruo
      */
     public Monster nextMonster() {
-        Monster monstruo = this.mUnusedMonsters.get(0);
-        this.mUnusedMonsters.remove(0);
         if (this.mUnusedMonsters.isEmpty()) {
             this.mUnusedMonsters = this.mUsedMonsters;
             this.shuffleTreasures();
             this.mUsedMonsters.clear();
         }
+        Monster monstruo = this.mUnusedMonsters.get(0);
+        this.mUnusedMonsters.remove(0);
         return monstruo;
     }
 
@@ -271,8 +271,8 @@ public class CardDealer {
      *
      * @param pT de tipo Treasure es el tesoro que vamos a usar
      */
-    public void giveTreasureBack(Treasure pT) {
-        this.mUsedTreasures.add(pT);
+    public void giveTreasureBack(Treasure t) {
+        this.mUsedTreasures.add(t);
     }
 
     /**
@@ -281,8 +281,8 @@ public class CardDealer {
      *
      * @param mM de tipo Monstruo es el monstruo que vamos a usar
      */
-    public void giveMonsterBack(Monster mM) {
-        this.mUsedMonsters.add(mM);
+    public void giveMonsterBack(Monster m) {
+        this.mUsedMonsters.add(m);
     }
 
     /**
@@ -301,7 +301,7 @@ public class CardDealer {
      * @return el parametro mUsedMonsters
      */
     public ArrayList<Monster> getUsedMonsters() {
-        return mUsedMonsters;
+        return this.mUsedMonsters;
     }
 
     /**
@@ -310,6 +310,6 @@ public class CardDealer {
      * @return el parametro mUsedTreasures
      */
     public ArrayList<Treasure> getUsedTreasures() {
-        return mUsedTreasures;
+        return this.mUsedTreasures;
     }
 }
