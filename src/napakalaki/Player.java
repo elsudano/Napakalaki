@@ -54,7 +54,7 @@ public class Player {
     /**
      * Constante que indica el nivel máximo de un Jugador.
      */
-    private static final int NIVEL_MAXIMO = 10;
+    static final int NIVEL_MAXIMO = 10;
     /**
      * Constante que indica el numero máximo de tesoros ocultos de un Jugador.
      */
@@ -206,7 +206,6 @@ public class Player {
         this.incrementLevels(nlevels);
         int nTreasures = m.getTreasuresGained();
         if (nTreasures > 0) {
-
             for (int i = 0; i < nTreasures; i++) {
                 Treasure treasure = Napakalaki.getInstance().getDealer().nextTreasure();
                 hiddenTreasures.add(treasure);
@@ -225,8 +224,11 @@ public class Player {
     private void applyBadConsequence(Monster m) {
         int nlevels = m.getBadConsequence().getLevels();
         this.decrementLevels(nlevels);
-        pendingBadConsequence = m.getBadConsequence().adjustToFitTreasureList(visibleTreasures, hiddenTreasures);
-        this.setPendingBadConsequence(pendingBadConsequence);
+        //@TODO Por que aqui no simplemente asignamos el badConsequence
+        //devuelto a la variable de clase pendingBadConsequence?????
+        //en vez de tener que usar un metodo privado local que hace lo mismo.
+        BadConsequence pendingBad = m.getBadConsequence().adjustToFitTreasureList(this.visibleTreasures, this.hiddenTreasures);
+        this.setPendingBadConsequence(pendingBad);
     }
 
     /**
@@ -527,29 +529,52 @@ public class Player {
      * jugador al principio de la partida.
      */
     public void initTreasures() {
+        CardDealer dealer = Napakalaki.getInstance().getDealer();
+        Dice dice = Dice.getInstance();
         this.bringToLife();
-        Treasure treasure = Napakalaki.getInstance().getDealer().nextTreasure();
+        Treasure treasure = dealer.nextTreasure();
         this.hiddenTreasures.add(treasure);
-        int number = Dice.getInstance().nextNumber();
+        int number = dice.nextNumber();
         if (number > 1) {
-            treasure = Napakalaki.getInstance().getDealer().nextTreasure();
-            hiddenTreasures.add(treasure);
+            treasure = dealer.nextTreasure();
+            this.hiddenTreasures.add(treasure);
         }
         if (number == 6) {
-            treasure = Napakalaki.getInstance().getDealer().nextTreasure();
-            hiddenTreasures.add(treasure);
+            treasure = dealer.nextTreasure();
+            this.hiddenTreasures.add(treasure);
         }
 
     }
 
     /**
-     * Método que sirve para.....
+     * Método que sirve para robar un tesoro a otro jugador, se encarga de
+     * comprobar que es posible y de robarlo en caso afirmativo de lo
+     * contrario devuelve null
      *
-     * @return devuelve un objeto tesoro que es....
+     * @return devuelve un tesoro que se ha robado o null en caso
+     * de no poder robar ninguno
      */
     public Treasure stealTreasure() {
-        //@TODO
-        return null;
+// Esta manera de implementarlo no necesita de variables auxiliares
+// pero se implementa de la segunda versión por que es lo que pone en el Guión
+//        Treasure treasure = null;
+//        if (this.canISteal())
+//            if (this.enemy.canYouGiveMeaATreasure()){
+//                treasure = this.enemy.giveMeATreasure();
+//                this.hiddenTreasures.add(treasure);
+//                this.haveStolen();                  
+//            }
+//        return treasure;
+        boolean canI = this.canISteal(), canYou = false;
+        Treasure treasure = null;
+        if (canI)
+            canYou = this.enemy.canYouGiveMeaATreasure();
+            if (canYou){
+                treasure = this.enemy.giveMeATreasure();
+                this.hiddenTreasures.add(treasure);
+                this.haveStolen();
+            }
+        return treasure;
     }
 
     /**
@@ -577,7 +602,10 @@ public class Player {
      * jugador, tanto los visibles como los ocultos.
      */
     public void discardAllTreasures() {
-        //@TODO
+        for (Treasure tesoro : this.visibleTreasures)
+            this.discardVisibleTreasure(tesoro);
+        for (Treasure tesoro : this.hiddenTreasures)
+            this.discardHiddenTreasure(tesoro);
     }
 
     /**

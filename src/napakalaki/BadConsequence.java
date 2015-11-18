@@ -120,6 +120,9 @@ public class BadConsequence {
     public BadConsequence(String text, boolean death) {
         this.text = text;
         this.death = death;
+        this.levels = Player.NIVEL_MAXIMO;
+        this.nVisibleTreasures = this.MAXTREASURES;
+        this.nHiddenTreasures = this.MAXTREASURES;
     }
 
     /**
@@ -209,10 +212,10 @@ public class BadConsequence {
     public BadConsequence adjustToFitTreasureList(ArrayList<Treasure> tVisible, ArrayList<Treasure> tHidden) {
         //Visible
         ArrayList<TreasureKind> aux = new ArrayList();
-        for (Treasure t : tVisible) {
-            for (TreasureKind t2 : this.specificVisibleTreasures) {
-                if (t.getType() == t2) {
-                    aux.add(t2);
+        for (Treasure tparam : tVisible) {
+            for (TreasureKind tlocal : this.specificVisibleTreasures) {
+                if (tparam.getType() == tlocal) {
+                    aux.add(tlocal);
                 }
             }
         }
