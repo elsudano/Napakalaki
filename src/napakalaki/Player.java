@@ -661,6 +661,8 @@ public class Player {
     @Override
     public String toString() {
         String formateado = this.name;
+        formateado += "\nNivel del Jugador:" + this.getLevels();
+        formateado += "\nEnemigo del Jugador:" + this.enemy.getName();
         formateado += "\t\nTesoros Ocultos:";
         for (Treasure tesoro : hiddenTreasures) {
             formateado += tesoro.getName() + " | ";

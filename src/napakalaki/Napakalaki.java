@@ -134,6 +134,7 @@ public class Napakalaki {
         while (this.currentPlayer == miEnemy){
             miEnemy = this.nextPlayer();
         }
+        this.currentPlayer.setEnemy(miEnemy);
     }
 
     /**
