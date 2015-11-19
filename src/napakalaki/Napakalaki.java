@@ -98,7 +98,7 @@ public class Napakalaki {
     private Player nextPlayer() {
         //@TODO hay que descubrir como se busca la primera jugada.
         int aux = 0;
-        boolean primera_jugada = false;
+        boolean primera_jugada = true;
         Random generator = new Random();
         
         if (primera_jugada){

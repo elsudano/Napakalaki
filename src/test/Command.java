@@ -1,5 +1,5 @@
 
-package Test;
+package test;
 
 public enum Command {
   Exit (0, "Salir del juego"),

@@ -1,4 +1,4 @@
-package Test;
+package test;
 
 import gui.NapakalakiView;
 import napakalaki.Napakalaki;

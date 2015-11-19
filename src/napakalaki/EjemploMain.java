@@ -1,6 +1,6 @@
 package napakalaki;
 
-import Test.GameTester;
+import test.GameTester;
 import gui.NapakalakiView;
 
 public class EjemploMain {
