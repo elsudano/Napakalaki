@@ -8,9 +8,7 @@ import java.util.Random;
  * Clase principal del juego, contiene las instancias principales para el
  * desarrollo de una partida.
  *
- * @authors:
- * Carlos de la Torre 75145459C
- * Farouk Arroub
+ * @authors: Carlos de la Torre 75145459C Farouk Arroub
  */
 public class Napakalaki {
 
@@ -33,8 +31,8 @@ public class Napakalaki {
      */
     private Monster currentMonster;
     /**
-     * Parámetro que se usa para que devuelva la vista que actualmente se
-     * esta utilizando en el juego esto sirve solo para la interfaz gráfica.
+     * Parámetro que se usa para que devuelva la vista que actualmente se esta
+     * utilizando en el juego esto sirve solo para la interfaz gráfica.
      */
     private NapakalakiView vista = null;
     /**
@@ -53,7 +51,7 @@ public class Napakalaki {
         this.players = new ArrayList();
         this.currentMonster = null;
         this.dealer = CardDealer.getInstance();
-        this.currentPlayer = new Player("nulo");
+        this.currentPlayer = null;
         this.dice = Dice.getInstance();
     }
 
@@ -96,17 +94,16 @@ public class Napakalaki {
      * @return objeto tipo jugador que es el siguiente que le toca interactuar
      */
     private Player nextPlayer() {
-        //@TODO hay que descubrir como se busca la primera jugada.
         int aux = 0;
-        boolean primera_jugada = true;
         Random generator = new Random();
-        
-        if (primera_jugada){
+
+        if (this.currentPlayer == null){
             aux = generator.nextInt(this.players.size());
-        }else{
+        } else {
             aux = this.players.indexOf(this.currentPlayer);
             aux++;
         }
+        
         if (aux == this.players.size()) {
             aux = 0;
         }
@@ -121,20 +118,23 @@ public class Napakalaki {
      * @return verdadero o falso según le toque o no al jugador tirar el dado
      */
     private boolean nextTurnIsAllowed() {
-        return this.currentPlayer.validState();
-        //return true;
+        boolean resultado = true;
+        if (this.currentPlayer != null)
+            resultado = this.currentPlayer.validState();
+        return resultado;
     }
 
     /**
      * Metodo auxiliar que sirve para añadir los enemigos al juego.
      */
     private void setEnemies() {
-        //@TODO Comprobar que este metodo esta correctamente implementado.
         Player miEnemy = this.nextPlayer();
-        while (this.currentPlayer == miEnemy){
-            miEnemy = this.nextPlayer();
+        for (Player player : this.players) {
+            while (player == miEnemy) {
+                miEnemy = this.nextPlayer();
+            }
+            player.setEnemy(miEnemy);
         }
-        this.currentPlayer.setEnemy(miEnemy);
     }
 
     /**
@@ -220,6 +220,7 @@ public class Napakalaki {
         this.setEnemies();
         this.dealer.initCards();
         this.nextTurn();
+
     }
 
     /**
@@ -291,16 +292,16 @@ public class Napakalaki {
     public ArrayList<Player> getNames() {
         return this.players;
     }
-    
+
     /**
-     * Este método nos permite cambiar nuestros tesoros ocultos y visibles
-     * por elevar el nivel del jugador que intercambia dichos tesoros.
-     * 
+     * Este método nos permite cambiar nuestros tesoros ocultos y visibles por
+     * elevar el nivel del jugador que intercambia dichos tesoros.
+     *
      * @param visible array de tipo tesoro que son los tesoros visibles.
      * @param hidden array de tipo tesoro que son los tesoros ocultos.
-     * 
-     * @return devuelve verdadero si se pueden comprar mas nivel para el
-     * usuario falso en caso contrario.
+     *
+     * @return devuelve verdadero si se pueden comprar mas nivel para el usuario
+     * falso en caso contrario.
      */
     public boolean buyLevels(ArrayList<Treasure> visible, ArrayList<Treasure> hidden) {
         boolean canI = this.currentPlayer.buyLevels(visible, hidden);
@@ -310,6 +311,7 @@ public class Napakalaki {
     /**
      * Metodo auxiliar que se usa para que devuelva la vista que actualmente se
      * esta utilizando en el juego esto sirve solo para la interfaz gráfica.
+     *
      * @return NapakalakiView retorna la vista del modelo.
      */
     public NapakalakiView getVista() {
@@ -319,6 +321,7 @@ public class Napakalaki {
     /**
      * Metodo auxiliar que se usa para que se pueda especificar la vista que
      * queremos que tenga el Juego.
+     *
      * @param vista parametro tipo vista que se asigna al modelo.
      */
     public void setVista(NapakalakiView vista) {

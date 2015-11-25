@@ -68,7 +68,7 @@ public class BadConsequence {
      * @param tVisible array con los tesoros visibles
      * @param tHidden array con los tesoros ocultos
      */
-    public BadConsequence(String text, int levels, int nHiddenTreasures, int nVisibleTreasures, boolean death, ArrayList<TreasureKind> tVisible, ArrayList<TreasureKind> tHidden) {
+    public BadConsequence(String text, int levels, int nVisibleTreasures, int nHiddenTreasures, boolean death, ArrayList<TreasureKind> tVisible, ArrayList<TreasureKind> tHidden) {
         this.text = text;
         this.levels = levels;
         this.nHiddenTreasures = nHiddenTreasures;
@@ -210,30 +210,20 @@ public class BadConsequence {
      * @return devolvemos el mismo mal rollo pero con los datos actualizados
      */
     public BadConsequence adjustToFitTreasureList(ArrayList<Treasure> tVisible, ArrayList<Treasure> tHidden) {
+        // @TODO Tienes que hacer que este metodo compruebe si los datos que vienen
+        // en los dos array se pueden quitar todos ellos de los datos que tiene
+        // el jugador.
+        // Osea que si tenemos una mano, un zapato.
+        // podamos quitarselo al jugador.
+        // no podemos modificar el this por que modificamos la carta original del mazo
+        // 
         //Visible
-        ArrayList<TreasureKind> aux = new ArrayList();
+        BadConsequence aux = new BadConsequence(this.text, this.levels, this.nVisibleTreasures, this.nHiddenTreasures, this.death, this.specificVisibleTreasures, this.specificHiddenTreasures);
         for (Treasure tparam : tVisible) {
-            for (TreasureKind tlocal : this.specificVisibleTreasures) {
-                if (tparam.getType() == tlocal) {
-                    aux.add(tlocal);
-                }
-            }
+            System.out.println("Contiene: " + tparam.getName() + " " + tVisible.contains(tparam));
         }
-        this.specificVisibleTreasures.clear();
-        this.specificVisibleTreasures.addAll(aux);
-
-        //Hidden
-        aux.clear(); //Limpio aux para reutilizarlo
-        for (Treasure t : tHidden) {
-            for (TreasureKind t2 : this.specificHiddenTreasures) {
-                if (t.getType() == t2) {
-                    aux.add(t2);
-                }
-            }
-        }
-        this.specificHiddenTreasures.clear();
-        this.specificHiddenTreasures.addAll(aux);
-        return this; //Se retorna el mismo
+        
+        return aux; //Se devuelve el auxiliar
     }
 
     /**
