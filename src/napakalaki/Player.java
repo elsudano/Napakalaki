@@ -95,7 +95,7 @@ public class Player {
      * @return devuelve un entero con el nivel de combate del Jugador
      */
     private int getCombatLevel() {
-        int cont = 0;
+        int cont = this.level;
 //        boolean collar = false;
 //        de momento se tiene que hacer asi cuando se explique el collar se separaran las bonus
         for (Treasure tesoro : visibleTreasures) {
@@ -127,6 +127,9 @@ public class Player {
      */
     private void incrementLevels(int i) {
         this.level += i;
+        if (this.level > NIVEL_MAXIMO) {
+            this.level = NIVEL_MAXIMO;
+        }
     }
 
     /**
@@ -137,8 +140,8 @@ public class Player {
      */
     private void decrementLevels(int i) {
         this.level -= i;
-        if (this.level <= 0) {
-            this.level = 1;
+        if (this.level < NIVEL_MINIMO) {
+            this.level = NIVEL_MINIMO;
         }
     }
 
@@ -151,7 +154,6 @@ public class Player {
      */
     private void setPendingBadConsequence(BadConsequence b) {
         this.pendingBadConsequence = b;
-
     }
 
     /**

@@ -125,8 +125,8 @@ public class CardDealer {
                 if (columnas[10] == "muerte") {
                     malrollo = new BadConsequence(columnas[4], true);
                 } else if (!columnas[8].isEmpty() || !columnas[9].isEmpty()) {
-                    ArrayList<TreasureKind> THidden = leeTesoros(columnas[8]);
-                    ArrayList<TreasureKind> TVisible = leeTesoros(columnas[9]);
+                    ArrayList<TreasureKind> THidden = this.leeTesoros(columnas[8]);
+                    ArrayList<TreasureKind> TVisible = this.leeTesoros(columnas[9]);
                     malrollo = new BadConsequence(columnas[4], Integer.parseInt(columnas[5]), THidden, TVisible);
                 } else {
                     malrollo = new BadConsequence(columnas[4], Integer.parseInt(columnas[5]), Integer.parseInt(columnas[6]), Integer.parseInt(columnas[7]));
