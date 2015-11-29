@@ -210,13 +210,18 @@ public class BadConsequence {
      * @return devolvemos el mismo mal rollo pero con los datos actualizados
      */
     public BadConsequence adjustToFitTreasureList(ArrayList<Treasure> tVisible, ArrayList<Treasure> tHidden) {
-        // @TODO Tienes que hacer que este método compruebe si los datos que vienen
-        // en los dos array se pueden quitar todos ellos de los datos que tiene
-        // el jugador.
-        // Osea que si tenemos una mano, un zapato.
-        // podamos quitarselo al jugador.
-        // no podemos modificar el this por que modificamos la carta original del mazo
-        // 
+        /**
+         * @TODO Tienes que hacer que este método compruebe si los datos que vienen
+         * en los dos array se pueden quitar todos ellos de los datos que tiene
+         * el jugador. Osea que si tenemos una mano, un zapato.
+         * Podamos quitarselo al jugador.
+         * No podemos modificar el this por que modificamos la carta
+         * original del mazo.
+         * Aparte de eso tenemos que crear un if para saber si los array vienen
+         * vacios pues tenemos que quitar el numero de tesoros que se especifican
+         * en las variables nVisibleTreasures y nHiddenTreasures del objeto This
+         */
+         
         //Visible
         ArrayList<TreasureKind> aux = new ArrayList();
         for (Treasure tparam : tVisible) {

@@ -15,5 +15,4 @@ public enum CombatResult {
     LOSEANDESCAPE,
     LOSEANDDIE,
     LOSEANDCONVERT;
-
 }
