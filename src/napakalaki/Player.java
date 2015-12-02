@@ -247,23 +247,29 @@ public class Player {
         switch (t.getType().toString()) {
             case "1 Mano":
                 for (Treasure tesoro : visibleTreasures) {
-                    if (tesoro.getType().equals(TreasureKind.ONEHAND))
+                    if (tesoro.getType().equals(TreasureKind.ONEHAND)) {
                         cont++;
-                    if (tesoro.getType().equals(TreasureKind.BOTHHANDS))
+                    }
+                    if (tesoro.getType().equals(TreasureKind.BOTHHANDS)) {
                         puede = false;
+                    }
                 }
-                if (cont >= 2)
+                if (cont >= 2) {
                     puede = false;
+                }
                 break;
             case "2 Manos":
                 for (Treasure tesoro : visibleTreasures) {
-                    if (tesoro.getType().equals(TreasureKind.ONEHAND))
+                    if (tesoro.getType().equals(TreasureKind.ONEHAND)) {
                         cont++;
-                    if (tesoro.getType().equals(TreasureKind.BOTHHANDS))
+                    }
+                    if (tesoro.getType().equals(TreasureKind.BOTHHANDS)) {
                         puede = false;
+                    }
                 }
-                if (cont > 0)
+                if (cont > 0) {
                     puede = false;
+                }
                 break;
             default:
                 for (Treasure tesoro : visibleTreasures) {
@@ -301,7 +307,16 @@ public class Player {
      */
     private Treasure giveMeATreasure() {
         Random generator = new Random();
-        return this.hiddenTreasures.get(generator.nextInt(this.hiddenTreasures.size()));
+        int num_tesoro = generator.nextInt(this.hiddenTreasures.size());
+        Treasure myTesoro = this.hiddenTreasures.get(num_tesoro);
+        /**
+         * Cuidado con esta función por que se especifica que solo se devuelve
+         * un tesoro de la lista de ocultos del enemigo pero no se especifica
+         * que se tenga que quitar del array puesto que puede servir para mas
+         * cosas a parte de para robar un tesoro.
+         */
+        //this.hiddenTreasures.remove(myTesoro);
+        return myTesoro;
     }
 
     /**
@@ -312,7 +327,11 @@ public class Player {
      * devuelve falso.
      */
     private boolean canYouGiveMeaATreasure() {
-        return (!this.visibleTreasures.isEmpty() || !this.hiddenTreasures.isEmpty());
+        /**
+         * Como solo se puede devolver un tesoro oculto del jugador solo se
+         * comprueba el tamaño del array de ocultos
+         */
+        return !this.hiddenTreasures.isEmpty();
     }
 
     /**
@@ -550,11 +569,11 @@ public class Player {
 
     /**
      * Método que sirve para robar un tesoro a otro jugador, se encarga de
-     * comprobar que es posible y de robarlo en caso afirmativo de lo
-     * contrario devuelve null
+     * comprobar que es posible y de robarlo en caso afirmativo de lo contrario
+     * devuelve null
      *
-     * @return devuelve un tesoro que se ha robado o null en caso
-     * de no poder robar ninguno
+     * @return devuelve un tesoro que se ha robado o null en caso de no poder
+     * robar ninguno
      */
     public Treasure stealTreasure() {
 // Esta manera de implementarlo no necesita de variables auxiliares
@@ -569,13 +588,14 @@ public class Player {
 //        return treasure;
         boolean canI = this.canISteal(), canYou = false;
         Treasure treasure = null;
-        if (canI)
+        if (canI) {
             canYou = this.enemy.canYouGiveMeaATreasure();
-            if (canYou){
-                treasure = this.enemy.giveMeATreasure();
-                this.hiddenTreasures.add(treasure);
-                this.haveStolen();
-            }
+        }
+        if (canYou) {
+            treasure = this.enemy.giveMeATreasure();
+            this.hiddenTreasures.add(treasure);
+            this.haveStolen();
+        }
         return treasure;
     }
 
@@ -604,10 +624,12 @@ public class Player {
      * jugador, tanto los visibles como los ocultos.
      */
     public void discardAllTreasures() {
-        for (Treasure tesoro : this.visibleTreasures)
+        for (Treasure tesoro : this.visibleTreasures) {
             this.discardVisibleTreasure(tesoro);
-        for (Treasure tesoro : this.hiddenTreasures)
+        }
+        for (Treasure tesoro : this.hiddenTreasures) {
             this.discardHiddenTreasure(tesoro);
+        }
     }
 
     /**

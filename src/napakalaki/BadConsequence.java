@@ -211,41 +211,40 @@ public class BadConsequence {
      */
     public BadConsequence adjustToFitTreasureList(ArrayList<Treasure> tVisible, ArrayList<Treasure> tHidden) {
         /**
-         * @TODO Tienes que hacer que este método compruebe si los datos que vienen
-         * en los dos array se pueden quitar todos ellos de los datos que tiene
-         * el jugador. Osea que si tenemos una mano, un zapato.
-         * Podamos quitarselo al jugador.
-         * No podemos modificar el this por que modificamos la carta
-         * original del mazo.
-         * Aparte de eso tenemos que crear un if para saber si los array vienen
-         * vacios pues tenemos que quitar el numero de tesoros que se especifican
-         * en las variables nVisibleTreasures y nHiddenTreasures del objeto This
+         * @TODO Tienes que hacer que este método compruebe si los datos que
+         * vienen en los dos array se pueden quitar todos ellos de los datos que
+         * tiene el jugador. Osea que si tenemos una mano, un zapato. Podamos
+         * quitarselo al jugador. No podemos modificar el this por que
+         * modificamos la carta original del mazo. Aparte de eso tenemos que
+         * crear un if para saber si los array vienen vacios pues tenemos que
+         * quitar el numero de tesoros que se especifican en las variables
+         * nVisibleTreasures y nHiddenTreasures del objeto This
          */
-         
-        //Visible
-        ArrayList<TreasureKind> aux = new ArrayList();
-        for (Treasure tparam : tVisible) {
-            for (TreasureKind tlocal : this.specificVisibleTreasures) {
-                if (tparam.getType() == tlocal) {
-                    aux.add(tlocal);
-                }
-            }
+        BadConsequence bs;
+        ArrayList<TreasureKind> auxv = new ArrayList();
+        ArrayList<TreasureKind> auxh = new ArrayList();
+        if (!tVisible.isEmpty() && !tHidden.isEmpty()) {
+            //Visible
+            for (Treasure tparam : tVisible)
+                for (TreasureKind tlocal : this.specificVisibleTreasures)
+                    if (tparam.getType() == tlocal)
+                        auxv.add(tlocal);
+            //Hidden
+            for (Treasure t : tHidden)
+                for (TreasureKind t2 : this.specificHiddenTreasures)
+                    if (t.getType() == t2)
+                        auxh.add(t2);
+            bs = new BadConsequence(this.text, this.levels, this.nVisibleTreasures, this.nHiddenTreasures, this.death, auxv, auxh);
+        } else {
+            /**
+             * Si el jugador no tiene tesoros en sus arrays no se puede quitar
+             * ninguno de los tesoros por lo tanto se devuelve un mal rollo
+             * que solo provoca muerte o quita los niveles del mal rollo
+             */
+            bs = new BadConsequence(this.text, this.levels, 0, 0, this.death, auxv, auxh);
         }
-        this.specificVisibleTreasures.clear();
-        this.specificVisibleTreasures.addAll(aux);
 
-        //Hidden
-        aux.clear(); //Limpio aux para reutilizarlo
-        for (Treasure t : tHidden) {
-            for (TreasureKind t2 : this.specificHiddenTreasures) {
-                if (t.getType() == t2) {
-                    aux.add(t2);
-                }
-            }
-        }
-        this.specificHiddenTreasures.clear();
-        this.specificHiddenTreasures.addAll(aux);
-        return this; //Se retorna el mismo
+        return bs;
     }
 
     /**
