@@ -190,6 +190,8 @@ public class BadConsequence {
      */
     public void substractVisibleTreasure(Treasure treasure) {
         this.specificVisibleTreasures.remove(treasure);
+        if (this.nVisibleTreasures > 0)
+            this.nVisibleTreasures--;
     }
 
     /**
@@ -199,6 +201,8 @@ public class BadConsequence {
      */
     public void substractHiddenTreasure(Treasure treasure) {
         this.specificHiddenTreasures.remove(treasure);
+        if (this.nHiddenTreasures > 0)
+            this.nHiddenTreasures--;
     }
 
     /**

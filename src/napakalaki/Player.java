@@ -542,7 +542,7 @@ public class Player {
      * Player.TESOROS_OCULTOS_MAXIMO
      */
     public boolean validState() {
-        return ((this.pendingBadConsequence.isEmpty()) && (this.hiddenTreasures.size() <= Player.TESOROS_OCULTOS_MAXIMO));
+        return (Player.TESOROS_OCULTOS_MAXIMO > this.hiddenTreasures.size() && this.pendingBadConsequence.isEmpty());
     }
 
     /**
@@ -624,10 +624,12 @@ public class Player {
      * jugador, tanto los visibles como los ocultos.
      */
     public void discardAllTreasures() {
-        for (Treasure tesoro : this.visibleTreasures) {
+        ArrayList<Treasure> auxv = new ArrayList(visibleTreasures);
+        ArrayList<Treasure> auxh = new ArrayList(hiddenTreasures);
+        for (Treasure tesoro : auxv) {
             this.discardVisibleTreasure(tesoro);
         }
-        for (Treasure tesoro : this.hiddenTreasures) {
+        for (Treasure tesoro : auxh) {
             this.discardHiddenTreasure(tesoro);
         }
     }
