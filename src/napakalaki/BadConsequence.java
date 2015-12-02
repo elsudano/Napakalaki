@@ -190,8 +190,9 @@ public class BadConsequence {
      */
     public void substractVisibleTreasure(Treasure treasure) {
         this.specificVisibleTreasures.remove(treasure);
-        if (this.nVisibleTreasures > 0)
+        if (this.nVisibleTreasures > 0) {
             this.nVisibleTreasures--;
+        }
     }
 
     /**
@@ -201,8 +202,9 @@ public class BadConsequence {
      */
     public void substractHiddenTreasure(Treasure treasure) {
         this.specificHiddenTreasures.remove(treasure);
-        if (this.nHiddenTreasures > 0)
+        if (this.nHiddenTreasures > 0) {
             this.nHiddenTreasures--;
+        }
     }
 
     /**
@@ -227,23 +229,41 @@ public class BadConsequence {
         BadConsequence bs;
         ArrayList<TreasureKind> auxv = new ArrayList();
         ArrayList<TreasureKind> auxh = new ArrayList();
-        if (!tVisible.isEmpty() && !tHidden.isEmpty()) {
+        int numvisibles = 0, numocultos = 0;
+
+        if (!tVisible.isEmpty() || !tHidden.isEmpty()) {
             //Visible
-            for (Treasure tparam : tVisible)
-                for (TreasureKind tlocal : this.specificVisibleTreasures)
-                    if (tparam.getType() == tlocal)
+            for (Treasure tparam : tVisible) {
+                for (TreasureKind tlocal : this.specificVisibleTreasures) {
+                    if (tparam.getType() == tlocal) {
                         auxv.add(tlocal);
+                    }
+                }
+            }
             //Hidden
-            for (Treasure t : tHidden)
-                for (TreasureKind t2 : this.specificHiddenTreasures)
-                    if (t.getType() == t2)
+            for (Treasure t : tHidden) {
+                for (TreasureKind t2 : this.specificHiddenTreasures) {
+                    if (t.getType() == t2) {
                         auxh.add(t2);
-            bs = new BadConsequence(this.text, this.levels, this.nVisibleTreasures, this.nHiddenTreasures, this.death, auxv, auxh);
+                    }
+                }
+            }
+            if (this.nVisibleTreasures >= tVisible.size()) {
+                numvisibles = tVisible.size();
+            } else {
+                numvisibles = tVisible.size() - this.nVisibleTreasures;
+            }
+            if (this.nHiddenTreasures >= tHidden.size()) {
+                numocultos = tHidden.size();
+            } else {
+                numocultos = tHidden.size() - this.nHiddenTreasures;
+            }
+            bs = new BadConsequence(this.text, this.levels, numvisibles, numocultos, this.death, auxv, auxh);
         } else {
             /**
              * Si el jugador no tiene tesoros en sus arrays no se puede quitar
-             * ninguno de los tesoros por lo tanto se devuelve un mal rollo
-             * que solo provoca muerte o quita los niveles del mal rollo
+             * ninguno de los tesoros por lo tanto se devuelve un mal rollo que
+             * solo provoca muerte o quita los niveles del mal rollo
              */
             bs = new BadConsequence(this.text, this.levels, 0, 0, this.death, auxv, auxh);
         }
