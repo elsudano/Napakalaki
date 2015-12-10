@@ -1,9 +1,6 @@
 package napakalaki;
 
 import java.util.ArrayList;
-import napakalaki.Napakalaki;
-import napakalaki.Treasure;
-import napakalaki.TreasureKind;
 
 /**
  * Clase de Mal rollo se encarga de incluir las ociones negativas del juego así
@@ -11,7 +8,7 @@ import napakalaki.TreasureKind;
  *
  * @authors: Carlos de la Torre 75145459C Farouk
  */
-public class BadConsequence {
+public class BadConsequence1 {
 
     /**
      * Cantidad máxima de tesoros del mal rollo
@@ -50,7 +47,7 @@ public class BadConsequence {
      * Constructor de Clase, inicializa los valores del objeto con parámetros de
      * entrada:
      */
-    public BadConsequence() {
+    public BadConsequence1() {
         this.text = "";
         this.levels = this.nVisibleTreasures = this.nHiddenTreasures = 0;
         death = false;
@@ -68,7 +65,7 @@ public class BadConsequence {
      * @param tVisible array con los tesoros visibles
      * @param tHidden array con los tesoros ocultos
      */
-    public BadConsequence(String text, int levels, int nVisibleTreasures, int nHiddenTreasures, boolean death, ArrayList<TreasureKind> tVisible, ArrayList<TreasureKind> tHidden) {
+    public BadConsequence1(String text, int levels, int nVisibleTreasures, int nHiddenTreasures, boolean death, ArrayList<TreasureKind> tVisible, ArrayList<TreasureKind> tHidden) {
         this.text = text;
         this.levels = levels;
         this.nHiddenTreasures = nHiddenTreasures;
@@ -87,7 +84,7 @@ public class BadConsequence {
      * @param nHiddenTreasures numero de tesoros ocultos
      * @param nVisibleTreasures numero de tesoros visibles
      */
-    public BadConsequence(String text, int levels, int nVisibleTreasures, int nHiddenTreasures) {
+    public BadConsequence1(String text, int levels, int nVisibleTreasures, int nHiddenTreasures) {
         this.text = text;
         this.levels = levels;
         this.nVisibleTreasures = nVisibleTreasures;
@@ -103,7 +100,7 @@ public class BadConsequence {
      * @param tVisible array con los tesoros visibles
      * @param tHidden array con los tesoros ocultos
      */
-    public BadConsequence(String text, int levels, ArrayList<TreasureKind> tVisible, ArrayList<TreasureKind> tHidden) {
+    public BadConsequence1(String text, int levels, ArrayList<TreasureKind> tVisible, ArrayList<TreasureKind> tHidden) {
         this.text = text;
         this.levels = levels;
         this.specificVisibleTreasures.addAll(tVisible);
@@ -117,7 +114,7 @@ public class BadConsequence {
      * @param text numero entero que indica cantidad de tesoros
      * @param death verdadero o falso si hay muerte
      */
-    public BadConsequence(String text, boolean death) {
+    public BadConsequence1(String text, boolean death) {
         this.text = text;
         this.death = death;
         this.levels = Player.NIVEL_MAXIMO;
@@ -215,71 +212,104 @@ public class BadConsequence {
      * @param tHidden array con los tesoros ocultos
      * @return devolvemos el mismo mal rollo pero con los datos actualizados
      */
-    public BadConsequence adjustToFitTreasureList(ArrayList<Treasure> tVisible, ArrayList<Treasure> tHidden) {
-        /**
-         * @TODO Tienes que hacer que este método compruebe si los datos que
-         * vienen en los dos array se pueden quitar todos ellos de los datos que
-         * tiene el jugador. Osea que si tenemos una mano, un zapato. Podamos
-         * quitarselo al jugador. No podemos modificar el this por que
-         * modificamos la carta original del mazo. Aparte de eso tenemos que
-         * crear un if para saber si los array vienen vacios pues tenemos que
-         * quitar el numero de tesoros que se especifican en las variables
-         * nVisibleTreasures y nHiddenTreasures del objeto This
-         */
-        BadConsequence bs;
-        ArrayList<TreasureKind> auxv = new ArrayList<>();
-        ArrayList<TreasureKind> auxh = new ArrayList<>();
-        ArrayList<TreasureKind> copiaMonsterVisibleTreasures = new ArrayList<>(this.specificVisibleTreasures);
-        ArrayList<TreasureKind> copiaMonsterHiddenTreasures = new ArrayList<>(this.specificHiddenTreasures);
-        int numvisibles = 0, numocultos = 0;
-
-        if (!tVisible.isEmpty() || !tHidden.isEmpty()) {
-            //Visible
-            for (Treasure tparam : tVisible) {
-                for (int i = 0; i < copiaMonsterVisibleTreasures.size(); i++) {
-                    if (tparam.getType() == copiaMonsterVisibleTreasures.get(i)) {
-                        auxv.add(copiaMonsterVisibleTreasures.get(i));
-                        copiaMonsterVisibleTreasures.remove(copiaMonsterVisibleTreasures.get(i));
-                        i = 0;
-                        break;
-                    }
-                }
-            }
-
-            //Hidden
-            for (Treasure tparam : tHidden) {
-                for (int i = 0; i < copiaMonsterHiddenTreasures.size(); i++) {
-                    if (tparam.getType() == copiaMonsterHiddenTreasures.get(i)) {
-                        auxh.add(copiaMonsterHiddenTreasures.get(i));
-                        copiaMonsterHiddenTreasures.remove(copiaMonsterHiddenTreasures.get(i));
-                        i = 0;
-                        break;
-                    }
-                }
-            }
-
-            if (this.nVisibleTreasures > tVisible.size()) {
-                numvisibles = tVisible.size();
-            } else {
-                numvisibles = this.nVisibleTreasures;
-            }
-            if (this.nHiddenTreasures > tHidden.size()) {
-                numocultos = tHidden.size();
-            } else {
-                numocultos = this.nHiddenTreasures;
-            }
-            bs = new BadConsequence(this.text, this.levels, numvisibles, numocultos, this.death, auxv, auxh);
-        } else {
-            /**
-             * Si el jugador no tiene tesoros en sus arrays no se puede quitar
-             * ninguno de los tesoros por lo tanto se devuelve un mal rollo que
-             * solo provoca muerte o quita los niveles del mal rollo
-             */
-            bs = new BadConsequence(this.text, this.levels, 0, 0, this.death, auxv, auxh);
-        }
-
-        return bs;
-    }
+//    public BadConsequence1 adjustToFitTreasureList(ArrayList<Treasure> tVisible, ArrayList<Treasure> tHidden) {
+//        /**
+//         * @TODO Tienes que hacer que este método compruebe si los datos que
+//         * vienen en los dos array se pueden quitar todos ellos de los datos que
+//         * tiene el jugador. Osea que si tenemos una mano, un zapato. Podamos
+//         * quitarselo al jugador. No podemos modificar el this por que
+//         * modificamos la carta original del mazo. Aparte de eso tenemos que
+//         * crear un if para saber si los array vienen vacios pues tenemos que
+//         * quitar el numero de tesoros que se especifican en las variables
+//         * nVisibleTreasures y nHiddenTreasures del objeto This
+//         */
+//        BadConsequence bs;
+//        ArrayList<TreasureKind> auxv = new ArrayList<>();
+//        ArrayList<TreasureKind> auxh = new ArrayList<>();
+//        ArrayList<TreasureKind> copiaMonsterVisibleTreasures = new ArrayList<>(this.specificVisibleTreasures);
+//        ArrayList<TreasureKind> copiaMonsterHiddenTreasures = new ArrayList<>(this.specificHiddenTreasures);
+//        int numvisibles = 0, numocultos = 0;
+//
+//        Treasure tesoroPlayer;
+//        int j = 0;
+//        if ((!tVisible.isEmpty() && !copiaMonsterVisibleTreasures.isEmpty()) || (!tHidden.isEmpty() && !copiaMonsterHiddenTreasures.isEmpty())) {
+//            if (!tVisible.isEmpty() && !copiaMonsterVisibleTreasures.isEmpty()) {
+//                for (int i = 0; j < tVisible.size(); i++) {
+//                    tesoroPlayer = tVisible.get(j);
+//                    if (tesoroPlayer.getType() == copiaMonsterVisibleTreasures.get(i) || copiaMonsterVisibleTreasures.size() == i) {
+//                        if (tesoroPlayer.getType() == copiaMonsterVisibleTreasures.get(i)) {
+//                            auxv.add(copiaMonsterVisibleTreasures.get(i));
+//                            copiaMonsterVisibleTreasures.remove(copiaMonsterVisibleTreasures.get(i));
+//                            i = 0;
+//                            j++;
+//                        } else {
+//                            j++;
+//                            i = 0;
+//                        }
+//                    }
+//                }
+//            }
+//            //Visible
+////            for (Treasure tparam : tVisible) {
+////                for (int i = 0; i < copiaMonsterVisibleTreasures.size(); i++) {
+////                    if (tparam.getType() == copiaMonsterVisibleTreasures.get(i)) {
+////                        auxv.add(copiaMonsterVisibleTreasures.get(i));
+////                        copiaMonsterVisibleTreasures.remove(copiaMonsterVisibleTreasures.get(i));
+////                        i = 0;
+////
+////                    }
+////                }
+////            }
+//            j = 0;
+//            if (!tHidden.isEmpty() && !copiaMonsterHiddenTreasures.isEmpty()) {
+//                for (int i = 0; j < tHidden.size(); i++) {
+//                    tesoroPlayer = tHidden.get(j);
+//                    if (tesoroPlayer.getType() == copiaMonsterHiddenTreasures.get(i) || copiaMonsterHiddenTreasures.size() == i) {
+//                        if (tesoroPlayer.getType() == copiaMonsterHiddenTreasures.get(i)) {
+//                            auxh.add(copiaMonsterHiddenTreasures.get(i));
+//                            copiaMonsterHiddenTreasures.remove(copiaMonsterHiddenTreasures.get(i));
+//                            i = 0;
+//                            j++;
+//                        } else {
+//                            j++;
+//                            i = 0;
+//                        }
+//                    }
+//                }
+//            }
+//            //Hidden
+////            for (Treasure t : tHidden) {
+////                for (TreasureKind t2 : copiaMonsterHiddenTreasures) {
+////                    if (t.getType() == t2) {
+////                        auxh.add(t2);
+////                    }
+////                }
+////            }
+//
+//        } else {
+//            if (this.nVisibleTreasures > 0 || this.nHiddenTreasures > 0) {
+//                if (this.nVisibleTreasures >= tVisible.size()) {
+//                    numvisibles = tVisible.size();
+//                } else {
+//                    numvisibles = this.nVisibleTreasures;
+//                }
+//                if (this.nHiddenTreasures >= tHidden.size()) {
+//                    numocultos = tHidden.size();
+//                } else {
+//                    numocultos = this.nHiddenTreasures;
+//                }
+//                bs = new BadConsequence(this.text, this.levels, numvisibles, numocultos, this.death, auxv, auxh);
+//            }
+//            /**
+//             * Si el jugador no tiene tesoros en sus arrays no se puede quitar
+//             * ninguno de los tesoros por lo tanto se devuelve un mal rollo que
+//             * solo provoca muerte o quita los niveles del mal rollo
+//             */
+//            bs = new BadConsequence(this.text, this.levels, 0, 0, this.death, auxv, auxh);
+//        }
+//
+//        //return bs;
+//    }
 
     /**
      * Comprobamos si mi mal rollo tiene muerte y por lo tanto el final de la

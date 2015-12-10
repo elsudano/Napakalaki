@@ -697,7 +697,7 @@ public class Player {
         for (Treasure tesoro : visibleTreasures) {
             formateado += tesoro.getName() + " | ";
         }
-        if (pendingBadConsequence != null && !pendingBadConsequence.isEmpty()) {
+        if (pendingBadConsequence != null) {
             formateado += "\t\nMal rollo Pendiente: " + pendingBadConsequence.toString();
             formateado += "\t\nNivel de Combate: " + level + "\n";
             formateado += "\t\nEsta Muerto: " + dead;
