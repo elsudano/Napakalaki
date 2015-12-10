@@ -99,9 +99,9 @@ public class CardDealer {
             // hacer una lectura comoda (disponer del metodo readLine()).
             String fichero = getClass().getResource("/resources/base_datos_tesoros.txt").getPath(); // < para Linux
             //String fichero = "C:\\Users\\pc\\Desktop\\Napakalaki\\src\\resources\\base_datos_tesoros.txt"; // < para Windows
-            File file = new File(fichero);
-            fr = new FileReader(file);
-            br = new BufferedReader(fr);
+            File file = new File(fichero); // Creamos el fichero
+            fr = new FileReader(file); // Creamos el manejador de ficheros
+            br = new BufferedReader(fr); // Creamos el buffer de lectura para el fichero
             while ((fila = br.readLine()) != null) {
                 columnas = fila.split(",");
                 mUnusedTreasures.add(new Treasure(columnas[0], Integer.parseInt((columnas[4])), Integer.parseInt(columnas[2]), Integer.parseInt(columnas[3]), TreasureKind.valueOf(columnas[1].toUpperCase())));
@@ -124,8 +124,9 @@ public class CardDealer {
             // hacer una lectura comoda (disponer del metodo readLine()).
             String fichero = getClass().getResource("/resources/base_datos_monstruos.txt").getPath(); // < para Linux
             //String fichero = "C:\\Users\\pc\\Desktop\\Napakalaki\\src\\resources\\base_datos_monstruos.txt"; // < para Windows
-            File file = new File(fichero);
-            fr = new FileReader(file);
+            File file = new File(fichero); // Creamos el fichero
+            fr = new FileReader(file); // Creamos el manejador de ficheros
+            br = new BufferedReader(fr); // Creamos el buffer de lectura para el fichero
             while ((fila = br.readLine()) != null) {
                 columnas = fila.split(",");
                 if (columnas[10] == "muerte") {
