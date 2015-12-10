@@ -96,7 +96,8 @@ public class CardDealer {
         try {
             // Apertura del fichero y creacion de BufferedReader para poder
             // hacer una lectura comoda (disponer del metodo readLine()).
-            fr = new FileReader(getClass().getResource("/resources/base_datos_tesoros.txt").getPath());
+            String fichero = getClass().getResource("/resources/base_datos_tesoros.txt").getPath();
+            fr = new FileReader(fichero);
             br = new BufferedReader(fr);
             while ((fila = br.readLine()) != null) {
                 columnas = fila.split(",");
