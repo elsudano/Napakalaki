@@ -1,6 +1,7 @@
 package napakalaki;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -96,8 +97,10 @@ public class CardDealer {
         try {
             // Apertura del fichero y creacion de BufferedReader para poder
             // hacer una lectura comoda (disponer del metodo readLine()).
-            String fichero = getClass().getResource("/resources/base_datos_tesoros.txt").getPath();
-            fr = new FileReader(fichero);
+            String fichero = getClass().getResource("/resources/base_datos_tesoros.txt").getPath(); // < para Linux
+            //String fichero = "C:\\Users\\pc\\Desktop\\Napakalaki\\src\\resources\\base_datos_tesoros.txt"; // < para Windows
+            File file = new File(fichero);
+            fr = new FileReader(file);
             br = new BufferedReader(fr);
             while ((fila = br.readLine()) != null) {
                 columnas = fila.split(",");
@@ -119,8 +122,10 @@ public class CardDealer {
         try {
             // Apertura del fichero y creacion de BufferedReader para poder
             // hacer una lectura comoda (disponer del metodo readLine()).
-            fr = new FileReader(getClass().getResource("/resources/base_datos_monstruos.txt").getPath());
-            br = new BufferedReader(fr);
+            String fichero = getClass().getResource("/resources/base_datos_monstruos.txt").getPath(); // < para Linux
+            //String fichero = "C:\\Users\\pc\\Desktop\\Napakalaki\\src\\resources\\base_datos_monstruos.txt"; // < para Windows
+            File file = new File(fichero);
+            fr = new FileReader(file);
             while ((fila = br.readLine()) != null) {
                 columnas = fila.split(",");
                 if (columnas[10] == "muerte") {
