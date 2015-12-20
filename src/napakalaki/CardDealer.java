@@ -102,6 +102,7 @@ public class CardDealer {
             File file = new File(fichero); // Creamos el fichero
             fr = new FileReader(file); // Creamos el manejador de ficheros
             br = new BufferedReader(fr); // Creamos el buffer de lectura para el fichero
+            br.readLine(); // lo usamos para leer las cabeceras de las columnas 
             while ((fila = br.readLine()) != null) {
                 columnas = fila.split(",");
                 mUnusedTreasures.add(new Treasure(columnas[0], Integer.parseInt((columnas[4])), Integer.parseInt(columnas[2]), Integer.parseInt(columnas[3]), TreasureKind.valueOf(columnas[1].toUpperCase())));
@@ -127,9 +128,10 @@ public class CardDealer {
             File file = new File(fichero); // Creamos el fichero
             fr = new FileReader(file); // Creamos el manejador de ficheros
             br = new BufferedReader(fr); // Creamos el buffer de lectura para el fichero
+            br.readLine(); // lo usamos para leer las cabeceras de las columnas 
             while ((fila = br.readLine()) != null) {
                 columnas = fila.split(",");
-                if (columnas[10] == "muerte") {
+                if (columnas[10] == "true") {
                     malrollo = new BadConsequence(columnas[4], true);
                 } else if (!columnas[8].isEmpty() || !columnas[9].isEmpty()) {
                     ArrayList<TreasureKind> THidden = this.leeTesoros(columnas[8]);
@@ -156,9 +158,12 @@ public class CardDealer {
         try {
             // Apertura del fichero y creacion de BufferedReader para poder
             // hacer una lectura comoda (disponer del metodo readLine()).
-
-            fr = new FileReader(getClass().getResource("/resources/base_datos_sectarios.txt").getPath());
-            br = new BufferedReader(fr);
+            String fichero = getClass().getResource("/resources/base_datos_sectarios.txt").getPath(); // < para Linux
+            //String fichero = "C:\\Users\\pc\\Desktop\\Napakalaki\\src\\resources\\base_datos_sectarios.txt"; // < para Windows
+            File file = new File(fichero); // Creamos el fichero
+            fr = new FileReader(file); // Creamos el manejador de ficheros
+            br = new BufferedReader(fr); // Creamos el buffer de lectura para el fichero
+            br.readLine(); // lo usamos para leer las cabeceras de las columnas 
             while ((fila = br.readLine()) != null) {
                 columnas = fila.split(",");
                 mUnusedCultists.add(new Cultist(columnas[0], Integer.parseInt(columnas[1])));
@@ -262,13 +267,13 @@ public class CardDealer {
      * @return el siguiente Carta del Sectario
      */
     public Cultist nextCultists() {
-        Cultist cultist = this.mUnusedCultists.get(0);
-        this.mUnusedCultists.remove(0);
         if (this.mUnusedCultists.isEmpty()) {
             this.mUnusedCultists = this.mUsedCultists;
             this.shuffleCultists();
             this.mUnusedCultists.clear();
         }
+        Cultist cultist = this.mUnusedCultists.get(0);
+        this.mUnusedCultists.remove(0);
         return cultist;
     }
 
