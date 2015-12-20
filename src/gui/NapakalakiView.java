@@ -857,7 +857,7 @@ public class NapakalakiView extends javax.swing.JFrame implements Vista {
 
         limpiaMonstruo();
         if (!fin) {
-        //if (fin == Circunstancia.PIERDE_TURNO) {
+            //if (fin == Circunstancia.PIERDE_TURNO) {
             jL_excesoCartas.setText("FIN ES FALSE");
         }
 
@@ -983,45 +983,30 @@ public class NapakalakiView extends javax.swing.JFrame implements Vista {
         tesorosOcultosSeleccionados.clear();
 
         // Actualizamos malRolloPendiente
-        if (currentPlayer.getPendingBadConsequence().getNHiddenTreasures() == 0
-                && currentPlayer.getPendingBadConsequence()
-                .getSpecificHiddenTreasures().isEmpty()) {
-            jL_ocultosPerdidos.setText("");
-            jL_tipoOcultosPerdidos.setText("");
-        } else {
-            jL_ocultosPerdidos.setText("Nº ocultos perdidos: "
-                    + currentPlayer.getPendingBadConsequence().getNHiddenTreasures());
+//        if (currentPlayer.getPendingBadConsequence().getNHiddenTreasures() == 0 && currentPlayer.getPendingBadConsequence().getSpecificHiddenTreasures().isEmpty()) {
+//            jL_ocultosPerdidos.setText("");
+//            jL_tipoOcultosPerdidos.setText("");
+//        } else {
+//            jL_ocultosPerdidos.setText("Nº ocultos perdidos: " + currentPlayer.getPendingBadConsequence().getNHiddenTreasures());
+//            String f = new String();
+//            f += "Tipos: ";
+//            for (TreasureKind t : currentPlayer.getPendingBadConsequence().getSpecificHiddenTreasures()) {
+//                f += t + " | ";
+//            }
+//            jL_tipoOcultosPerdidos.setText(f);
+//        }
 
-            String f = new String();
-            f += "Tipos: ";
-            for (TreasureKind t : currentPlayer.getPendingBadConsequence()
-                    .getSpecificHiddenTreasures()) {
-                f += t + " | ";
-            }
-
-            jL_tipoOcultosPerdidos.setText(f);
-        }
-
-        if (currentPlayer.getPendingBadConsequence().getNVisibleTreasures() == 0
-                && currentPlayer.getPendingBadConsequence()
-                .getSpecificVisibleTreasures().isEmpty()) {
-            jL_visiblesPerdidos.setText("");
-            jL_tipoVisiblesPerdidos.setText("");
-
-        } else {
-            jL_visiblesPerdidos
-                    .setText("Nº visibles perdidos: "
-                            + currentPlayer.getPendingBadConsequence()
-                            .getNVisibleTreasures());
-
-            String f = "Tipos: ";
-            for (TreasureKind t : currentPlayer.getPendingBadConsequence()
-                    .getSpecificVisibleTreasures()) {
-                f += t + " | ";
-            }
-
-            jL_tipoVisiblesPerdidos.setText(f);
-        }
+//        if (currentPlayer.getPendingBadConsequence().getNVisibleTreasures() == 0 && currentPlayer.getPendingBadConsequence().getSpecificVisibleTreasures().isEmpty()) {
+//            jL_visiblesPerdidos.setText("");
+//            jL_tipoVisiblesPerdidos.setText("");
+//        } else {
+//            jL_visiblesPerdidos.setText("Nº visibles perdidos: " + currentPlayer.getPendingBadConsequence().getNVisibleTreasures());
+//            String f = "Tipos: ";
+//            for (TreasureKind t : currentPlayer.getPendingBadConsequence().getSpecificVisibleTreasures()) {
+//                f += t + " | ";
+//            }
+//            jL_tipoVisiblesPerdidos.setText(f);
+//        }
 
         repaint();
         pack();

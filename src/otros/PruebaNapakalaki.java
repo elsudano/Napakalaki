@@ -1,4 +1,4 @@
-package napakalaki;
+package otros;
 
 /**
  * Clase Principal del Proyecto que sería como si fuera la clase controlador del
@@ -9,6 +9,10 @@ package napakalaki;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import napakalaki.BadConsequence;
+import napakalaki.CardDealer;
+import napakalaki.Monster;
+import napakalaki.Prize;
 
 /**
  * @author Carlos de la Torre
@@ -79,7 +83,7 @@ public class PruebaNapakalaki {
                                 + "pulse enter y luego el numero para los Tesoros Visibles\n"
                                 + "pulse enter y luego el numero para los Tesoros Ocultos\n"
                                 + "pulse enter para terminar\n");
-                        MalRolloMonstruo = new BadConsequence(in.readLine(), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()));
+//                        MalRolloMonstruo = new BadConsequence(in.readLine(), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()));
                         System.out.println("Objeto 1 Creado\n");
                         System.out.println("Valor del Mal Rollo del objeto creado: " + MalRolloMonstruo.getText() + "\n");
                         System.out.println("Valor de los niveles del objeto creado: " + MalRolloMonstruo.getLevels() + "\n");
@@ -97,7 +101,7 @@ public class PruebaNapakalaki {
                                 + "pulse enter y y por ultimo el valor del nivel del monstruo\n"
                                 + "pulse enter para terminar\n");
                         precioMonstruo = new Prize(Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()));
-                        MalRolloMonstruo = new BadConsequence(in.readLine(), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()));
+//                        MalRolloMonstruo = new BadConsequence(in.readLine(), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()));
                         monstruo = new Monster(in.readLine(), Integer.parseInt(in.readLine()), MalRolloMonstruo, precioMonstruo);
                         BDMonstruos.add(monstruo);
                         System.out.println("Objeto monstruo Creado\n");
@@ -146,9 +150,9 @@ public class PruebaNapakalaki {
                                 case 4:
                                     while (contador < BDMonstruos.size()) {
                                         monstruo = BDMonstruos.get(contador);
-                                        if (!monstruo.getBadConsequence().getSpecificHiddenTreasures().isEmpty() && !monstruo.getBadConsequence().getSpecificVisibleTreasures().isEmpty()) {
-                                            System.out.println(monstruo.toString());
-                                        }
+//                                        if (!monstruo.getBadConsequence().getSpecificHiddenTreasures().isEmpty() && !monstruo.getBadConsequence().getSpecificVisibleTreasures().isEmpty()) {
+//                                            System.out.println(monstruo.toString());
+//                                        }
                                         contador++;
                                     }
                             }
