@@ -9,11 +9,11 @@ package napakalaki;
 public class Cultist implements Card {
 
     /**
-     * @brief Nombre de la carta del tipo sectario.
+     * Nombre de la carta del tipo sectario.
      */
     private String name;
     /**
-     * @brief Niveles que se ganan con la carta de tipo sectario.
+     * Niveles que se ganan con la carta de tipo sectario.
      */
     private int gainedLevels;
 
@@ -36,18 +36,9 @@ public class Cultist implements Card {
      */
     @Override
     public String getName() {
-        return this.name;
+        return name;
     }
-    
-    /**
-     * Devuelve el valor del parametro GainedLevels.
-     * 
-     * @return devuelve un entero con el valor del parametro.
-     */
-    public int getGainedLevels(){
-        return this.gainedLevels;
-    }
-    
+
     /**
      * Devuelve el nivel del objeto.
      *
@@ -55,7 +46,7 @@ public class Cultist implements Card {
      */
     @Override
     public int getBasicValue() {
-        return this.gainedLevels;
+        return gainedLevels;
     }
 
     /**

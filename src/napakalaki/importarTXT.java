@@ -1,14 +1,10 @@
-package otros;
+package napakalaki;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import napakalaki.BadConsequence;
-import napakalaki.Monster;
-import napakalaki.Prize;
-import napakalaki.TreasureKind;
 
 public class importarTXT {
 
@@ -100,16 +96,16 @@ public class importarTXT {
                 //System.out.println("La ultima linea es : " + fila);
                 columnas = fila.split(",");
                 if (columnas[10].equals("merte")) {
-//                    malrollo = new BadConsequence(columnas[4], 0, true);
+                    malrollo = new BadConsequence(columnas[4], true);
                 } else if (!columnas[8].isEmpty() || !columnas[9].isEmpty()) {
                     ArrayList<TreasureKind> THidden = leeTesoros(columnas[8]);
                     ArrayList<TreasureKind> TVisible = leeTesoros(columnas[9]);
-//                    malrollo = new BadConsequence(columnas[4], Integer.parseInt(columnas[5]), THidden, TVisible);
+                    malrollo = new BadConsequence(columnas[4], Integer.parseInt(columnas[5]), THidden, TVisible);
                 } else {
-//                    malrollo = new BadConsequence(columnas[4], Integer.parseInt(columnas[5]), Integer.parseInt(columnas[6]), Integer.parseInt(columnas[7]));
+                    malrollo = new BadConsequence(columnas[4], Integer.parseInt(columnas[5]), Integer.parseInt(columnas[6]), Integer.parseInt(columnas[7]));
                 }
                 Prize precio = new Prize(Integer.parseInt(columnas[2]), Integer.parseInt(columnas[3]));
-//                this.BDMonstruos.add(new Monster(columnas[0], Integer.parseInt(columnas[1]), malrollo, precio));
+                this.BDMonstruos.add(new Monster(columnas[0], Integer.parseInt(columnas[1]), malrollo, precio));
             }
             this.fr.close();
         } catch (IOException e) {

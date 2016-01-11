@@ -6,9 +6,9 @@ import gui.NapakalakiView;
 public class EjemploMain {
 
     public static void main(String[] args) {
-        NapakalakiView vista = new NapakalakiView();
         Napakalaki game = Napakalaki.getInstance();
-        game.setVista(vista);
+        NapakalakiView vista = new NapakalakiView();
+        Dice.createInstance(vista);
         GameTester test = GameTester.getInstance();
         
         // Poner el numero de jugadores con el que se quiera probar

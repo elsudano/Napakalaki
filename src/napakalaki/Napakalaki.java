@@ -52,7 +52,6 @@ public class Napakalaki {
         this.currentMonster = null;
         this.dealer = CardDealer.getInstance();
         this.currentPlayer = null;
-        Dice.createInstance(vista);
         this.dice = Dice.getInstance();
     }
 
@@ -98,13 +97,13 @@ public class Napakalaki {
         int aux = 0;
         Random generator = new Random();
 
-        if (this.currentPlayer == null) {
+        if (this.currentPlayer == null){
             aux = generator.nextInt(this.players.size());
         } else {
             aux = this.players.indexOf(this.currentPlayer);
             aux++;
         }
-
+        
         if (aux == this.players.size()) {
             aux = 0;
         }
@@ -120,9 +119,8 @@ public class Napakalaki {
      */
     private boolean nextTurnIsAllowed() {
         boolean resultado = true;
-        if (this.currentPlayer != null) {
+        if (this.currentPlayer != null)
             resultado = this.currentPlayer.validState();
-        }
         return resultado;
     }
 
@@ -159,23 +157,16 @@ public class Napakalaki {
     public CombatResult developCombat() {
         CombatResult cr = this.currentPlayer.combat(currentMonster);
         this.dealer.giveMonsterBack(currentMonster);
-        if (cr.equals(CombatResult.LOSEANDCONVERT)) {
-            Cultist c = this.dealer.nextCultists();
-            CultistPlayer cp = new CultistPlayer(this.currentPlayer, c);
-            for (int i = 0; i < this.players.size(); i++) {
-                if (this.players.get(i).equals(this.currentPlayer)) {
-                    this.players.add(cp);
-                    this.players.remove(this.players.get(i));
-                }
-            }
-//            for (Player p : players) {
-//                if (p.equals(currentPlayer)) {
-//                    this.players.add(cp);
-//                    this.players.remove(p);
+//        if(cr.equals(CombatResult.LOSEANDCONVERT)){
+//            Cultist c = dealer.nextCultists();
+//            CultistPlayer cp = new CultistPlayer(this.currentPlayer,c);
+//            for(Player p:players){
+//                if(p.equals(currentPlayer)){
+//                    p = cp;
 //                }
 //            }
-            this.currentPlayer = cp;
-        }
+//            this.currentPlayer = cp;
+//        }
         return cr;
     }
 

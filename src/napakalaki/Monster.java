@@ -53,14 +53,14 @@ public class Monster implements Card {
      * @param l entero nivel de combate
      * @param b mal rollo del monstruo
      * @param p precio del monstruo
-     * @param lC entero que indica el jugador sectario al que cambiamos
+     * @param l2 entero que indica el jugador sectario al que cambiamos
      */
-    public Monster(String n, int l, BadConsequence b, Prize p, int lC) {
+    public Monster(String n, int l, BadConsequence b, Prize p, int l2) {
         this.name = n;
         this.combatLevel = l;
         this.badConsequence = b;
         this.prize = p;
-        this.levelChangeAgainstCultistPlayers = lC;
+        this.levelChangeAgainstCultistPlayers = l2;
     }
 
     /**
@@ -71,17 +71,7 @@ public class Monster implements Card {
     public int getCombatLevel() {
         return this.combatLevel;
     }
-    
-    /**
-     * Consultor de el nivel de combate del mostruo que se usara para enfretar
-     * al jugador sectario
-     *
-     * @return entero que indica el nivel de combate 
-     */
-    public int getCombatLevelAgainstCultisPlayer() {
-        return this.combatLevel + this.levelChangeAgainstCultistPlayers;
-    }
-    
+
     /**
      * Consultor del mal rollo del monstruo
      *
@@ -150,13 +140,13 @@ public class Monster implements Card {
     }
 
     /**
-     * Muestra un valor especial para los casos de CultisPlayer
+     * Muestra un valor especial
      *
      * @return numero entero con un valor especial
      */
     @Override
     public int getSpecialValue() {
-        return this.getCombatLevelAgainstCultisPlayer();
+        return getBasicValue() + levelChangeAgainstCultistPlayers;
     }
 
     /**
