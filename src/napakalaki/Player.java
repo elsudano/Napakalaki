@@ -26,7 +26,7 @@ public class Player {
     /**
      * Este sera un enemigo directo del jugador.
      */
-    private Player enemy;
+    protected Player enemy;
     /**
      * Tesoros ocultos que tiene el Jugador.
      */
@@ -46,7 +46,7 @@ public class Player {
     /**
      * Indica si el Jugador es un Sectario.
      */
-    private boolean isCultistPlayer;
+    protected boolean isCultistPlayer;
     /**
      * Constante que indica el nivel minimo de un Jugador.
      */
@@ -72,9 +72,27 @@ public class Player {
         this.level = 1;
         this.hiddenTreasures = new ArrayList();
         this.visibleTreasures = new ArrayList();
-        this.pendingBadConsequence = new BadConsequence();
+        this.pendingBadConsequence = null;
         this.canISteal = true;
         this.isCultistPlayer = false;
+    }
+
+    /**
+     * Constructor de copia de Jugador, copia un objeto de tipo jugador, a otra
+     * variable en el mismo estado en el que se encuentra el original.
+     *
+     * @param p objeto de tipo Jugador que será el origen.
+     */
+    public Player(Player p) {
+        this.name = p.name;
+        this.dead = p.dead;
+        this.level = p.level;
+        this.enemy = p.enemy;
+        this.hiddenTreasures = p.hiddenTreasures;
+        this.visibleTreasures = p.visibleTreasures;
+        this.pendingBadConsequence = p.pendingBadConsequence;
+        this.canISteal = p.canISteal;
+        this.isCultistPlayer = p.isCultistPlayer;
     }
 
     /**
@@ -94,7 +112,7 @@ public class Player {
      *
      * @return devuelve un entero con el nivel de combate del Jugador
      */
-    private int getCombatLevel() {
+    protected int getCombatLevel() {
         int cont = this.level;
 //        boolean collar = false;
 //        de momento se tiene que hacer asi cuando se explique el collar se separaran las bonus
@@ -422,9 +440,8 @@ public class Player {
      */
     public CombatResult combat(Monster m) {
         CombatResult cr;
-//        Dice dado = Dice.getInstance();
         int myLevel = this.getCombatLevel();
-        int monsterLevel = m.getCombatLevel();
+        int monsterLevel = this.getOponentLevel(m);
         if (myLevel > monsterLevel) {
             this.applyPrize(m);
             if (this.getLevels() >= NIVEL_MAXIMO) {
@@ -434,27 +451,12 @@ public class Player {
             }
         } else {
             this.applyBadConsequence(m);
-            cr = CombatResult.LOSE;
-//            int escape = dado.nextNumber();
-//            if (escape < 5) {
-//                boolean amIDead = m.kills();
-//                if (amIDead) {
-//                    this.die();
-//                    cr = CombatResult.LOSEANDDIE;
-//                } else {
-//                    cr = CombatResult.LOSE;
-//                    this.applyBadConsequence(m);
-//                }
-//            } else {
-//                cr = CombatResult.LOSEANDESCAPE;
-//            }
+            if (this.shouldConvert()) {
+                cr = CombatResult.LOSEANDCONVERT;
+            } else {
+                cr = CombatResult.LOSE;
+            }
         }
-//        if (!this.isDead()) {
-//            if (this.shouldConvert()) {
-//                cr = CombatResult.LOSEANDCONVERT;
-//            }
-//        }
-//        this.dicardNecklaceIfVisible();
         return cr;
     }
 
@@ -664,21 +666,6 @@ public class Player {
     }
 
     /**
-     * Constructor de copia de Jugador, copia un objeto de tipo jugador, a otra
-     * variable en el mismo estado en el que se encuentra el original.
-     *
-     * @param p objeto de tipo Jugador que será el origen.
-     */
-    public Player(Player p) {
-        this.dead = p.dead;
-        this.hiddenTreasures = p.hiddenTreasures;
-        this.level = p.level;
-        this.name = p.name;
-        this.pendingBadConsequence = p.pendingBadConsequence;
-        this.visibleTreasures = p.visibleTreasures;
-    }
-
-    /**
      * Devuelve el contenido del jugador impreso por la pantalla de manera
      * formateada
      *
@@ -705,20 +692,24 @@ public class Player {
         return formateado;
     }
 
-    public int getOponentLevel(Monster m) {
+    protected int getOponentLevel(Monster m) {
         return m.getBasicValue();
     }
 
-    public boolean shouldConvert() {
+    protected boolean shouldConvert() {
         Dice dado = Dice.getInstance();
-        return (dado.nextNumber() == 6);
+        return (dado.nextNumber() == 1);
     }
 
     public BadConsequence getPendingBadConsequence() {
         return this.pendingBadConsequence;
     }
 
-    public boolean isCultistPlayer() {
+    protected boolean isCultistPlayer() {
         return isCultistPlayer;
+    }
+
+    protected Player getEnemy() {
+        return this.enemy;
     }
 }

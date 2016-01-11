@@ -89,7 +89,8 @@ public class Dice extends javax.swing.JDialog {
      * @return
      */
     public int nextNumber(String message1, String message2) {
-        jB_OK.setVisible(false);
+        jB_OK.setEnabled(false);
+        //jB_OK.setVisible(false);
         jL_message1.setText(message1);
         jL_message2.setText(message2);
         pack();
@@ -156,7 +157,8 @@ public class Dice extends javax.swing.JDialog {
 
     private void jL_diceMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jL_diceMouseClicked
         timerDice.stop();
-        jB_OK.setVisible(true);
+        jB_OK.setEnabled(true);
+        //jB_OK.setVisible(true);
         pack();
     }// GEN-LAST:event_jL_diceMouseClicked
 
