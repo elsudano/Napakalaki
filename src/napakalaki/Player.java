@@ -133,7 +133,6 @@ public class Player {
 //                cont += t2.getBasicValue();
 //            }
 //        }
-        cont += this.level;
         return cont;
     }
 
@@ -711,5 +710,29 @@ public class Player {
 
     protected Player getEnemy() {
         return this.enemy;
+    }
+
+    @Override
+    public boolean equals(Object player) {
+        boolean aux = false;
+        if (player instanceof Player) {
+            if (((Player) player).name.equals(this.name)
+                    && ((Player) player).dead == this.dead
+                    && ((Player) player).level == this.level
+                    && ((Player) player).enemy.equals(this.enemy)
+                    // para que esto fueran iguales habria que redefinir el metodo
+                    // equals de la clase Treasure y utilizar los metodos de las
+                    // colecciones que utilizan el metodo equals del objeto que
+                    // estoy comparando en este caso Treasure
+                    && ((Player) player).hiddenTreasures.equals(this.hiddenTreasures)
+                    && ((Player) player).visibleTreasures.equals(this.visibleTreasures)
+                    ///////////////////////////////////////////////////////////////////
+                    && ((Player) player).pendingBadConsequence.equals(this.pendingBadConsequence)
+                    && ((Player) player).canISteal == this.canISteal
+                    && ((Player) player).isCultistPlayer == this.isCultistPlayer) {
+                aux = true;
+            }
+        }
+        return aux;
     }
 }

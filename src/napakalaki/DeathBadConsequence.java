@@ -17,16 +17,4 @@ public class DeathBadConsequence extends NumericBadConsequence {
     public DeathBadConsequence(String text, boolean death) {
         super(text, Player.NIVEL_MAXIMO, death, MAXTREASURES, MAXTREASURES);
     }
-
-    /**
-     * Devuelve una cadena de caracteres con todos los valores que contiene el
-     * mal rollo, lo imprime por pantalla formateado
-     *
-     * @return Cadena de caracteres con los valores del mal rollo formateado
-     */
-    @Override
-    public String toString() {
-        return super.toString() + "";
-    }
-
 }
