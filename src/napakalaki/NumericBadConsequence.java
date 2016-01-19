@@ -128,6 +128,41 @@ public class NumericBadConsequence extends BadConsequence {
     }
 
     /**
+     * Comparamos dos objetos de tipo NumericBadConsequence y decidimos si son
+     * iguales según los parametros del objeto que queremos comparar.
+     * Es una sebrescritura del operador de comparación
+     * @param dbc
+     * @return devuelve true si son iguales, false en caso contrario.
+     */
+    @Override
+    public boolean equals(Object dbc) {
+        boolean aux = false;
+        if (dbc instanceof NumericBadConsequence) {
+            if ( ((NumericBadConsequence) dbc).getText().equals(this.getText())
+                    && ((NumericBadConsequence) dbc).getLevels() == this.getLevels()
+                    && ((NumericBadConsequence) dbc).getDeath() == this.getDeath()
+                    && ((NumericBadConsequence) dbc).nVisibleTreasures == this.nVisibleTreasures
+                    && ((NumericBadConsequence) dbc).nHiddenTreasures == this.nHiddenTreasures ) {
+                aux = true;
+            }
+        }
+        return aux;
+    }
+    
+    /**
+     * Esta función se crea para asegurarnos de que miramos los datos de los
+     * diferentes objetos cuando los comparamos.
+     * @return devuelve un numero entero según una función hash.
+     */
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 61 * hash + this.nVisibleTreasures;
+        hash = 61 * hash + this.nHiddenTreasures;
+        return hash;
+    }
+
+    /**
      * Devuelve una cadena de caracteres con todos los valores que contiene el
      * mal rollo, lo imprime por pantalla formateado
      *

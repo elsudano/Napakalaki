@@ -1,6 +1,7 @@
 package napakalaki;
 
 import gui.NapakalakiView;
+import gui.Dice;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -52,7 +53,6 @@ public class Napakalaki {
         this.currentMonster = null;
         this.dealer = CardDealer.getInstance();
         this.currentPlayer = null;
-        Dice.createInstance(vista);
         this.dice = Dice.getInstance();
     }
 
@@ -132,7 +132,7 @@ public class Napakalaki {
     private void setEnemies() {
         Player miEnemy = this.nextPlayer();
         for (Player player : this.players) {
-            while (player == miEnemy) {
+            while (player.equals(miEnemy)) {
                 miEnemy = this.nextPlayer();
             }
             player.setEnemy(miEnemy);

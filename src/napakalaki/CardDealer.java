@@ -234,7 +234,7 @@ public class CardDealer {
      */
     public Treasure nextTreasure() {
         if (this.mUnusedTreasures.isEmpty()) {
-            this.mUnusedTreasures = this.mUsedTreasures;
+            this.mUnusedTreasures = new ArrayList<>(this.mUsedTreasures);
             this.shuffleTreasures();
             this.mUsedTreasures.clear();
         }
@@ -251,8 +251,8 @@ public class CardDealer {
      */
     public Monster nextMonster() {
         if (this.mUnusedMonsters.isEmpty()) {
-            this.mUnusedMonsters = this.mUsedMonsters;
-            this.shuffleTreasures();
+            this.mUnusedMonsters = new ArrayList<>(this.mUsedMonsters);
+            this.shuffleMonsters();
             this.mUsedMonsters.clear();
         }
         Monster monstruo = this.mUnusedMonsters.get(0);
@@ -268,9 +268,9 @@ public class CardDealer {
      */
     public Cultist nextCultists() {
         if (this.mUnusedCultists.isEmpty()) {
-            this.mUnusedCultists = this.mUsedCultists;
+            this.mUnusedCultists = new ArrayList<>(this.mUsedCultists);
             this.shuffleCultists();
-            this.mUnusedCultists.clear();
+            this.mUsedCultists.clear();
         }
         Cultist cultist = this.mUnusedCultists.get(0);
         this.mUnusedCultists.remove(0);

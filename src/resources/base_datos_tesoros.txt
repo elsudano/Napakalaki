@@ -10,7 +10,7 @@ Clavo de rail ferroviario,ONEHAND,3,6,400
 Cuchillo de sushi arcano,ONEHAND,2,3,300
 Fez alopodo,HELMET,3,5,700
 Hacha prehistorica,ONEHAND,2,5,500
-El aparato del Pr. Tesla,ARMOR,4,8,900
+El aparato del Pr-Tesla,ARMOR,4,8,900
 Gaita,BOTHHANDS,4,5,500
 Insecticida,ONEHAND,2,3,300
 Escopeta de 3 caniones,BOTHHANDS,4,6,700

@@ -9,7 +9,7 @@ import napakalaki.CombatResult;
 import napakalaki.Player;
 import napakalaki.Treasure;
 import java.util.Arrays;
-import napakalaki.Dice;
+import gui.Dice;
 
 public class GameTester {
   
@@ -32,7 +32,7 @@ public class GameTester {
 
     this.game = aGame;
     this.vista = mVista;
-    this.vista.setModel(this.game);
+    this.vista.setNapakalaki(this.game);
     this.game.setVista(this.vista);
     names = getPlayerNames(numberOfPlayers);
     game.initGame(names);

@@ -101,7 +101,8 @@ public class Monster implements Card {
     }
 
     /**
-     * Consultor de la cantidad de niveles que gana el monstruo
+     * Consultor de la cantidad de niveles que nos dará el monstruo
+     * cuando le ganemos.
      *
      * @return entero con la cantidad de niveles que ganamos
      */

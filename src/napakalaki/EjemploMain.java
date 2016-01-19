@@ -1,5 +1,6 @@
 package napakalaki;
 
+import gui.Dice;
 import test.GameTester;
 import gui.NapakalakiView;
 
@@ -9,6 +10,7 @@ public class EjemploMain {
         NapakalakiView vista = new NapakalakiView();
         Napakalaki game = Napakalaki.getInstance();
         game.setVista(vista);
+        Dice.createInstance(vista);
         GameTester test = GameTester.getInstance();
         
         // Poner el numero de jugadores con el que se quiera probar

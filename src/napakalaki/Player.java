@@ -2,6 +2,8 @@ package napakalaki;
 
 import java.util.ArrayList;
 import java.util.Random;
+import gui.Dice;
+import java.util.Objects;
 
 /**
  * Clase de Jugador que controla todo lo relacionado con el tesoros que posee,
@@ -664,6 +666,27 @@ public class Player {
         return this.name;
     }
 
+    protected int getOponentLevel(Monster m) {
+        return m.getBasicValue();
+    }
+
+    protected boolean shouldConvert() {
+        Dice dado = Dice.getInstance();
+        return (dado.nextNumber() == 1);
+    }
+
+    public BadConsequence getPendingBadConsequence() {
+        return this.pendingBadConsequence;
+    }
+
+    protected boolean isCultistPlayer() {
+        return isCultistPlayer;
+    }
+
+    public Player getEnemy() {
+        return this.enemy;
+    }
+
     /**
      * Devuelve el contenido del jugador impreso por la pantalla de manera
      * formateada
@@ -690,28 +713,7 @@ public class Player {
         }
         return formateado;
     }
-
-    protected int getOponentLevel(Monster m) {
-        return m.getBasicValue();
-    }
-
-    protected boolean shouldConvert() {
-        Dice dado = Dice.getInstance();
-        return (dado.nextNumber() == 1);
-    }
-
-    public BadConsequence getPendingBadConsequence() {
-        return this.pendingBadConsequence;
-    }
-
-    protected boolean isCultistPlayer() {
-        return isCultistPlayer;
-    }
-
-    protected Player getEnemy() {
-        return this.enemy;
-    }
-
+    
     @Override
     public boolean equals(Object player) {
         boolean aux = false;
@@ -719,20 +721,28 @@ public class Player {
             if (((Player) player).name.equals(this.name)
                     && ((Player) player).dead == this.dead
                     && ((Player) player).level == this.level
-                    && ((Player) player).enemy.equals(this.enemy)
-                    // para que esto fueran iguales habria que redefinir el metodo
-                    // equals de la clase Treasure y utilizar los metodos de las
-                    // colecciones que utilizan el metodo equals del objeto que
-                    // estoy comparando en este caso Treasure
                     && ((Player) player).hiddenTreasures.equals(this.hiddenTreasures)
                     && ((Player) player).visibleTreasures.equals(this.visibleTreasures)
-                    ///////////////////////////////////////////////////////////////////
-                    && ((Player) player).pendingBadConsequence.equals(this.pendingBadConsequence)
+                    //&& ((Player) player).pendingBadConsequence.equals(this.pendingBadConsequence)
                     && ((Player) player).canISteal == this.canISteal
                     && ((Player) player).isCultistPlayer == this.isCultistPlayer) {
                 aux = true;
             }
         }
         return aux;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + (this.dead ? 1 : 0);
+        hash = 71 * hash + Objects.hashCode(this.name);
+        hash = 71 * hash + this.level;
+        hash = 71 * hash + Objects.hashCode(this.hiddenTreasures);
+        hash = 71 * hash + Objects.hashCode(this.visibleTreasures);
+        hash = 71 * hash + Objects.hashCode(this.pendingBadConsequence);
+        hash = 71 * hash + (this.canISteal ? 1 : 0);
+        hash = 71 * hash + (this.isCultistPlayer ? 1 : 0);
+        return hash;
     }
 }

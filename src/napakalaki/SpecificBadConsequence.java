@@ -1,6 +1,7 @@
 package napakalaki;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * @Creado el 07-ene-2016
@@ -144,6 +145,41 @@ public class SpecificBadConsequence extends BadConsequence {
         return (this.specificHiddenTreasures.isEmpty() && this.specificVisibleTreasures.isEmpty());
     }
 
+    /**
+     * Comparamos dos objetos de tipo SpecificBadConsequence y decidimos si son
+     * iguales según los parametros del objeto que queremos comparar.
+     * Es una sebrescritura del operador de comparación
+     * @param sbc
+     * @return devuelve true si son iguales, false en caso contrario.
+     */
+    @Override
+    public boolean equals(Object sbc) {
+        boolean aux = false;
+        if (sbc instanceof SpecificBadConsequence) {
+            if ( ((SpecificBadConsequence) sbc).getText().equals(this.getText())
+                    && ((SpecificBadConsequence) sbc).getLevels() == this.getLevels()
+                    && ((SpecificBadConsequence) sbc).getDeath() == this.getDeath()
+                    && ((SpecificBadConsequence) sbc).specificVisibleTreasures.equals(this.specificVisibleTreasures)
+                    && ((SpecificBadConsequence) sbc).specificHiddenTreasures.equals(this.specificHiddenTreasures) ) {
+                aux = true;
+            }
+        }
+        return aux;
+    }
+
+    /**
+     * Esta función se crea para asegurarnos de que miramos los datos de los
+     * diferentes objetos cuando los comparamos.
+     * @return devuelve un numero entero según una función hash.
+     */
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 67 * hash + Objects.hashCode(this.specificHiddenTreasures);
+        hash = 67 * hash + Objects.hashCode(this.specificVisibleTreasures);
+        return hash;
+    }
+    
     /**
      * Devuelve una cadena de caracteres con todos los valores que contiene el
      * mal rollo, lo imprime por pantalla formateado
