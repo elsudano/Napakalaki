@@ -2,8 +2,12 @@ package napakalaki;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -11,9 +15,7 @@ import java.util.Collections;
  * Clase principal del juego, contiene las instancias principales para el
  * desarrollo de una partida.
  *
- * @authors:
- * Carlos de la Torre 75145459C
- * Farouk Arroub
+ * @author: Carlos de la Torre
  */
 public class CardDealer {
 
@@ -75,7 +77,7 @@ public class CardDealer {
      * usando en la partida.
      */
     public ArrayList<Cultist> mUsedCultists;
-    
+
     /**
      * Es el constructor por defecto, pero está privado por que vamos a usar la
      * clase de manera que sea una clase singleton, osea que solo habrá una
@@ -91,6 +93,45 @@ public class CardDealer {
     }
 
     /**
+     * Función auxiliar que se usa para poder leer el fichero de configuración
+     * de los diferentes mazos de cartas cuando se usa el juego en un fichero
+     * compilado .jar.
+     *
+     * @param recurso esta es una cadena de texto que será donde se encuentra el
+     * fichero
+     * @return devuelve un objeto File con el fichero que le hemos pasado por
+     * parametros
+     */
+    private File ficheroExterno(String recurso) {
+        File fichero = null;
+        URL res = getClass().getResource(recurso);
+        if (res.toString().startsWith("jar:")) {
+            try {
+                InputStream input = getClass().getResourceAsStream(recurso);
+                fichero = File.createTempFile("tempfile", ".tmp");
+                OutputStream out = new FileOutputStream(fichero);
+                int read;
+                byte[] bytes = new byte[1024];
+
+                while ((read = input.read(bytes)) != -1) {
+                    out.write(bytes, 0, read);
+                }
+                fichero.deleteOnExit();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            //this will probably work in your IDE, but not from a JAR
+            fichero = new File(res.getFile());
+        }
+
+        if (fichero != null && !fichero.exists()) {
+            throw new RuntimeException("Error: File " + fichero + " not found!");
+        }
+        return fichero;
+    }
+
+    /**
      * Inicializa el monton de cartas de Tesoros para que se puedan usar en el
      * juego las carga desde un fichero de texto y las baraja.
      */
@@ -98,9 +139,10 @@ public class CardDealer {
         try {
             // Apertura del fichero y creacion de BufferedReader para poder
             // hacer una lectura comoda (disponer del metodo readLine()).
-            String fichero = getClass().getResource("/resources/base_datos_tesoros.txt").getPath(); // < para Linux
+            //String fichero = getClass().getResource("/resources/base_datos_tesoros.txt").getPath(); // < para Linux desde el IDE
             //String fichero = "C:\\Users\\pc\\Desktop\\Napakalaki\\src\\resources\\base_datos_tesoros.txt"; // < para Windows
-            File file = new File(fichero); // Creamos el fichero
+            String fichero = "/resources/base_datos_tesoros.txt"; // < para Linux desde fichero JAR
+            File file = this.ficheroExterno(fichero); // Creamos el fichero
             fr = new FileReader(file); // Creamos el manejador de ficheros
             br = new BufferedReader(fr); // Creamos el buffer de lectura para el fichero
             br.readLine(); // lo usamos para leer las cabeceras de las columnas 
@@ -112,6 +154,7 @@ public class CardDealer {
             fr.close();
         } catch (Exception e) {
             e.printStackTrace();
+            System.exit(0);
         }
     }
 
@@ -124,9 +167,10 @@ public class CardDealer {
             BadConsequence malrollo = null;
             // Apertura del fichero y creacion de BufferedReader para poder
             // hacer una lectura comoda (disponer del metodo readLine()).
-            String fichero = getClass().getResource("/resources/base_datos_monstruos.txt").getPath(); // < para Linux
+            //String fichero = getClass().getResource("/resources/base_datos_monstruos.txt").getPath(); // < para Linux desde el IDE
             //String fichero = "C:\\Users\\pc\\Desktop\\Napakalaki\\src\\resources\\base_datos_monstruos.txt"; // < para Windows
-            File file = new File(fichero); // Creamos el fichero
+            String fichero = "/resources/base_datos_monstruos.txt"; // < para Linux desde fichero JAR
+            File file = this.ficheroExterno(fichero); // Creamos el fichero
             fr = new FileReader(file); // Creamos el manejador de ficheros
             br = new BufferedReader(fr); // Creamos el buffer de lectura para el fichero
             br.readLine(); // lo usamos para leer las cabeceras de las columnas 
@@ -148,6 +192,7 @@ public class CardDealer {
             fr.close();
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
+            System.exit(0);
         }
     }
 
@@ -159,9 +204,10 @@ public class CardDealer {
         try {
             // Apertura del fichero y creacion de BufferedReader para poder
             // hacer una lectura comoda (disponer del metodo readLine()).
-            String fichero = getClass().getResource("/resources/base_datos_sectarios.txt").getPath(); // < para Linux
+            //String fichero = getClass().getResource("/resources/base_datos_sectarios.txt").getPath(); // < para Linux desde el IDE
             //String fichero = "C:\\Users\\pc\\Desktop\\Napakalaki\\src\\resources\\base_datos_sectarios.txt"; // < para Windows
-            File file = new File(fichero); // Creamos el fichero
+            String fichero = "/resources/base_datos_sectarios.txt"; // < para Linux desde fichero JAR
+            File file = this.ficheroExterno(fichero); // Creamos el fichero
             fr = new FileReader(file); // Creamos el manejador de ficheros
             br = new BufferedReader(fr); // Creamos el buffer de lectura para el fichero
             br.readLine(); // lo usamos para leer las cabeceras de las columnas 
@@ -173,6 +219,7 @@ public class CardDealer {
             fr.close();
         } catch (Exception e) {
             e.printStackTrace();
+            System.exit(0);
         }
     }
 
@@ -282,7 +329,7 @@ public class CardDealer {
      * Con este metodo conseguiremos insertar en los tesoros usuados el tesoro
      * cuyo parámetro sea pT
      *
-     * @param pT de tipo Treasure es el tesoro que vamos a usar
+     * @param t de tipo Treasure es el tesoro que vamos a usar
      */
     public void giveTreasureBack(Treasure t) {
         this.mUsedTreasures.add(t);
@@ -292,7 +339,7 @@ public class CardDealer {
      * Con este metodo conseguiremos insertar en los tesoros usuados el tesoro
      * cuyo parámetro sea pT
      *
-     * @param mM de tipo Monstruo es el monstruo que vamos a usar
+     * @param m de tipo Monstruo es el monstruo que vamos a usar
      */
     public void giveMonsterBack(Monster m) {
         this.mUsedMonsters.add(m);

@@ -9,7 +9,7 @@ import java.util.Random;
  * Clase principal del juego, contiene las instancias principales para el
  * desarrollo de una partida.
  *
- * @authors: Carlos de la Torre 75145459C Farouk Arroub
+ * @author: Carlos de la Torre
  */
 public class Napakalaki {
 

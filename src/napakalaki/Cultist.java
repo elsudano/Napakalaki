@@ -4,7 +4,7 @@ package napakalaki;
  * Clase de Jugador sectario esto es un tipo especial de jugador, con unos
  * atributos diferentes y reglas especiales
  *
- * @authors: Carlos de la Torre 75145459C Farouk Arroub
+ * @author: Carlos de la Torre
  */
 public class Cultist implements Card {
 

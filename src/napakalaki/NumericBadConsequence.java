@@ -140,7 +140,7 @@ public class NumericBadConsequence extends BadConsequence {
      * Comparamos dos objetos de tipo NumericBadConsequence y decidimos si son
      * iguales según los parametros del objeto que queremos comparar.
      * Es una sebrescritura del operador de comparación
-     * @param dbc
+     * @param dbc Este es un objeto de tipo NumericBadConsequence
      * @return devuelve true si son iguales, false en caso contrario.
      */
     @Override

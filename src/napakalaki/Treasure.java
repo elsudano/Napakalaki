@@ -5,7 +5,7 @@ package napakalaki;
  * que proporcionan las ventajas al jugador para poder enfrentarse a los
  * monstruos
  *
- * @authors: Carlos de la Torre 75145459C Farouk Arroub
+ * @author: Carlos de la Torre
  */
 public class Treasure implements Card {
 

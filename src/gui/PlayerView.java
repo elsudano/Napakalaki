@@ -440,7 +440,9 @@ public class PlayerView extends javax.swing.JPanel {
     }//GEN-LAST:event_jBDescartarTodosActionPerformed
 
     private void jBRobarTesoroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRobarTesoroActionPerformed
-        if (this.playerModel.stealTreasure() == null) {
+        if (this.playerModel.canISteal()) {
+            this.playerModel.stealTreasure();
+        }else{
             JOptionPane.showMessageDialog(null, "No se ha podido robar ningún tesoro");
         }
         this.setPlayer(this.napakalakiModel.getCurrentPlayer());

@@ -4,7 +4,7 @@ package napakalaki;
  * Clase de buen rollo del monstruo, esta clase indica lo que gana un jugador
  * cuando gana un enfrentamiento contra un monstruo.
  *
- * @authors: Carlos de la Torre 75145459C Farouk Arroub
+ * @author: Carlos de la Torre
  */
 public class Prize {
 

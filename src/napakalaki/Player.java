@@ -9,7 +9,7 @@ import java.util.Objects;
  * Clase de Jugador que controla todo lo relacionado con el tesoros que posee,
  * tanto ocultos como visibles nombre, o si ha terminado la partida para el.
  *
- * @authors: Carlos de la Torre 75145459C Farouk Arroub
+ * @author: Carlos de la Torre
  */
 public class Player {
 

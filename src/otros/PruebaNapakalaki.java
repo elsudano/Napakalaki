@@ -36,7 +36,7 @@ public class PruebaNapakalaki {
     private static Prize precioMonstruo;
 
     /**
-     * @param args
+     * @param args son los parametros de entrada del programa principal.
      */
     public static void main(String[] args) {
         misCartas.initCards();

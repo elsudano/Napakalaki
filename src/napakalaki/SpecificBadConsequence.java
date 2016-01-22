@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * @Creado el 07-ene-2016
- * @Autor Carlos de la Torre
- * @Blog https://www.sudano.net
+ * 
+ * @author Carlos de la Torre
  */
 public class SpecificBadConsequence extends BadConsequence {
 
@@ -164,10 +163,10 @@ public class SpecificBadConsequence extends BadConsequence {
 
     /**
      * Comparamos dos objetos de tipo SpecificBadConsequence y decidimos si son
-     * iguales según los parametros del objeto que queremos comparar. Es una
-     * sebrescritura del operador de comparación
+     * iguales según los parametros del objeto que queremos comparar; Es una
+     * sebrescritura del operador de comparación.
      *
-     * @param sbc
+     * @param sbc Es un objeto de tipo SpecificBadConsequence que comparamos.
      * @return devuelve true si son iguales, false en caso contrario.
      */
     @Override

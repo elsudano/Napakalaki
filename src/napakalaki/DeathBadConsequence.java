@@ -1,9 +1,8 @@
 package napakalaki;
 
 /**
- * @Creado el 07-ene-2016
- * @Autor Carlos de la Torre
- * @Blog https://www.sudano.net
+ * 
+ * @author Carlos de la Torre
  */
 public class DeathBadConsequence extends NumericBadConsequence {
 

@@ -8,7 +8,7 @@ import java.util.Random;
  * mismas funciones que Jugador pero se añaden funcionalidades para la parte de
  * Sectarios
  *
- * @authors: Carlos de la Torre 75145459C Farouk Arroub
+ * @author: Carlos de la Torre
  */
 public class CultistPlayer extends Player {
 

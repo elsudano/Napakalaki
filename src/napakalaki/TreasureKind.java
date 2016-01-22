@@ -4,7 +4,7 @@ package napakalaki;
  * Clase enumerada que contiene el tipo o tipos de regalos que puede ganar un
  * jugador
  *
- * @authors: Carlos de la Torre 75145459C Farouk Arroub
+ * @author: Carlos de la Torre
  */
 public enum TreasureKind {
 

@@ -7,7 +7,7 @@ import java.util.Objects;
  * Clase de Mal rollo se encarga de incluir las ociones negativas del juego así
  * cuando se pierde un combate.
  *
- * @authors: Carlos de la Torre 75145459C Farouk
+ * @author: Carlos de la Torre
  */
 public abstract class BadConsequence {
 

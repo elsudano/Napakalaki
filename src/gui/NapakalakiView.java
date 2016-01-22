@@ -5,7 +5,6 @@ import javax.swing.JOptionPane;
 import napakalaki.CombatResult;
 import napakalaki.Napakalaki;
 import napakalaki.Player;
-import napakalaki.Treasure;
 
 /**
  *
@@ -81,6 +80,7 @@ public class NapakalakiView extends javax.swing.JFrame {
         setBounds(ancho, alto, this.getWidth(), this.getHeight());
         // oculto al principio de la creacion de la vista el monstruo
         this.mosterView.setVisible(false);
+        new java.awt.GridLayout(alto, alto);
     }
 
     public void setNapakalaki(Napakalaki napa) {

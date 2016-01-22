@@ -4,7 +4,7 @@ package napakalaki;
  * Clase de Monstruo que contiene todos los datos para poder crear un monstruo
  * del juego
  *
- * @authors: Carlos de la Torre 75145459C Farouk Arroub
+ * @author: Carlos de la Torre
  */
 public class Monster implements Card {
 

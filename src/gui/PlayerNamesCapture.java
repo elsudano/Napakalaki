@@ -1,10 +1,24 @@
 package gui;
 
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 /**
  *
@@ -35,11 +49,81 @@ public class PlayerNamesCapture extends javax.swing.JDialog {
                 names.add(jT_Jugador3.getText());
             }
         }
+        //this.sonido("");
         this.dispose();
     }
 
     /**
+     * Función auxiliar que se usa para poder leer el fichero de configuración
+     * de los diferentes mazos de cartas cuando se usa el juego en un fichero
+     * compilado .jar.
+     *
+     * @param recurso esta es una cadena de texto que será donde se encuentra el
+     * fichero
+     * @return devuelve un objeto File con el fichero que le hemos pasado por
+     * parametros
+     */
+    private File ficheroExterno(String recurso) {
+        File fichero = null;
+        URL res = getClass().getResource(recurso);
+        if (res.toString().startsWith("jar:")) {
+            try {
+                InputStream input = getClass().getResourceAsStream(recurso);
+                fichero = File.createTempFile("tempfile", ".tmp");
+                OutputStream out = new FileOutputStream(fichero);
+                int read;
+                byte[] bytes = new byte[1024];
+
+                while ((read = input.read(bytes)) != -1) {
+                    out.write(bytes, 0, read);
+                }
+                fichero.deleteOnExit();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            //this will probably work in your IDE, but not from a JAR
+            fichero = new File(res.getFile());
+        }
+
+        if (fichero != null && !fichero.exists()) {
+            throw new RuntimeException("Error: File " + fichero + " not found!");
+        }
+        return fichero;
+    }
+
+    /**
+     * Este es el manejador de sonidos de la interfaz gráfica, simplemente se le
+     * decimos que sonido queremos reproducir en cada momento y listo.
+     *
+     * @param sonido El nombre del sonido que queremos que reproduzca
+     */
+    private void sonido(String sonido) {
+        AudioInputStream clipNameAIS;
+        Clip clipNameClip;
+        String fichero = "/resources/comenzar.wav";
+
+        if (!sonido.isEmpty()) {
+            fichero = "/resources/" + sonido + ".wav";
+        }
+        //File file = this.ficheroExterno(fichero);
+        try {
+            clipNameAIS = AudioSystem.getAudioInputStream(getClass().getResourceAsStream(fichero));
+            clipNameClip = AudioSystem.getClip();
+            clipNameClip.open(clipNameAIS);
+            //Action where .wav is played
+            clipNameClip.setFramePosition(0);
+            clipNameClip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+            Logger.getLogger(PlayerNamesCapture.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
      * Creates new form PlayerNamesCapture
+     *
+     * @param parent Ventana padre del cuadro de dialogo.
+     * @param modal parametro para especificar si es modal.
      */
     public PlayerNamesCapture(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -64,8 +148,9 @@ public class PlayerNamesCapture extends javax.swing.JDialog {
     }
 
     /**
-     * Función que nos permite recuperar los datos que ha metido el usuario
-     * en los campos del formulario.
+     * Función que nos permite recuperar los datos que ha metido el usuario en
+     * los campos del formulario.
+     *
      * @return Devuelve un Array con los nombres que se han introducido.
      */
     public ArrayList<String> getNames() {

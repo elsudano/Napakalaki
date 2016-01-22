@@ -1,8 +1,9 @@
-package napakalaki;
+
 
 import gui.Dice;
 import gui.NapakalakiView;
 import gui.PlayerNamesCapture;
+import napakalaki.Napakalaki;
 
 public class Main {
 
