@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -19,7 +20,19 @@ public class TreasureView extends javax.swing.JPanel {
     /**
      * Esta será la imgen del tesoro
      */
-    private Image imagenTesoro;
+    private ImageIcon imagenTesoro;
+    /**
+     * Este parametro es para que saber si está seleccionado el tesoro
+     */
+    private boolean selected = false;
+
+    /**
+     * Este metodo privado lo pongo para no repetir codigo
+     */
+    private void seleccionar() {
+        this.selected = !this.selected;
+        this.setOpaque(selected);
+    }
 
     /**
      * Creamos un Objeto de tipo Tesoro para la vista.
@@ -29,17 +42,40 @@ public class TreasureView extends javax.swing.JPanel {
     }
 
     /**
+     * Devolvemos el tesoro que representa al modelo.
+     *
+     * @return devuelve un objeto de tipo Treasure
+     */
+    public Treasure getTreasure() {
+        return this.treasureModel;
+    }
+
+    /**
+     * Podemos consultar si el treasureView esta seleccionado.
+     *
+     * @return devuelve verdadero si esta seleccionado, falso en caso contrario.
+     */
+    public boolean isSelected() {
+        return selected;
+    }
+
+    /**
      * Asignamos el tésoro del modelo a la vista.
+     *
      * @param aTreasure este será el tesoro que se mostrará
      */
     protected void setTreasure(Treasure aTreasure) {
         this.treasureModel = aTreasure;
         this.jTANombreTesoro.setText(treasureModel.getName());
         this.jTTipo.setText(treasureModel.getType().name());
-        this.jTBonus_Tesoro.setText(""+treasureModel.getMaxBonus());
-        this.jTMonedas.setText(""+treasureModel.getGoldCoins());
+        this.jTBonus_Tesoro.setText("" + treasureModel.getMaxBonus());
+        this.jTMonedas.setText("" + treasureModel.getGoldCoins());
         try {
-            this.imagenTesoro = (new ImageIcon(getClass().getClassLoader().getResource("resources/Tesoros/" + treasureModel.getName() + ".png"))).getImage();
+            this.imagenTesoro = new ImageIcon(getClass().getClassLoader().getResource("resources/Tesoros/" + treasureModel.getName() + ".png"));
+            if (this.imagenTesoro != null) {
+                this.jLImagen.setIcon(imagenTesoro);
+                this.jLImagen.setText("");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "La imagen resources/Tesoros/" + treasureModel.getName()
                     + ".png no está disponible.\n"
@@ -64,50 +100,104 @@ public class TreasureView extends javax.swing.JPanel {
         jTBonus_Tesoro = new javax.swing.JTextField();
         jLTipo = new javax.swing.JLabel();
         jTTipo = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
         jTANombreTesoro = new javax.swing.JTextArea();
+        jLImagen = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(153, 153, 153));
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setName("TreasureView"); // NOI18N
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(140, 200));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         jLMonedas.setLabelFor(jTMonedas);
         jLMonedas.setText("Monedas:");
+        jLMonedas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLMonedasMouseClicked(evt);
+            }
+        });
 
         jTMonedas.setEditable(false);
+        jTMonedas.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTMonedas.setText("jTMonedas");
         jTMonedas.setBorder(null);
+        jTMonedas.setFocusable(false);
+        jTMonedas.setOpaque(false);
+        jTMonedas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTMonedasMouseClicked(evt);
+            }
+        });
 
         jLBonus.setLabelFor(jTBonus_Tesoro);
         jLBonus.setText("Bonus:");
+        jLBonus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLBonusMouseClicked(evt);
+            }
+        });
 
         jTBonus_Tesoro.setEditable(false);
+        jTBonus_Tesoro.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTBonus_Tesoro.setText("jTBonus_Tesoro");
         jTBonus_Tesoro.setBorder(null);
+        jTBonus_Tesoro.setFocusable(false);
+        jTBonus_Tesoro.setOpaque(false);
+        jTBonus_Tesoro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTBonus_TesoroMouseClicked(evt);
+            }
+        });
 
         jLTipo.setLabelFor(jTTipo);
         jLTipo.setText("Tipo:");
+        jLTipo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLTipoMouseClicked(evt);
+            }
+        });
 
         jTTipo.setEditable(false);
+        jTTipo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTTipo.setText("jTTipo");
+        jTTipo.setAutoscrolls(false);
         jTTipo.setBorder(null);
+        jTTipo.setFocusable(false);
         jTTipo.setMinimumSize(new java.awt.Dimension(40, 19));
+        jTTipo.setOpaque(false);
+        jTTipo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTTipoMouseClicked(evt);
+            }
+        });
 
-        jScrollPane1.setBorder(null);
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        jScrollPane1.setWheelScrollingEnabled(false);
-
+        jTANombreTesoro.setEditable(false);
         jTANombreTesoro.setBackground(new java.awt.Color(238, 238, 238));
         jTANombreTesoro.setColumns(10);
         jTANombreTesoro.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jTANombreTesoro.setLineWrap(true);
-        jTANombreTesoro.setRows(3);
+        jTANombreTesoro.setRows(2);
         jTANombreTesoro.setText("Nombre del Tesoro");
         jTANombreTesoro.setToolTipText("Este es el Nombre del Tesoro");
         jTANombreTesoro.setBorder(null);
+        jTANombreTesoro.setFocusable(false);
         jTANombreTesoro.setName("jTANombreTesoro"); // NOI18N
-        jScrollPane1.setViewportView(jTANombreTesoro);
+        jTANombreTesoro.setOpaque(false);
+        jTANombreTesoro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTANombreTesoroMouseClicked(evt);
+            }
+        });
+
+        jLImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLImagen.setFocusable(false);
+        jLImagen.setMaximumSize(new java.awt.Dimension(85, 126));
+        jLImagen.setMinimumSize(new java.awt.Dimension(85, 126));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -115,7 +205,9 @@ public class TreasureView extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTANombreTesoro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLMonedas)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLTipo)
@@ -126,16 +218,16 @@ public class TreasureView extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLBonus)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTBonus_Tesoro, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1))
+                            .addComponent(jTBonus_Tesoro, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(4, 4, 4))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                .addComponent(jTANombreTesoro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLTipo)
                     .addComponent(jTTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -151,11 +243,51 @@ public class TreasureView extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        this.seleccionar();
+        repaint();
+    }//GEN-LAST:event_formMouseClicked
+
+    private void jTANombreTesoroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTANombreTesoroMouseClicked
+        this.seleccionar();
+        repaint();
+    }//GEN-LAST:event_jTANombreTesoroMouseClicked
+
+    private void jLTipoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLTipoMouseClicked
+        this.seleccionar();
+        repaint();
+    }//GEN-LAST:event_jLTipoMouseClicked
+
+    private void jTTipoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTTipoMouseClicked
+        this.seleccionar();
+        repaint();
+    }//GEN-LAST:event_jTTipoMouseClicked
+
+    private void jLBonusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLBonusMouseClicked
+        this.seleccionar();
+        repaint();
+    }//GEN-LAST:event_jLBonusMouseClicked
+
+    private void jTBonus_TesoroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTBonus_TesoroMouseClicked
+        this.seleccionar();
+        repaint();
+    }//GEN-LAST:event_jTBonus_TesoroMouseClicked
+
+    private void jLMonedasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLMonedasMouseClicked
+        this.seleccionar();
+        repaint();
+    }//GEN-LAST:event_jLMonedasMouseClicked
+
+    private void jTMonedasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTMonedasMouseClicked
+        this.seleccionar();
+        repaint();
+    }//GEN-LAST:event_jTMonedasMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLBonus;
+    private javax.swing.JLabel jLImagen;
     private javax.swing.JLabel jLMonedas;
     private javax.swing.JLabel jLTipo;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTANombreTesoro;
     private javax.swing.JTextField jTBonus_Tesoro;
     private javax.swing.JTextField jTMonedas;

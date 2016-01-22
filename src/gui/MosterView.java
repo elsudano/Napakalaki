@@ -5,6 +5,8 @@
  */
 package gui;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import napakalaki.Monster;
 
 /**
@@ -18,6 +20,8 @@ public class MosterView extends javax.swing.JPanel {
      * para preguntarle todos los datos necesarios.
      */
     Monster monsterModel;
+    
+    ImageIcon imagenMonstruo;
     
     /**
      * Creates new form MosterView
@@ -33,7 +37,21 @@ public class MosterView extends javax.swing.JPanel {
      */
     public void setMonster(Monster aMonster){
         this.monsterModel = aMonster;
-
+        this.jTANombreMonstruo.setText(this.monsterModel.getName());
+        this.jTJugadorNormal.setText(""+this.monsterModel.getCombatLevel());
+        this.jTJugadorSectario.setText(""+this.monsterModel.getCombatLevelAgainstCultisPlayer());
+        try {
+            this.imagenMonstruo = new ImageIcon(getClass().getClassLoader().getResource("resources/Monstruos/" + monsterModel.getName() + ".png"));
+            if (this.imagenMonstruo != null) {
+                this.jLImagen.setIcon(imagenMonstruo);
+                this.jLImagen.setText("");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "La imagen resources/Tesoros/" + monsterModel.getName()
+                    + ".png no está disponible.\n"
+                    + "Contactar con los programadores para subsanar el fallo: " + e.getMessage(), "Error!!!", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        }
         this.badConsequenceView.setBadConsequence(this.monsterModel.getBadConsequence());
         this.prizeView.setPrize(this.monsterModel.getPrize());
         repaint();
@@ -50,58 +68,136 @@ public class MosterView extends javax.swing.JPanel {
     private void initComponents() {
 
         badConsequenceView = new gui.BadConsequenceView();
+        jPDatosMonstruo = new javax.swing.JPanel();
+        jTANombreMonstruo = new javax.swing.JTextArea();
+        jLJugadorNormal = new javax.swing.JLabel();
+        jLJugadorSectario = new javax.swing.JLabel();
+        jTJugadorNormal = new javax.swing.JTextField();
+        jTJugadorSectario = new javax.swing.JTextField();
+        jLNivelCombate = new javax.swing.JLabel();
+        jLImagen = new javax.swing.JLabel();
         prizeView = new gui.PrizeView();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Espacio del Monstruo"));
-        setMinimumSize(new java.awt.Dimension(885, 250));
-        setPreferredSize(new java.awt.Dimension(885, 250));
+        setMinimumSize(new java.awt.Dimension(230, 535));
+        setPreferredSize(new java.awt.Dimension(230, 535));
 
-        javax.swing.GroupLayout badConsequenceViewLayout = new javax.swing.GroupLayout(badConsequenceView);
-        badConsequenceView.setLayout(badConsequenceViewLayout);
-        badConsequenceViewLayout.setHorizontalGroup(
-            badConsequenceViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 212, Short.MAX_VALUE)
-        );
-        badConsequenceViewLayout.setVerticalGroup(
-            badConsequenceViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 209, Short.MAX_VALUE)
-        );
+        jPDatosMonstruo.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Monstruo"));
+        jPDatosMonstruo.setMaximumSize(new java.awt.Dimension(222, 159));
+        jPDatosMonstruo.setMinimumSize(new java.awt.Dimension(222, 159));
+        jPDatosMonstruo.setPreferredSize(new java.awt.Dimension(222, 159));
 
-        javax.swing.GroupLayout prizeViewLayout = new javax.swing.GroupLayout(prizeView);
-        prizeView.setLayout(prizeViewLayout);
-        prizeViewLayout.setHorizontalGroup(
-            prizeViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 140, Short.MAX_VALUE)
+        jTANombreMonstruo.setEditable(false);
+        jTANombreMonstruo.setBackground(new java.awt.Color(238, 238, 238));
+        jTANombreMonstruo.setColumns(19);
+        jTANombreMonstruo.setLineWrap(true);
+        jTANombreMonstruo.setRows(3);
+        jTANombreMonstruo.setBorder(null);
+        jTANombreMonstruo.setMaximumSize(new java.awt.Dimension(212, 30));
+        jTANombreMonstruo.setMinimumSize(new java.awt.Dimension(212, 30));
+
+        jLJugadorNormal.setText("Normal:");
+
+        jLJugadorSectario.setText("Sectario:");
+
+        jTJugadorNormal.setEditable(false);
+        jTJugadorNormal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTJugadorNormal.setText("jTJugadorNormal");
+        jTJugadorNormal.setBorder(null);
+        jTJugadorNormal.setMaximumSize(new java.awt.Dimension(40, 19));
+        jTJugadorNormal.setMinimumSize(new java.awt.Dimension(40, 19));
+        jTJugadorNormal.setName(""); // NOI18N
+        jTJugadorNormal.setPreferredSize(new java.awt.Dimension(40, 19));
+
+        jTJugadorSectario.setEditable(false);
+        jTJugadorSectario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTJugadorSectario.setText("jTJugadorSectario");
+        jTJugadorSectario.setBorder(null);
+        jTJugadorSectario.setMaximumSize(new java.awt.Dimension(40, 19));
+        jTJugadorSectario.setMinimumSize(new java.awt.Dimension(40, 19));
+        jTJugadorSectario.setName(""); // NOI18N
+        jTJugadorSectario.setPreferredSize(new java.awt.Dimension(40, 19));
+
+        jLNivelCombate.setText("Nivel de Combate");
+
+        jLImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLImagen.setMaximumSize(new java.awt.Dimension(77, 137));
+        jLImagen.setMinimumSize(new java.awt.Dimension(77, 137));
+        jLImagen.setPreferredSize(new java.awt.Dimension(77, 137));
+
+        javax.swing.GroupLayout jPDatosMonstruoLayout = new javax.swing.GroupLayout(jPDatosMonstruo);
+        jPDatosMonstruo.setLayout(jPDatosMonstruoLayout);
+        jPDatosMonstruoLayout.setHorizontalGroup(
+            jPDatosMonstruoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPDatosMonstruoLayout.createSequentialGroup()
+                .addGroup(jPDatosMonstruoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPDatosMonstruoLayout.createSequentialGroup()
+                        .addGroup(jPDatosMonstruoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLJugadorNormal)
+                            .addComponent(jLJugadorSectario))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPDatosMonstruoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTJugadorSectario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTJugadorNormal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLNivelCombate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTANombreMonstruo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        prizeViewLayout.setVerticalGroup(
-            prizeViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 209, Short.MAX_VALUE)
+        jPDatosMonstruoLayout.setVerticalGroup(
+            jPDatosMonstruoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPDatosMonstruoLayout.createSequentialGroup()
+                .addComponent(jTANombreMonstruo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLNivelCombate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPDatosMonstruoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLJugadorNormal)
+                    .addComponent(jTJugadorNormal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPDatosMonstruoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTJugadorSectario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLJugadorSectario))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jLImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(473, Short.MAX_VALUE)
-                .addComponent(prizeView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(badConsequenceView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(badConsequenceView, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPDatosMonstruo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(prizeView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(badConsequenceView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(prizeView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(jPDatosMonstruo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(prizeView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(badConsequenceView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private gui.BadConsequenceView badConsequenceView;
+    private javax.swing.JLabel jLImagen;
+    private javax.swing.JLabel jLJugadorNormal;
+    private javax.swing.JLabel jLJugadorSectario;
+    private javax.swing.JLabel jLNivelCombate;
+    private javax.swing.JPanel jPDatosMonstruo;
+    private javax.swing.JTextArea jTANombreMonstruo;
+    private javax.swing.JTextField jTJugadorNormal;
+    private javax.swing.JTextField jTJugadorSectario;
     private gui.PrizeView prizeView;
     // End of variables declaration//GEN-END:variables
 }

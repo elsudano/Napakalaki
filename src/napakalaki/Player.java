@@ -58,9 +58,10 @@ public class Player {
      */
     static final int NIVEL_MAXIMO = 10;
     /**
-     * Constante que indica el numero máximo de tesoros ocultos de un Jugador.
+     * Constante que indica el numero máximo de tesoros ocultos de un Jugador;
+     * Se pone publico puesto que desde la interfaz grafica tambien lo consultamos.
      */
-    private static final int TESOROS_OCULTOS_MAXIMO = 4;
+    public static final int TESOROS_OCULTOS_MAXIMO = 4;
 
     /**
      * Constructor de Clase, inicializa los valores del objeto con parámetros de
@@ -74,14 +75,15 @@ public class Player {
         this.level = 1;
         this.hiddenTreasures = new ArrayList();
         this.visibleTreasures = new ArrayList();
-        this.pendingBadConsequence = null;
+        this.pendingBadConsequence = new NumericBadConsequence("", 0, this.dead, 0, 0);
         this.canISteal = true;
         this.isCultistPlayer = false;
     }
 
     /**
-     * Constructor de copia de Jugador, copia un objeto de tipo jugador, a otra
-     * variable en el mismo estado en el que se encuentra el original.
+     * Constructor de copia (en profundidad) de Jugador, copia un objeto de tipo
+     * jugador, a otra variable en el mismo estado en el que se encuentra el
+     * original.
      *
      * @param p objeto de tipo Jugador que será el origen.
      */
@@ -89,10 +91,23 @@ public class Player {
         this.name = p.name;
         this.dead = p.dead;
         this.level = p.level;
+        // es este paso no hace falta hacer copia en profundidad 
+        // puesto que el jugador se convierte pero sigue teneiendo el mismo 
+        // enemigo por eso solo copiamos su referencia.
         this.enemy = p.enemy;
-        this.hiddenTreasures = p.hiddenTreasures;
-        this.visibleTreasures = p.visibleTreasures;
-        this.pendingBadConsequence = p.pendingBadConsequence;
+        this.hiddenTreasures = new ArrayList<>();
+        for (Treasure t : p.hiddenTreasures){
+            this.hiddenTreasures.add(new Treasure(t));
+        }
+        this.visibleTreasures = new ArrayList<>();
+        for (Treasure t : p.visibleTreasures){
+            this.visibleTreasures.add(new Treasure(t));
+        }
+        if (p.pendingBadConsequence instanceof NumericBadConsequence) {
+            this.pendingBadConsequence = new NumericBadConsequence((NumericBadConsequence) p.pendingBadConsequence);
+        } else if (p.pendingBadConsequence instanceof SpecificBadConsequence) {
+            this.pendingBadConsequence = new SpecificBadConsequence((SpecificBadConsequence) p.pendingBadConsequence);
+        }
         this.canISteal = p.canISteal;
         this.isCultistPlayer = p.isCultistPlayer;
     }
@@ -245,9 +260,6 @@ public class Player {
     private void applyBadConsequence(Monster m) {
         int nlevels = m.getBadConsequence().getLevels();
         this.decrementLevels(nlevels);
-        //@TODO Por que aqui no simplemente asignamos el badConsequence
-        //devuelto a la variable de clase pendingBadConsequence?????
-        //en vez de tener que usar un metodo privado local que hace lo mismo.
         BadConsequence pendingBad = m.getBadConsequence().adjustToFitTreasureList(this.visibleTreasures, this.hiddenTreasures);
         this.setPendingBadConsequence(pendingBad);
     }
@@ -545,7 +557,7 @@ public class Player {
      * Player.TESOROS_OCULTOS_MAXIMO
      */
     public boolean validState() {
-        return (Player.TESOROS_OCULTOS_MAXIMO > this.hiddenTreasures.size() && this.pendingBadConsequence.isEmpty());
+        return (Player.TESOROS_OCULTOS_MAXIMO >= this.hiddenTreasures.size() && this.pendingBadConsequence.isEmpty());
     }
 
     /**
@@ -558,7 +570,7 @@ public class Player {
         this.bringToLife();
         Treasure treasure = dealer.nextTreasure();
         this.hiddenTreasures.add(treasure);
-        int number = dice.nextNumber();
+        int number = dice.nextNumber("Según el número tendremos:", "1 = 1 Tesoro, 2...5 = 2 Tesoros, 6 = 3 Tesoros");
         if (number > 1) {
             treasure = dealer.nextTreasure();
             this.hiddenTreasures.add(treasure);
@@ -672,7 +684,7 @@ public class Player {
 
     protected boolean shouldConvert() {
         Dice dado = Dice.getInstance();
-        return (dado.nextNumber() == 1);
+        return (dado.nextNumber("Has perdido....", "Si sacas un 1 te conviertes") == 1);
     }
 
     public BadConsequence getPendingBadConsequence() {
@@ -713,7 +725,14 @@ public class Player {
         }
         return formateado;
     }
-    
+
+    /**
+     * Función de comparación entre dos jugadores, esto se sobreescribe por que
+     * queremos comparar el estado del objeto jugador, si no lo sobreescribimos
+     * solo comparamos su referencia.
+     * @param player tipo de objeto player con el que vamos a comparar.
+     * @return devuelve verdadero si son iguales y falso en caso contrario.
+     */
     @Override
     public boolean equals(Object player) {
         boolean aux = false;
@@ -723,7 +742,7 @@ public class Player {
                     && ((Player) player).level == this.level
                     && ((Player) player).hiddenTreasures.equals(this.hiddenTreasures)
                     && ((Player) player).visibleTreasures.equals(this.visibleTreasures)
-                    //&& ((Player) player).pendingBadConsequence.equals(this.pendingBadConsequence)
+                    && ((Player) player).pendingBadConsequence.equals(this.pendingBadConsequence)
                     && ((Player) player).canISteal == this.canISteal
                     && ((Player) player).isCultistPlayer == this.isCultistPlayer) {
                 aux = true;

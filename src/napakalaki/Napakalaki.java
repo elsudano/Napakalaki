@@ -153,7 +153,7 @@ public class Napakalaki {
      * Metodo que se encarga de realizar los combates entre juegadores y
      * monstruos.
      *
-     * @return devuelve un objeto de tipo CombarResult con el resultado del
+     * @return devuelve un objeto de tipo CombatResult con el resultado del
      * combate
      */
     public CombatResult developCombat() {
@@ -229,7 +229,6 @@ public class Napakalaki {
         this.setEnemies();
         this.dealer.initCards();
         this.nextTurn();
-
     }
 
     /**

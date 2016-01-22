@@ -25,7 +25,8 @@ public class Monster implements Card {
      */
     private BadConsequence badConsequence;
     /**
-     * Variable de tipo entero que almacena el nivel que tiene el monstruo cuando se enfrenta a un jugador Sectario.
+     * Variable de tipo entero que almacena el nivel que tiene el monstruo
+     * cuando se enfrenta a un jugador Sectario.
      */
     private int levelChangeAgainstCultistPlayers = 0;
 
