@@ -3,7 +3,6 @@ package napakalaki;
 import gui.Dice;
 import gui.NapakalakiView;
 import gui.PlayerNamesCapture;
-import java.util.ArrayList;
 
 public class Main {
 
@@ -48,27 +47,11 @@ public class Main {
          * que queremos pasarle a la vista, ya que si no lo hacemos en este
          * orden habrá datos que necesite la vista y que estén a NULL.
          */
-        //napakalakiView.setNapakalaki(game);
+        napakalakiView.setNapakalaki(game);
         /**
          * Le decimos a la ventana de la vista que se muestre en la pantalla,
          * una vez que ya lo tenemos todo inicializado enseñamos la interfaz.
          */
         napakalakiView.setVisible (true);
-
-        /**
-         * Este es el bucle principal de ejecucion del Juego.
-         */
-        ArrayList<Treasure> tesoros;
-        CombatResult resultado = CombatResult.LOSE;
-        while (resultado != CombatResult.WIN) {
-            napakalakiView.setNapakalaki(game);
-            System.out.println(game.getCurrentMonster());
-            System.out.println(game.getCurrentPlayer());
-            tesoros = new ArrayList<>(game.getCurrentPlayer().getHiddenTreasures());
-            game.discardHiddenTreasures(tesoros);
-            resultado = game.developCombat();
-            System.out.println(resultado);
-            game.nextTurn();
-        }
     }
 }

@@ -1,6 +1,7 @@
 package napakalaki;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Clase de Mal rollo se encarga de incluir las ociones negativas del juego así
@@ -87,7 +88,7 @@ public abstract class BadConsequence {
         return this.death;
         //return this.text.contains("muerto");
     }
-    
+
     /**
      * Podemos preguntar si el mal rollo esta lleno o esta vacio osea si los
      * tesoros visibles y los ocultos estan vacios.
@@ -102,7 +103,7 @@ public abstract class BadConsequence {
      * @param treasure es el tesoro que queremos quitar
      */
     abstract public void substractVisibleTreasure(Treasure treasure);
-            
+
     /**
      * Quitamos un tesoro oculto
      *
@@ -119,19 +120,42 @@ public abstract class BadConsequence {
      * @return devolvemos el mismo mal rollo pero con los datos actualizados
      */
     abstract public BadConsequence adjustToFitTreasureList(ArrayList<Treasure> tVisible, ArrayList<Treasure> tHidden);
-//    {
-//        /**
-//         * @TODO Tienes que hacer que este método compruebe si los datos que
-//         * vienen en los dos array se pueden quitar todos ellos de los datos que
-//         * tiene el jugador. Osea que si tenemos una mano, un zapato. Podamos
-//         * quitarselo al jugador. No podemos modificar el this por que
-//         * modificamos la carta original del mazo. Aparte de eso tenemos que
-//         * crear un if para saber si los array vienen vacios pues tenemos que
-//         * quitar el numero de tesoros que se especifican en las variables
-//         * nVisibleTreasures y nHiddenTreasures del objeto This
-//         */
-//            bs = new BadConsequence(this.text, this.levels, 0, 0, this.death, auxv, auxh);
 
+    /**
+     * @TODO Tienes que hacer que este método compruebe si los datos que vienen
+     * en los dos array se pueden quitar todos ellos de los datos que tiene el
+     * jugador. Osea que si tenemos una mano, un zapato. Podamos quitarselo al
+     * jugador. No podemos modificar el this por que modificamos la carta
+     * original del mazo. Aparte de eso tenemos que crear un if para saber si
+     * los array vienen vacios pues tenemos que quitar el numero de tesoros que
+     * se especifican en las variables nVisibleTreasures y nHiddenTreasures del
+     * objeto This
+     */
+    /**
+     * Función de comparación entre dos jugadores, esto se sobreescribe por que
+     * queremos comparar el estado del objeto jugador, si no lo sobreescribimos
+     * solo comparamos su
+     *
+     * @param bc este es el objeto badconsequence que vamos a comparar.
+     * @return devuelve verdadero si son iguales y falso en caso contrario.
+     */
+    @Override
+    abstract public boolean equals(Object bc);
+
+    /**
+     * Esta función se crea para asegurarnos de que miramos los datos de los
+     * diferentes objetos cuando los comparamos.
+     *
+     * @return devuelve un numero entero según una función hash.
+     */
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 73 * hash + Objects.hashCode(this.text);
+        hash = 73 * hash + this.levels;
+        hash = 73 * hash + (this.death ? 1 : 0);
+        return hash;
+    }
 
     /**
      * Devuelve una cadena de caracteres con todos los valores que contiene el

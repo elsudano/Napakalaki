@@ -3,6 +3,7 @@ package napakalaki;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -119,8 +120,8 @@ public class CardDealer {
      * juego las carga desde un fichero de texto y las baraja.
      */
     private void initMonsterCardDeck() {
-        BadConsequence malrollo = null;
         try {
+            BadConsequence malrollo = null;
             // Apertura del fichero y creacion de BufferedReader para poder
             // hacer una lectura comoda (disponer del metodo readLine()).
             String fichero = getClass().getResource("/resources/base_datos_monstruos.txt").getPath(); // < para Linux
@@ -131,7 +132,7 @@ public class CardDealer {
             br.readLine(); // lo usamos para leer las cabeceras de las columnas 
             while ((fila = br.readLine()) != null) {
                 columnas = fila.split(",");
-                if (columnas[10] == "true") {
+                if (columnas[10].equals("true")) {
                     malrollo = new DeathBadConsequence(columnas[4], true);
                 } else if (!columnas[8].isEmpty() || !columnas[9].isEmpty()) {
                     ArrayList<TreasureKind> THidden = this.leeTesoros(columnas[8]);
@@ -145,7 +146,7 @@ public class CardDealer {
             }
             this.shuffleMonsters();
             fr.close();
-        } catch (Exception e) {
+        } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
         }
     }

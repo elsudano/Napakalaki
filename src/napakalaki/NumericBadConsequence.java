@@ -43,6 +43,15 @@ public class NumericBadConsequence extends BadConsequence {
     }
 
     /**
+     * Constructor de copia(en profundidad) del objeto tipo NumericBadConsequence
+     * @param bc Objeto del tipo NumericBadConsequence que queremos copiar.
+     */
+    public NumericBadConsequence(NumericBadConsequence bc){
+        super(bc.getText(), bc.getLevels(), bc.getDeath());
+        this.nVisibleTreasures = bc.nVisibleTreasures;
+        this.nHiddenTreasures = bc.nHiddenTreasures;
+    }
+    /**
      * Devuelve el numero entero con la cantidad de tesoros visibles que
      * perdemos cuando tenemos este mal rollo
      *

@@ -44,6 +44,23 @@ public class SpecificBadConsequence extends BadConsequence {
     }
 
     /**
+     * Constructor de copia (en profundidad) del objeto tipo
+     * SpecificBadConsequence
+     *
+     * @param bc Objeto del tipo SpecificBadConsequence que queremos copiar.
+     */
+    public SpecificBadConsequence(SpecificBadConsequence bc) {
+        super(bc.getText(), bc.getLevels(), bc.getDeath());
+        for (TreasureKind tk : bc.specificVisibleTreasures) {
+            this.specificVisibleTreasures.add(tk);
+        }
+        for (TreasureKind tk : bc.specificHiddenTreasures) {
+            this.specificHiddenTreasures.add(tk);
+        }
+
+    }
+
+    /**
      * Devuelve un array con todos los tesoros ocultos que contiene el mal rollo
      *
      * @return Array con todos los tesoros ocultos
@@ -147,8 +164,9 @@ public class SpecificBadConsequence extends BadConsequence {
 
     /**
      * Comparamos dos objetos de tipo SpecificBadConsequence y decidimos si son
-     * iguales según los parametros del objeto que queremos comparar.
-     * Es una sebrescritura del operador de comparación
+     * iguales según los parametros del objeto que queremos comparar. Es una
+     * sebrescritura del operador de comparación
+     *
      * @param sbc
      * @return devuelve true si son iguales, false en caso contrario.
      */
@@ -156,11 +174,11 @@ public class SpecificBadConsequence extends BadConsequence {
     public boolean equals(Object sbc) {
         boolean aux = false;
         if (sbc instanceof SpecificBadConsequence) {
-            if ( ((SpecificBadConsequence) sbc).getText().equals(this.getText())
+            if (((SpecificBadConsequence) sbc).getText().equals(this.getText())
                     && ((SpecificBadConsequence) sbc).getLevels() == this.getLevels()
                     && ((SpecificBadConsequence) sbc).getDeath() == this.getDeath()
                     && ((SpecificBadConsequence) sbc).specificVisibleTreasures.equals(this.specificVisibleTreasures)
-                    && ((SpecificBadConsequence) sbc).specificHiddenTreasures.equals(this.specificHiddenTreasures) ) {
+                    && ((SpecificBadConsequence) sbc).specificHiddenTreasures.equals(this.specificHiddenTreasures)) {
                 aux = true;
             }
         }
@@ -170,6 +188,7 @@ public class SpecificBadConsequence extends BadConsequence {
     /**
      * Esta función se crea para asegurarnos de que miramos los datos de los
      * diferentes objetos cuando los comparamos.
+     *
      * @return devuelve un numero entero según una función hash.
      */
     @Override
@@ -179,7 +198,7 @@ public class SpecificBadConsequence extends BadConsequence {
         hash = 67 * hash + Objects.hashCode(this.specificVisibleTreasures);
         return hash;
     }
-    
+
     /**
      * Devuelve una cadena de caracteres con todos los valores que contiene el
      * mal rollo, lo imprime por pantalla formateado

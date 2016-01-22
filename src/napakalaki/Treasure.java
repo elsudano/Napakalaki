@@ -49,6 +49,19 @@ public class Treasure implements Card {
     }
 
     /**
+     * Constructor de copia (en profundidad), que simplemente copia todos los
+     * atributos del objeto en otro lugar de la memoria.
+     * @param t El objeto de tipo Treasure que queremos copiar.
+     */
+    public Treasure(Treasure t){
+        this.name = t.name;
+        this.minBonus = t.minBonus;
+        this.maxBonus = t.maxBonus;
+        this.goldCoins = t.goldCoins;
+        this.type = t.type;
+    }
+    
+    /**
      * Consultor de la cantidad de monedas que tiene el tesoro.
      *
      * @return numero entero con la cantidad de monedas de oro.

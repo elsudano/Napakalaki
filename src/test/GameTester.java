@@ -32,10 +32,10 @@ public class GameTester {
 
     this.game = aGame;
     this.vista = mVista;
-    this.vista.setNapakalaki(this.game);
-    this.game.setVista(this.vista);
     names = getPlayerNames(numberOfPlayers);
     game.initGame(names);
+    this.vista.setNapakalaki(this.game);
+    this.game.setVista(this.vista);
     do { // Mientras dure la partida
       currentPlayer = game.getCurrentPlayer();
       do { // Mientras el jugador se decide a conocer al monstruo
